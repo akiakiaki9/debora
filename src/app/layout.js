@@ -53,9 +53,9 @@ export const metadata = {
     siteName: "Debora Ceramica",
     images: [
       {
-        url: "https://deboraceramica.uz/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "https://deboraceramica.uz/images/logo.png",
+        width: 512,
+        height: 512,
         alt: "Debora Ceramica - Премиальная сантехника",
       },
     ],
@@ -66,7 +66,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Debora Ceramica | Премиальная сантехника в Ташкенте",
     description: "Премиальная сантехника в Ташкенте с 2006 года. Чугунные ванны, унитазы, смесители Grohe.",
-    images: ["https://deboraceramica.uz/twitter-image.jpg"],
+    images: ["https://deboraceramica.uz/images/logo.png"],
   },
   robots: {
     index: true,
@@ -83,9 +83,11 @@ export const metadata = {
     icon: [
       { url: '/favicon.ico' },
       { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/images/logo.png', type: 'image/png', sizes: '512x512' },
     ],
     apple: [
       { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/images/logo.png', sizes: '180x180', type: 'image/png' },
     ],
   },
   manifest: '/manifest.json',
@@ -107,6 +109,47 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <head>
+        {/* Структурированные данные для поисковых систем */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Store",
+              "name": "Debora Ceramica",
+              "image": "https://deboraceramica.uz/images/logo.png",
+              "logo": "https://deboraceramica.uz/images/logo.png",
+              "url": "https://deboraceramica.uz",
+              "telephone": "+998941471116",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Амира Темура, 123",
+                "addressLocality": "Ташкент",
+                "addressCountry": "UZ"
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                  "opens": "09:00",
+                  "closes": "18:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": "Sunday",
+                  "opens": "10:00",
+                  "closes": "18:00"
+                }
+              ],
+              "sameAs": [
+                "https://t.me/deboraceramica",
+                "https://instagram.com/deboraceramica",
+                "https://facebook.com/deboraceramica"
+              ]
+            })
+          }}
+        />
+
         {/* Global site tag (gtag.js) - Google Analytics */}
         <script
           async
@@ -130,4 +173,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-};
+}
