@@ -1,18 +1,44 @@
-'use cliebt'
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
-import { FiPhone, FiMapPin, FiMail, FiClock, FiSend } from 'react-icons/fi';
-import { FaTelegram, FaInstagram, FaFacebook } from 'react-icons/fa';
+import { FiPhone, FiMapPin, FiMail, FiClock, FiNavigation } from 'react-icons/fi';
+import { FaTelegram, FaInstagram, FaYoutube } from 'react-icons/fa';
 import Link from 'next/link';
 import './contacts.css';
 
 export const metadata = {
     title: 'Контакты | Debora Ceramica - Премиальная сантехника в Ташкенте',
-    description: 'Свяжитесь с нами: +998 99 878-39-49, info@deboraceramica.uz, адрес: ул. Амира Темура, 123. Режим работы: Пн-Сб 9:00-20:00, Вс 10:00-18:00.',
-    keywords: 'сантехника Ташкент контакты, Debora Ceramica адрес, магазин сантехники телефон, премиум сантехника Ташкент',
+    description: '3 магазина в Ташкенте: Абу Сахий, Урикзор, Фархад. Телефоны, адреса, режим работы 9:00-18:00.',
+    keywords: 'сантехника Ташкент контакты, магазины сантехники, Debora Ceramica адрес',
 };
 
 export default function ContactsPage() {
+    const locations = [
+        {
+            id: 1,
+            market: 'Абу Сахий',
+            address: '1 этаж, 10 магазин',
+            coordinates: '41.333122,69.311549',
+            phone: '+998941471116',
+            mapLink: 'https://maps.google.com/maps?q=41.333122,69.311549&ll=41.333122,69.311549&z=16'
+        },
+        {
+            id: 2,
+            market: 'Урикзор',
+            address: '5 ряд, 27 магазин',
+            coordinates: '41.237603,69.335270',
+            phone: '+998977074046',
+            mapLink: 'https://maps.google.com/maps?q=41.237603,69.335270&ll=41.237603,69.335270&z=16'
+        },
+        {
+            id: 3,
+            market: 'Фархад',
+            address: '1 этаж, 133 магазин',
+            coordinates: '41.356032,69.246443',
+            phone: '+998974008180',
+            mapLink: 'https://maps.google.com/maps?q=41.356032,69.246443&ll=41.356032,69.246443&z=16'
+        }
+    ];
+
     return (
         <>
             <Navbar />
@@ -22,7 +48,7 @@ export default function ContactsPage() {
                     <div className="container">
                         <h1 className="contacts-title">Контакты</h1>
                         <p className="contacts-subtitle">
-                            Свяжитесь с нами любым удобным способом
+                            3 магазина в Ташкенте для вашего удобства
                         </p>
                     </div>
                 </section>
@@ -33,34 +59,12 @@ export default function ContactsPage() {
                         <div className="info-grid">
                             <div className="info-card">
                                 <div className="info-icon">
-                                    <FiPhone />
-                                </div>
-                                <h3 className="info-title">Телефон</h3>
-                                <a href="tel:+998998783949" className="info-value">+998 99 878-39-49</a>
-                                <a href="tel:+998998783950" className="info-value">+998 99 878-39-50</a>
-                                <p className="info-note">Ежедневно с 9:00 до 20:00</p>
-                            </div>
-
-                            <div className="info-card">
-                                <div className="info-icon">
-                                    <FiMapPin />
-                                </div>
-                                <h3 className="info-title">Адрес</h3>
-                                <p className="info-value">г. Ташкент, ул. Амира Темура, 123</p>
-                                <p className="info-note">Ориентир: рядом с метро Амира Темура</p>
-                                <Link href="https://maps.google.com/?q=Ташкент+ул.+Амира+Темура+123" target="_blank" className="info-link">
-                                    Открыть в картах
-                                    <FiSend />
-                                </Link>
-                            </div>
-
-                            <div className="info-card">
-                                <div className="info-icon">
                                     <FiMail />
                                 </div>
                                 <h3 className="info-title">Email</h3>
-                                <a href="mailto:info@deboraceramica.uz" className="info-value">info@deboraceramica.uz</a>
-                                <a href="mailto:sales@deboraceramica.uz" className="info-value">sales@deboraceramica.uz</a>
+                                <a href="mailto:Rasultoy1985@mail.ru" className="info-value">
+                                    Rasultoy1985@mail.ru
+                                </a>
                                 <p className="info-note">Напишите нам на почту</p>
                             </div>
 
@@ -69,10 +73,71 @@ export default function ContactsPage() {
                                     <FiClock />
                                 </div>
                                 <h3 className="info-title">Режим работы</h3>
-                                <p className="info-value">Пн-Сб: 9:00 - 20:00</p>
-                                <p className="info-value">Вс: 10:00 - 18:00</p>
-                                <p className="info-note">Без выходных</p>
+                                <p className="info-value">Ежедневно</p>
+                                <p className="info-value">9:00 - 18:00</p>
+                                <p className="info-note">С Выходными</p>
                             </div>
+
+                            <div className="info-card">
+                                <div className="info-icon">
+                                    <FiPhone />
+                                </div>
+                                <h3 className="info-title">Общий отдел</h3>
+                                <a href="tel:+998941471116" className="info-value">+998 94 147-11-16</a>
+                                <a href="tel:+998998783950" className="info-value">+998 99 878 39 50</a>
+                                <a href="tel:+998977074046" className="info-value">+998 97 707 40 46</a>
+                                <p className="info-note">Для связи с менеджером</p>
+                            </div>
+
+                            <div className="info-card">
+                                <div className="info-icon">
+                                    <FaTelegram />
+                                </div>
+                                <h3 className="info-title">Telegram</h3>
+                                <a href="https://t.me/deboraceramica" target="_blank" rel="noopener noreferrer" className="info-value">
+                                    @debora_ceramica
+                                </a>
+                                <p className="info-note">Быстрая связь</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Локации магазинов */}
+                <section className="locations-section">
+                    <div className="container">
+                        <h2 className="section-title">Наши магазины</h2>
+                        <div className="locations-grid">
+                            {locations.map((loc) => (
+                                <div key={loc.id} className="location-card">
+                                    <div className="location-header">
+                                        <FiMapPin className="location-icon" />
+                                        <h3 className="location-market">{loc.market}</h3>
+                                    </div>
+
+                                    <div className="location-body">
+                                        <p className="location-address">
+                                            <strong>Адрес:</strong> {loc.address}
+                                        </p>
+                                        <a href={`tel:${loc.phone}`} className="location-phone">
+                                            <FiPhone className="location-phone-icon" />
+                                            {loc.phone}
+                                        </a>
+                                    </div>
+
+                                    <div className="location-footer">
+                                        <Link
+                                            href={loc.mapLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="location-map-link"
+                                        >
+                                            <FiNavigation />
+                                            Открыть в картах
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -82,40 +147,21 @@ export default function ContactsPage() {
                     <div className="container">
                         <h2 className="social-title">Мы в соцсетях</h2>
                         <div className="social-grid">
-                            <a href="https://t.me/deboraceramica" target="_blank" rel="noopener noreferrer" className="social-card telegram">
+                            <a href="https://t.me/debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card telegram">
                                 <FaTelegram className="social-icon" />
                                 <span className="social-name">Telegram</span>
-                                <span className="social-link">@deboraceramica</span>
+                                <span className="social-link">@debora_ceramica</span>
                             </a>
-                            <a href="https://instagram.com/deboraceramica" target="_blank" rel="noopener noreferrer" className="social-card instagram">
+                            <a href="https://instagram.com/debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card instagram">
                                 <FaInstagram className="social-icon" />
                                 <span className="social-name">Instagram</span>
-                                <span className="social-link">@deboraceramica</span>
+                                <span className="social-link">@debora_ceramica</span>
                             </a>
-                            <a href="https://facebook.com/deboraceramica" target="_blank" rel="noopener noreferrer" className="social-card facebook">
-                                <FaFacebook className="social-icon" />
-                                <span className="social-name">Facebook</span>
-                                <span className="social-link">deboraceramica</span>
+                            <a href="https://www.youtube.com/@debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card facebook">
+                                <FaYoutube className="social-icon" />
+                                <span className="social-name">You Tube</span>
+                                <span className="social-link">debora_ceramica</span>
                             </a>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Карта */}
-                <section className="contacts-map">
-                    <div className="container">
-                        <h2 className="map-title">Как нас найти</h2>
-                        <div className="map-container">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.112234567891!2d69.278945!3d41.311475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aef4b8c8c8c8c8%3A0x8c8c8c8c8c8c8c8c!2z0KLQsNGI0LrQtdC90YIsINCj0LfQsdC10LrQuNGB0YLQsNC9!5e0!3m2!1sru!2s!4v1234567890123!5m2!1sru!2s"
-                                width="100%"
-                                height="450"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title="Debora Ceramica на карте Ташкента"
-                            />
                         </div>
                     </div>
                 </section>
@@ -123,4 +169,4 @@ export default function ContactsPage() {
             <Footer />
         </>
     );
-}
+};

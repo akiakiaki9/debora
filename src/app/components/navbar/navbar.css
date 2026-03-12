@@ -1,4 +1,5 @@
-/* navbar.css - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+/* Обновленный navbar.css */
+
 :root {
     --navy: #1a2b3c;
     --gold: #c5a572;
@@ -108,7 +109,7 @@
     justify-content: space-between;
 }
 
-/* Логотип */
+/* Логотип - УВЕЛИЧЕН */
 .logo {
     display: flex;
     align-items: center;
@@ -119,10 +120,24 @@
 
 .logo-wrapper {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     flex-shrink: 0;
     transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .logo-wrapper {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-wrapper {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .logo-image {
@@ -139,11 +154,29 @@
 }
 
 .logo-text {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: var(--navy);
     transition: color 0.3s ease;
     white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 0.9rem;
+    }
 }
 
 /* Навигационное меню */
@@ -288,6 +321,308 @@
     z-index: 1001;
 }
 
+/* Телефоны в навбаре - десктоп */
+.phones-wrapper.desktop-only {
+    position: relative;
+    margin-right: 10px;
+}
+
+@media (max-width: 992px) {
+    .phones-wrapper.desktop-only {
+        display: none;
+    }
+}
+
+.phones-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.phones-trigger:hover {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+.phones-icon {
+    font-size: 1rem;
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.phones-trigger:hover .phones-icon {
+    color: var(--white);
+}
+
+.phones-text {
+    font-size: 0.9rem;
+}
+
+.phones-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.phones-arrow.active {
+    transform: rotate(180deg);
+}
+
+.phones-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 240px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 12px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border: 1px solid var(--border);
+    pointer-events: none;
+    margin-top: 10px;
+}
+
+.phones-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(5px);
+    pointer-events: all;
+}
+
+.phone-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--border);
+}
+
+.phone-item:last-child {
+    border-bottom: none;
+}
+
+.phone-item:hover {
+    background: var(--cream);
+    transform: translateX(5px);
+}
+
+.phone-name {
+    color: var(--navy);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.phone-number {
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Иконка телефона для мобильных */
+.mobile-phone-icon-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.mobile-phone-icon-btn:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+}
+
+@media (max-width: 992px) {
+    .mobile-phone-icon-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-phone-icon-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-phone-icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Модальное окно с телефонами */
+.phones-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.phones-modal-content {
+    background: var(--white);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 350px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.phones-modal-header {
+    padding: 25px 25px 15px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+}
+
+.phones-modal-icon {
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.phones-modal-title {
+    font-size: 1.4rem;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+}
+
+.phones-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.phones-modal-close:hover {
+    color: var(--gold);
+    transform: rotate(90deg);
+}
+
+.phones-modal-body {
+    padding: 20px 25px;
+}
+
+.phones-modal-item {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.phones-modal-item:last-child {
+    border-bottom: none;
+}
+
+.phones-modal-item:hover {
+    transform: translateX(5px);
+}
+
+.phones-modal-name {
+    color: var(--navy);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.phones-modal-number {
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.phones-modal-footer {
+    padding: 15px 25px 25px;
+    text-align: center;
+}
+
+.phones-modal-btn {
+    padding: 12px 30px;
+    background: var(--cream);
+    border: none;
+    border-radius: 40px;
+    color: var(--navy);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.phones-modal-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+}
+
 /* Поиск */
 .search-wrapper {
     position: relative;
@@ -308,6 +643,12 @@
     color: var(--navy);
     font-size: 0.9rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 1200px) {
+    .search-input {
+        width: 200px;
+    }
 }
 
 .search-input::placeholder {
@@ -476,6 +817,22 @@
     font-size: 1.2rem;
 }
 
+@media (max-width: 768px) {
+    .cart-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-button {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+}
+
 .cart-button:hover {
     color: var(--gold);
     transform: scale(1.1) rotate(5deg);
@@ -512,6 +869,14 @@
     }
 }
 
+@media (max-width: 480px) {
+    .cart-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
+    }
+}
+
 /* Бургер меню */
 .burger-button {
     display: none;
@@ -529,6 +894,22 @@
     border-radius: 50%;
 }
 
+@media (max-width: 768px) {
+    .burger-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .burger-button {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+}
+
 .burger-button:hover {
     color: var(--gold);
     background: rgba(197, 165, 114, 0.1);
@@ -543,95 +924,16 @@
     transform: rotate(180deg);
 }
 
-/* Мобильный поиск */
-.mobile-search {
-    display: none;
-    width: 100%;
-    padding: 20px 0 0;
-}
-
-.mobile-search-form {
-    position: relative;
-    width: 100%;
-}
-
-.mobile-search-input {
-    width: 100%;
-    padding: 12px 50px 12px 15px;
-    border: 2px solid var(--navy);
-    border-radius: 30px;
-    background: var(--white);
-    color: var(--navy);
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-}
-
-.mobile-search-input:focus {
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
-}
-
-.mobile-search-button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--navy);
-    cursor: pointer;
-    padding: 8px 12px;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-}
-
-.mobile-search-button:hover {
-    color: var(--gold);
-    background: rgba(197, 165, 114, 0.1);
-}
-
-/* Оффсет */
-.navbar-offset {
-    height: 74px;
-}
-
-@media (min-width: 993px) {
-    .navbar-offset {
-        height: 114px;
-    }
-}
-
-/* Адаптивность */
-@media (max-width: 1200px) {
-    .nav-menu {
-        gap: 30px;
-    }
-
-    .search-input {
-        width: 200px;
-    }
-
-    .logo-text {
-        font-size: 1rem;
-    }
-}
-
 @media (max-width: 992px) {
     .burger-button {
         display: flex;
     }
+}
 
-    .navbar-main {
-        top: 0;
-        background: var(--white);
-        box-shadow: var(--shadow-sm);
-    }
-
-    .navbar-main.scrolled {
-        top: 0;
-        padding: 10px 0;
+/* Мобильное меню */
+@media (max-width: 992px) {
+    .search-wrapper {
+        display: none;
     }
 
     .nav-menu {
@@ -643,7 +945,7 @@
         background: var(--white);
         flex-direction: column;
         justify-content: flex-start;
-        padding: 80px 20px 40px;
+        padding: 100px 20px 40px;
         gap: 15px;
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1000;
@@ -673,7 +975,7 @@
     .nav-item a,
     .nav-item .dropdown-trigger {
         color: var(--navy) !important;
-        font-size: 1rem;
+        font-size: 1.1rem;
         padding: 12px 0;
         width: 100%;
         justify-content: space-between;
@@ -720,7 +1022,7 @@
         background: var(--cream);
         transform: translateX(0);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: 400;
         border-left: 3px solid transparent;
     }
@@ -736,167 +1038,107 @@
         display: none;
     }
 
-    /* Поиск на десктопе скрываем */
-    .search-wrapper {
-        display: none;
-    }
-
-    /* Показываем поиск в мобильном меню */
+    /* Мобильный поиск */
     .mobile-search {
         display: block;
+        width: 100%;
+        padding: 20px 0 0;
     }
 
     .mobile-search-form {
-        margin-top: 10px;
+        position: relative;
+        width: 100%;
     }
 
     .mobile-search-input {
-        background: var(--cream);
-        border: 1px solid var(--border);
-        font-size: 0.9rem;
+        width: 100%;
+        padding: 12px 50px 12px 15px;
+        border: 2px solid var(--navy);
+        border-radius: 30px;
+        background: var(--white);
+        color: var(--navy);
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
     }
 
     .mobile-search-input:focus {
-        background: var(--white);
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
+    }
+
+    .mobile-search-button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--navy);
+        cursor: pointer;
+        padding: 8px 12px;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .mobile-search-button:hover {
+        color: var(--gold);
+        background: rgba(197, 165, 114, 0.1);
     }
 
     /* Скрываем корзину при открытом меню */
     .cart-button.mobile-hidden {
         display: none;
     }
+}
 
+/* Оффсет */
+.navbar-offset {
+    height: 74px;
+}
+
+@media (min-width: 993px) {
     .navbar-offset {
-        height: 60px;
-    }
-
-    /* Исправление: текст логотипа всегда виден на мобилке */
-    .logo-text {
-        display: block !important; /* Принудительно показываем текст */
-        font-size: 1rem;
+        height: 114px;
     }
 }
 
 @media (max-width: 768px) {
-    .navbar-main {
-        padding: 12px 0;
-    }
-
-    .navbar-main.scrolled {
-        padding: 8px 0;
-    }
-
-    .logo-wrapper {
-        width: 45px;
-        height: 45px;
-    }
-
-    .logo-text {
-        font-size: 0.95rem; /* Немного уменьшаем но оставляем видимым */
-    }
-
-    .nav-actions {
-        gap: 10px;
-    }
-
-    .cart-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
-    }
-
-    .burger-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.3rem;
-    }
-
-    .nav-menu {
-        padding: 70px 15px 30px;
-    }
-
     .navbar-offset {
-        height: 55px;
-    }
-}
-
-@media (max-width: 576px) {
-    .logo-text {
-        font-size: 0.9rem; /* Ещё меньше но всё ещё видимый */
-    }
-    
-    .logo-wrapper {
-        width: 40px;
-        height: 40px;
+        height: 65px;
     }
 }
 
 @media (max-width: 480px) {
-    .logo-wrapper {
-        width: 38px;
-        height: 38px;
-    }
-
-    .logo-text {
-        font-size: 0.85rem; /* Минимальный размер но текст остаётся */
-    }
-
-    .cart-button {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-    }
-
-    .burger-button {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
-    }
-
-    .cart-badge {
-        width: 18px;
-        height: 18px;
-        font-size: 0.65rem;
-    }
-
-    .nav-menu {
-        padding: 60px 12px 25px;
-    }
-
-    .nav-item a,
-    .nav-item .dropdown-trigger {
-        font-size: 0.95rem;
-        padding: 10px 0;
-    }
-
-    .dropdown-item {
-        font-size: 0.85rem;
-        padding: 8px 12px;
-    }
-
     .navbar-offset {
-        height: 50px;
+        height: 60px;
     }
 }
 
 /* Кастомный скролл */
 .search-results::-webkit-scrollbar,
-.nav-menu::-webkit-scrollbar {
+.nav-menu::-webkit-scrollbar,
+.phones-modal-content::-webkit-scrollbar {
     width: 6px;
 }
 
 .search-results::-webkit-scrollbar-track,
-.nav-menu::-webkit-scrollbar-track {
+.nav-menu::-webkit-scrollbar-track,
+.phones-modal-content::-webkit-scrollbar-track {
     background: var(--cream);
 }
 
 .search-results::-webkit-scrollbar-thumb,
-.nav-menu::-webkit-scrollbar-thumb {
+.nav-menu::-webkit-scrollbar-thumb,
+.phones-modal-content::-webkit-scrollbar-thumb {
     background: var(--gold);
     border-radius: 3px;
     transition: background 0.3s ease;
 }
 
 .search-results::-webkit-scrollbar-thumb:hover,
-.nav-menu::-webkit-scrollbar-thumb:hover {
+.nav-menu::-webkit-scrollbar-thumb:hover,
+.phones-modal-content::-webkit-scrollbar-thumb:hover {
     background: var(--navy);
 }

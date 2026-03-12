@@ -1,4 +1,5 @@
-/* Contacts Page */
+/* Обновленный contacts.css */
+
 .contacts-page {
     background: var(--cream);
 }
@@ -15,6 +16,32 @@
     padding: 80px 0;
     text-align: center;
     color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.contacts-hero::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: var(--gold);
+    opacity: 0.1;
+    border-radius: 50%;
+}
+
+.contacts-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: var(--gold);
+    opacity: 0.1;
+    border-radius: 50%;
 }
 
 .contacts-title {
@@ -22,6 +49,8 @@
     font-family: 'Cormorant Garamond', serif;
     margin-bottom: 15px;
     color: var(--white);
+    position: relative;
+    z-index: 2;
 }
 
 .contacts-subtitle {
@@ -29,6 +58,8 @@
     opacity: 0.9;
     max-width: 600px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 /* Контактная информация */
@@ -50,6 +81,24 @@
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
     border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+}
+
+.info-card:hover::before {
+    transform: translateX(0);
 }
 
 .info-card:hover {
@@ -75,6 +124,7 @@
 .info-card:hover .info-icon {
     background: var(--gold);
     color: var(--white);
+    transform: rotateY(180deg);
 }
 
 .info-title {
@@ -103,26 +153,170 @@
     margin-top: 10px;
 }
 
-.info-link {
-    display: inline-flex;
+/* Локации магазинов */
+.locations-section {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--navy);
+    margin-bottom: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--gold);
+}
+
+.locations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.location-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.location-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.location-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: var(--gold);
+    opacity: 0.05;
+    border-radius: 0 0 0 100%;
+}
+
+.location-header {
+    display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.location-icon {
+    font-size: 1.8rem;
+    color: var(--gold);
+    transition: transform 0.3s ease;
+}
+
+.location-card:hover .location-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.location-market {
+    font-size: 1.5rem;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+}
+
+.location-body {
+    margin-bottom: 20px;
+}
+
+.location-address {
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.location-address strong {
+    color: var(--navy);
+    font-weight: 600;
+}
+
+.location-phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: var(--gold);
     text-decoration: none;
-    margin-top: 15px;
+    font-size: 1.1rem;
     font-weight: 500;
+    padding: 8px 12px;
+    background: rgba(197, 165, 114, 0.1);
+    border-radius: 30px;
+    width: fit-content;
     transition: all 0.3s ease;
 }
 
-.info-link:hover {
-    gap: 12px;
-    color: var(--gold-dark);
+.location-phone:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateX(5px);
+}
+
+.location-phone-icon {
+    font-size: 1rem;
+}
+
+.location-footer {
+    margin-top: 15px;
+}
+
+.location-map-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--navy);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.location-map-link:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+.location-map-link svg {
+    transition: transform 0.3s ease;
+}
+
+.location-map-link:hover svg {
+    transform: translateX(5px);
 }
 
 /* Социальные сети */
 .contacts-social {
     padding: 60px 0;
-    background: var(--white);
+    background: var(--cream);
 }
 
 .social-title {
@@ -143,7 +337,7 @@
 
 .social-card {
     padding: 40px 30px;
-    border-radius: 12px;
+    border-radius: 16px;
     text-align: center;
     text-decoration: none;
     color: var(--white);
@@ -180,13 +374,18 @@
 }
 
 .social-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
 }
 
 .social-icon {
     font-size: 3.5rem;
     margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.social-card:hover .social-icon {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .social-name {
@@ -202,34 +401,23 @@
     opacity: 0.9;
 }
 
-/* Карта */
-.contacts-map {
-    padding: 60px 0 80px;
-}
-
-.map-title {
-    text-align: center;
-    font-size: 2.5rem;
-    color: var(--navy);
-    margin-bottom: 30px;
-    font-family: 'Cormorant Garamond', serif;
-}
-
-.map-container {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-}
-
 /* Адаптивность */
 @media (max-width: 1200px) {
     .info-grid {
+        gap: 20px;
+    }
+
+    .locations-grid {
         gap: 20px;
     }
 }
 
 @media (max-width: 992px) {
     .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .locations-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -266,21 +454,30 @@
         gap: 20px;
     }
 
+    .locations-grid {
+        grid-template-columns: 1fr;
+    }
+
     .social-grid {
         grid-template-columns: 1fr;
         max-width: 400px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
     }
 
     .social-title {
         font-size: 2rem;
     }
 
-    .map-title {
-        font-size: 2rem;
+    .location-card {
+        padding: 25px;
     }
 
-    .map-container iframe {
-        height: 350px;
+    .location-market {
+        font-size: 1.3rem;
     }
 }
 
@@ -307,6 +504,11 @@
         font-size: 1rem;
     }
 
+    .location-phone {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
+
     .social-card {
         padding: 30px 20px;
     }
@@ -322,8 +524,35 @@
     .social-link {
         font-size: 0.9rem;
     }
+}
 
-    .map-container iframe {
-        height: 300px;
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
+
+.info-card,
+.location-card,
+.social-card {
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.info-card:nth-child(1) { animation-delay: 0.1s; }
+.info-card:nth-child(2) { animation-delay: 0.2s; }
+.info-card:nth-child(3) { animation-delay: 0.3s; }
+.info-card:nth-child(4) { animation-delay: 0.4s; }
+
+.location-card:nth-child(1) { animation-delay: 0.1s; }
+.location-card:nth-child(2) { animation-delay: 0.2s; }
+.location-card:nth-child(3) { animation-delay: 0.3s; }
+
+.social-card:nth-child(1) { animation-delay: 0.1s; }
+.social-card:nth-child(2) { animation-delay: 0.2s; }
+.social-card:nth-child(3) { animation-delay: 0.3s; }

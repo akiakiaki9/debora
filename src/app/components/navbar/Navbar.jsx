@@ -1,4 +1,3 @@
-// Navbar.jsx - без изменений, тот же самый
 'use client'
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -12,7 +11,8 @@ import {
     FiPhone,
     FiClock,
     FiAward,
-    FiChevronDown
+    FiChevronDown,
+    FiChevronRight
 } from 'react-icons/fi';
 import { products } from '@/app/utils/data';
 import { useCart } from '@/app/context/CartContext';
@@ -25,9 +25,13 @@ const Navbar = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(false);
+    const [activePhones, setActivePhones] = useState(false);
+    const [showPhonesModal, setShowPhonesModal] = useState(false);
     const [dropdownTimeout, setDropdownTimeout] = useState(null);
+    const [phonesTimeout, setPhonesTimeout] = useState(null);
     const searchRef = useRef(null);
     const dropdownRef = useRef(null);
+    const phonesRef = useRef(null);
     const menuRef = useRef(null);
     const router = useRouter();
     const { cartCount } = useCart();
@@ -51,6 +55,17 @@ const Navbar = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    // Закрытие модалки при клике вне
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (showPhonesModal && !event.target.closest('.phones-modal-content') && !event.target.closest('.mobile-phone-icon-btn')) {
+                setShowPhonesModal(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [showPhonesModal]);
+
     // Закрытие меню при ресайзе
     useEffect(() => {
         const handleResize = () => {
@@ -64,7 +79,7 @@ const Navbar = () => {
 
     // Блокировка скролла при открытом меню
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen || showPhonesModal) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
@@ -72,7 +87,7 @@ const Navbar = () => {
         return () => {
             document.body.style.overflow = 'unset';
         };
-    }, [isOpen]);
+    }, [isOpen, showPhonesModal]);
 
     const categories = [
         { name: 'Унитазы', slug: 'unitaz' },
@@ -81,6 +96,12 @@ const Navbar = () => {
         { name: 'Аксессуары', slug: 'akksesuar' },
         { name: 'Зеркала', slug: 'oyna' },
         { name: 'Шкафы', slug: 'play3' },
+    ];
+
+    const phones = [
+        { name: 'Абу Сахий', number: '+998941471116', formatted: '+998 94 147-11-16' },
+        { name: 'Урикзор', number: '+998977074046', formatted: '+998 97 707-40-46' },
+        { name: 'Фархад', number: '+998974008180', formatted: '+998 97 400-81-80' },
     ];
 
     // Поиск по товарам
@@ -119,22 +140,31 @@ const Navbar = () => {
     const closeMenu = () => {
         setIsOpen(false);
         setActiveDropdown(false);
+        setActivePhones(false);
     };
 
     // Обработчики для дропдауна с задержкой
-    const handleMouseEnter = () => {
-        if (dropdownTimeout) {
-            clearTimeout(dropdownTimeout);
-            setDropdownTimeout(null);
-        }
-        setActiveDropdown(true);
+    const handleMouseEnter = (setter) => {
+        return () => {
+            if (dropdownTimeout) {
+                clearTimeout(dropdownTimeout);
+                setDropdownTimeout(null);
+            }
+            if (phonesTimeout) {
+                clearTimeout(phonesTimeout);
+                setPhonesTimeout(null);
+            }
+            setter(true);
+        };
     };
 
-    const handleMouseLeave = () => {
-        const timeout = setTimeout(() => {
-            setActiveDropdown(false);
-        }, 300);
-        setDropdownTimeout(timeout);
+    const handleMouseLeave = (setter, timeoutSetter) => {
+        return () => {
+            const timeout = setTimeout(() => {
+                setter(false);
+            }, 300);
+            timeoutSetter(timeout);
+        };
     };
 
     return (
@@ -145,17 +175,17 @@ const Navbar = () => {
                     <div className="navbar-top-inner">
                         <div className="contact-info">
                             <FiPhone className="icon" />
-                            <a href="tel:+998998783949" className="phone-link">
-                                +998 99 878-39-49
+                            <a href="tel:+998941471116" className="phone-link">
+                                +998 94 147-11-16
                             </a>
                         </div>
                         <div className="years-badge">
                             <FiClock className="icon" />
-                            <span>17 лет на рынке Ташкента</span>
+                            <span>9:00 - 18:00 ежедневно</span>
                         </div>
                         <div className="premium-badge">
                             <FiAward className="icon" />
-                            <span>Премиум сантехника</span>
+                            <span>3 магазина в Ташкенте</span>
                         </div>
                     </div>
                 </div>
@@ -165,14 +195,14 @@ const Navbar = () => {
             <nav className={`navbar-main ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container">
                     <div className="navbar-main-inner">
-                        {/* Логотип */}
+                        {/* Логотип - УВЕЛИЧЕН */}
                         <Link href="/" className="logo" onClick={closeMenu}>
                             <div className="logo-wrapper">
                                 <Image
                                     src="/images/logo.png"
                                     alt="Debora Ceramica"
-                                    width={60}
-                                    height={60}
+                                    width={70}
+                                    height={70}
                                     priority
                                     className="logo-image"
                                 />
@@ -189,8 +219,8 @@ const Navbar = () => {
                             </li>
                             <li
                                 className={`nav-item dropdown ${activeDropdown ? 'active' : ''}`}
-                                onMouseEnter={handleMouseEnter}
-                                onMouseLeave={handleMouseLeave}
+                                onMouseEnter={handleMouseEnter(setActiveDropdown)}
+                                onMouseLeave={handleMouseLeave(setActiveDropdown, setDropdownTimeout)}
                                 ref={dropdownRef}
                             >
                                 <span className="dropdown-trigger">
@@ -220,26 +250,45 @@ const Navbar = () => {
                                     Контакты
                                 </Link>
                             </li>
-
-                            {/* Мобильный поиск */}
-                            <li className="nav-item mobile-search">
-                                <form onSubmit={handleSearch} className="mobile-search-form">
-                                    <input
-                                        type="text"
-                                        placeholder="Поиск товаров..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="mobile-search-input"
-                                    />
-                                    <button type="submit" className="mobile-search-button">
-                                        <FiSearch />
-                                    </button>
-                                </form>
-                            </li>
                         </ul>
 
                         {/* Поиск и корзина */}
                         <div className="nav-actions">
+                            {/* Телефоны - десктоп версия */}
+                            <div
+                                className="phones-wrapper desktop-only"
+                                onMouseEnter={handleMouseEnter(setActivePhones)}
+                                onMouseLeave={handleMouseLeave(setActivePhones, setPhonesTimeout)}
+                                ref={phonesRef}
+                            >
+                                <button className="phones-trigger">
+                                    <FiPhone className="phones-icon" />
+                                    <span className="phones-text">Контакты</span>
+                                    <FiChevronDown className={`phones-arrow ${activePhones ? 'active' : ''}`} />
+                                </button>
+                                <div className={`phones-dropdown ${activePhones ? 'show' : ''}`}>
+                                    {phones.map((phone, index) => (
+                                        <a
+                                            key={index}
+                                            href={`tel:${phone.number}`}
+                                            className="phone-item"
+                                        >
+                                            <span className="phone-name">{phone.name}</span>
+                                            <span className="phone-number">{phone.formatted}</span>
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Иконка телефона для мобильных */}
+                            <button
+                                className="mobile-phone-icon-btn"
+                                onClick={() => setShowPhonesModal(true)}
+                                aria-label="Позвонить"
+                            >
+                                <FiPhone />
+                            </button>
+
                             <div className="search-wrapper" ref={searchRef}>
                                 <form onSubmit={handleSearch} className="search-form">
                                     <input
@@ -304,6 +353,45 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
+
+            {/* Модальное окно с телефонами для мобильных */}
+            {showPhonesModal && (
+                <div className="phones-modal-overlay" onClick={() => setShowPhonesModal(false)}>
+                    <div className="phones-modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="phones-modal-header">
+                            <FiPhone className="phones-modal-icon" />
+                            <h3 className="phones-modal-title">Наши магазины</h3>
+                            <button
+                                className="phones-modal-close"
+                                onClick={() => setShowPhonesModal(false)}
+                            >
+                                <FiX />
+                            </button>
+                        </div>
+                        <div className="phones-modal-body">
+                            {phones.map((phone, index) => (
+                                <a
+                                    key={index}
+                                    href={`tel:${phone.number}`}
+                                    className="phones-modal-item"
+                                    onClick={() => setShowPhonesModal(false)}
+                                >
+                                    <span className="phones-modal-name">{phone.name}</span>
+                                    <span className="phones-modal-number">{phone.formatted}</span>
+                                </a>
+                            ))}
+                        </div>
+                        <div className="phones-modal-footer">
+                            <button
+                                className="phones-modal-btn"
+                                onClick={() => setShowPhonesModal(false)}
+                            >
+                                Закрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Оффсет для фиксированного навбара */}
             <div className="navbar-offset" />

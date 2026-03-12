@@ -3,7 +3,6 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-    FiPhone,
     FiMail,
     FiMapPin,
     FiClock,
@@ -11,7 +10,7 @@ import {
     FiChevronRight,
     FiCode
 } from 'react-icons/fi';
-import { FaFacebook, FaInstagram, FaTelegram, FaYoutube } from 'react-icons/fa';
+import { FaYoutube, FaInstagram, FaTelegram } from 'react-icons/fa';
 import './footer.css';
 
 const Footer = () => {
@@ -42,10 +41,15 @@ const Footer = () => {
     ];
 
     const footerSocialLinks = [
-        { icon: <FaFacebook />, href: 'https://facebook.com', label: 'Facebook' },
-        { icon: <FaInstagram />, href: 'https://instagram.com', label: 'Instagram' },
-        { icon: <FaTelegram />, href: 'https://telegram.org', label: 'Telegram' },
-        { icon: <FaYoutube />, href: 'https://youtube.com', label: 'YouTube' },
+        { icon: <FaTelegram />, href: 'https://t.me/debora_ceramica', label: 'Telegram' },
+        { icon: <FaInstagram />, href: 'https://instagram.com/debora_ceramica', label: 'Instagram' },
+        { icon: <FaYoutube />, href: 'https://www.youtube.com/@debora_ceramica', label: 'You Tube' },
+    ];
+
+    const locations = [
+        { name: 'Абу Сахий', address: '1 этаж, 10 магазин', phone: '+998941471116' },
+        { name: 'Урикзор', address: '5 ряд, 27 магазин', phone: '+998977074046' },
+        { name: 'Фархад', address: '1 этаж, 133 магазин', phone: '+998974008180' }
     ];
 
     return (
@@ -74,8 +78,8 @@ const Footer = () => {
                                 <h3 className="footer-brand-name">Debora Ceramica</h3>
                             </div>
                             <p className="footer-company-description">
-                                Премиальная сантехника в Ташкенте с 2006 года.
-                                Только лучшие итальянские, немецкие и японские бренды.
+                                Премиальная сантехника в Ташкенте.
+                                Только лучшие бренды.
                             </p>
                             <div className="footer-social-links">
                                 {footerSocialLinks.map((social, index) => (
@@ -125,36 +129,29 @@ const Footer = () => {
 
                         {/* Контакты */}
                         <div className="footer-column">
-                            <h3 className="footer-column-title">Контакты</h3>
+                            <h3 className="footer-column-title">Наши магазины</h3>
                             <ul className="footer-contact-list">
-                                <li className="footer-contact-item">
-                                    <div className="footer-contact-icon-wrapper">
-                                        <FiMapPin className="footer-contact-icon" />
-                                    </div>
-                                    <div className="footer-contact-details">
-                                        <span className="footer-contact-label">Адрес:</span>
-                                        <span>г. Ташкент, ул. Амира Темура, 123</span>
-                                    </div>
-                                </li>
-                                <li className="footer-contact-item">
-                                    <div className="footer-contact-icon-wrapper">
-                                        <FiPhone className="footer-contact-icon" />
-                                    </div>
-                                    <div className="footer-contact-details">
-                                        <span className="footer-contact-label">Телефоны:</span>
-                                        <div className="footer-contact-phones">
-                                            <a href="tel:+998998783949">+998 99 878-39-49</a>
-                                            <a href="tel:+998998783950">+998 99 878-39-50</a>
+                                {locations.map((loc, index) => (
+                                    <li key={index} className="footer-contact-item">
+                                        <div className="footer-contact-icon-wrapper">
+                                            <FiMapPin className="footer-contact-icon" />
                                         </div>
-                                    </div>
-                                </li>
+                                        <div className="footer-contact-details">
+                                            <span className="footer-contact-label">{loc.name}</span>
+                                            <span className="footer-contact-address">{loc.address}</span>
+                                            <a href={`tel:${loc.phone}`} className="footer-contact-phone">
+                                                {loc.phone}
+                                            </a>
+                                        </div>
+                                    </li>
+                                ))}
                                 <li className="footer-contact-item">
                                     <div className="footer-contact-icon-wrapper">
                                         <FiMail className="footer-contact-icon" />
                                     </div>
                                     <div className="footer-contact-details">
                                         <span className="footer-contact-label">Email:</span>
-                                        <a href="mailto:info@deboraceramica.uz">info@deboraceramica.uz</a>
+                                        <a href="mailto:Rasultoy1985@mail.ru">Rasultoy1985@mail.ru</a>
                                     </div>
                                 </li>
                                 <li className="footer-contact-item">
@@ -163,7 +160,7 @@ const Footer = () => {
                                     </div>
                                     <div className="footer-contact-details">
                                         <span className="footer-contact-label">Режим работы:</span>
-                                        <span>Пн-Сб: 9:00 - 20:00<br />Вс: 10:00 - 18:00</span>
+                                        <span>Ежедневно: 9:00 - 18:00</span>
                                     </div>
                                 </li>
                             </ul>
@@ -181,7 +178,6 @@ const Footer = () => {
                         </div>
                         <div className="footer-payment-methods">
                             <span className="footer-payment-icon" title="Visa">Visa</span>
-                            <span className="footer-payment-icon" title="MasterCard">MasterCard</span>
                             <span className="footer-payment-icon" title="UzCard">UzCard</span>
                             <span className="footer-payment-icon" title="Humo">Humo</span>
                         </div>

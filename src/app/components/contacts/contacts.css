@@ -1,8 +1,14 @@
-/* contacts.css */
+/* Обновленный contacts.css - убраны стили для карты и формы */
 
 .contacts-page {
     background: var(--cream);
     overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
 }
 
 /* Hero секция */
@@ -263,10 +269,168 @@
     box-shadow: var(--shadow-gold);
 }
 
-/* Социальные сети */
-.contacts-social {
+/* Локации магазинов */
+.locations-section {
     padding: 60px 0;
     background: var(--white);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--navy);
+    margin-bottom: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--gold);
+}
+
+.locations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.location-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.location-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.location-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: var(--gold);
+    opacity: 0.05;
+    border-radius: 0 0 0 100%;
+}
+
+.location-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.location-icon {
+    font-size: 1.8rem;
+    color: var(--gold);
+    transition: transform 0.3s ease;
+}
+
+.location-card:hover .location-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.location-market {
+    font-size: 1.5rem;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+}
+
+.location-body {
+    margin-bottom: 20px;
+}
+
+.location-address {
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.location-address strong {
+    color: var(--navy);
+    font-weight: 600;
+}
+
+.location-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    background: rgba(197, 165, 114, 0.1);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.location-phone:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateX(5px);
+}
+
+.location-phone-icon {
+    font-size: 1rem;
+}
+
+.location-footer {
+    margin-top: 15px;
+}
+
+.location-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--navy);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.location-map-link:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+.location-map-link svg {
+    transition: transform 0.3s ease;
+}
+
+.location-map-link:hover svg {
+    transform: translateX(5px);
+}
+
+/* Социальные сети */
+.contacts-social {
+    padding: 60px 0 100px;
+    background: var(--cream);
 }
 
 .social-title {
@@ -383,302 +547,6 @@
     transform: translateX(0);
 }
 
-/* Карта и форма */
-.contacts-map-form {
-    padding: 60px 0;
-    background: var(--cream);
-}
-
-.map-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    background: var(--white);
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: var(--shadow-xl);
-}
-
-/* Карта */
-.map-wrapper {
-    padding: 40px;
-    position: relative;
-}
-
-.map-title {
-    font-size: 2rem;
-    color: var(--navy);
-    margin-bottom: 25px;
-    font-family: 'Cormorant Garamond', serif;
-    position: relative;
-    padding-bottom: 15px;
-}
-
-.map-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: var(--gold);
-}
-
-.map-container {
-    position: relative;
-    width: 100%;
-    height: 350px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-}
-
-/* Форма */
-.form-wrapper {
-    padding: 40px;
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.form-wrapper::before {
-    content: '';
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    background: var(--gold);
-    opacity: 0.1;
-    border-radius: 50%;
-}
-
-.form-wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: -50px;
-    left: -50px;
-    width: 200px;
-    height: 200px;
-    background: var(--gold);
-    opacity: 0.1;
-    border-radius: 50%;
-}
-
-.form-content {
-    position: relative;
-    z-index: 2;
-}
-
-.form-title {
-    font-size: 2.2rem;
-    color: var(--white);
-    margin-bottom: 10px;
-    font-family: 'Cormorant Garamond', serif;
-}
-
-.form-subtitle {
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 30px;
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-.form-notification {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    animation: slideInDown 0.3s ease;
-}
-
-.form-notification.success {
-    background: rgba(39, 174, 96, 0.2);
-    border: 1px solid #27ae60;
-    color: #27ae60;
-}
-
-.form-notification svg {
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-@keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.contact-form {
-    text-align: left;
-}
-
-.form-row {
-    margin-bottom: 20px;
-}
-
-.form-input {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--white);
-}
-
-.form-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.form-input:focus {
-    outline: none;
-    border-color: var(--gold);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
-}
-
-.form-input:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.form-textarea {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--white);
-    resize: vertical;
-    font-family: inherit;
-}
-
-.form-textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.form-textarea:focus {
-    outline: none;
-    border-color: var(--gold);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
-}
-
-.form-textarea:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 16px;
-    font-size: 1.1rem;
-    margin-top: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.submit-btn.loading {
-    opacity: 0.8;
-    cursor: wait;
-}
-
-.spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: var(--white);
-    animation: spin 0.8s linear infinite;
-    margin-right: 8px;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.form-privacy {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.8rem;
-    margin-top: 20px;
-}
-
-.privacy-link {
-    color: var(--gold);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.privacy-link:hover {
-    color: var(--white);
-    text-decoration: underline;
-}
-
-/* Дополнительная информация */
-.contacts-extra {
-    padding: 60px 0;
-    background: var(--white);
-}
-
-.extra-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-.extra-item {
-    text-align: center;
-    padding: 30px;
-    border-radius: 15px;
-    background: var(--cream);
-    transition: all 0.3s ease;
-}
-
-.extra-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.extra-item h3 {
-    font-size: 1.3rem;
-    color: var(--navy);
-    margin-bottom: 15px;
-    font-family: 'Cormorant Garamond', serif;
-}
-
-.extra-item p {
-    color: var(--gray);
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.extra-link {
-    color: var(--gold);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.extra-link:hover {
-    color: var(--navy);
-}
-
 /* Адаптивность */
 @media (max-width: 1200px) {
     .info-grid {
@@ -687,10 +555,6 @@
 
     .info-card {
         padding: 30px 20px;
-    }
-
-    .extra-grid {
-        gap: 20px;
     }
 }
 
@@ -704,30 +568,22 @@
         margin-top: -40px;
     }
 
+    .locations-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
     .social-grid {
         grid-template-columns: repeat(2, 1fr);
         max-width: 600px;
     }
-
-    .map-form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .map-wrapper,
-    .form-wrapper {
-        padding: 30px;
-    }
-
-    .map-container {
-        height: 300px;
-    }
-
-    .extra-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
     .contacts-hero {
         padding: 60px 0;
     }
@@ -747,6 +603,23 @@
         margin-top: -20px;
     }
 
+    .locations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .location-card {
+        padding: 25px;
+    }
+
+    .location-market {
+        font-size: 1.3rem;
+    }
+
+    .location-phone {
+        font-size: 1rem;
+        padding: 6px 12px;
+    }
+
     .social-grid {
         grid-template-columns: 1fr;
         max-width: 400px;
@@ -754,18 +627,6 @@
 
     .social-card {
         padding: 25px;
-    }
-
-    .extra-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .map-title {
-        font-size: 1.8rem;
-    }
-
-    .form-title {
-        font-size: 2rem;
     }
 }
 
@@ -808,27 +669,6 @@
     .social-name {
         font-size: 1.2rem;
     }
-
-    .map-wrapper,
-    .form-wrapper {
-        padding: 20px;
-    }
-
-    .map-container {
-        height: 250px;
-    }
-
-    .form-title {
-        font-size: 1.8rem;
-    }
-
-    .extra-item {
-        padding: 20px;
-    }
-
-    .extra-item h3 {
-        font-size: 1.2rem;
-    }
 }
 
 /* Анимации */
@@ -861,11 +701,11 @@
         transform: none;
     }
 
-    .social-card:hover {
+    .location-card:hover {
         transform: none;
     }
 
-    .extra-item:hover {
+    .social-card:hover {
         transform: none;
     }
 }

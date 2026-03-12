@@ -1,17 +1,14 @@
 'use client'
 import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import {
     FiPhone,
     FiMapPin,
     FiMail,
     FiClock,
     FiArrowRight,
-    FiCheckCircle,
-    FiAlertCircle
+    FiNavigation
 } from 'react-icons/fi';
-import { FaTelegram, FaInstagram, FaFacebook } from 'react-icons/fa';
+import { FaTelegram, FaInstagram, FaYoutube } from 'react-icons/fa';
 import './contacts.css';
 
 const Contacts = () => {
@@ -28,6 +25,33 @@ const Contacts = () => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const locations = [
+        {
+            id: 1,
+            market: 'Абу Сахий',
+            address: '1 этаж, 10 магазин',
+            coordinates: '41.333122,69.311549',
+            phone: '+998941471116',
+            mapLink: 'https://maps.google.com/maps?q=41.333122,69.311549&ll=41.333122,69.311549&z=16'
+        },
+        {
+            id: 2,
+            market: 'Урикзор',
+            address: '5 ряд, 27 магазин',
+            coordinates: '41.237603,69.335270',
+            phone: '+998977074046',
+            mapLink: 'https://maps.google.com/maps?q=41.237603,69.335270&ll=41.237603,69.335270&z=16'
+        },
+        {
+            id: 3,
+            market: 'Фархад',
+            address: '1 этаж, 133 магазин',
+            coordinates: '41.356032,69.246443',
+            phone: '+998974008180',
+            mapLink: 'https://maps.google.com/maps?q=41.356032,69.246443&ll=41.356032,69.246443&z=16'
+        }
+    ];
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -40,7 +64,6 @@ const Contacts = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Имитация отправки формы
         setTimeout(() => {
             setFormStatus({
                 submitted: true,
@@ -55,7 +78,6 @@ const Contacts = () => {
                 message: ''
             });
 
-            // Скрыть уведомление через 5 секунд
             setTimeout(() => {
                 setFormStatus({
                     submitted: false,
@@ -69,46 +91,45 @@ const Contacts = () => {
     const contacts = [
         {
             id: 1,
-            icon: <FiPhone />,
-            title: 'Телефон',
-            values: [
-                { type: 'tel', value: '+998 99 878-39-49', label: '+998 99 878-39-49' },
-                { type: 'tel', value: '+998 99 878-39-50', label: '+998 99 878-39-50' }
-            ],
-            note: 'Ежедневно с 9:00 до 20:00'
-        },
-        {
-            id: 2,
-            icon: <FiMapPin />,
-            title: 'Адрес',
-            values: [
-                { type: 'text', value: 'г. Ташкент, ул. Амира Темура, 123', label: 'г. Ташкент, ул. Амира Темура, 123' }
-            ],
-            note: 'Ориентир: рядом с метро Амира Темура',
-            link: {
-                href: 'https://maps.google.com',
-                text: 'Открыть в картах'
-            }
-        },
-        {
-            id: 3,
             icon: <FiMail />,
             title: 'Email',
             values: [
-                { type: 'email', value: 'info@deboraceramica.uz', label: 'info@deboraceramica.uz' },
-                { type: 'email', value: 'sales@deboraceramica.uz', label: 'sales@deboraceramica.uz' }
+                { type: 'email', value: 'Rasultoy1985@mail.ru', label: 'Rasultoy1985@mail.ru' }
             ],
-            note: 'Ответим в течение 2 часов'
+            note: 'Напишите нам на почту'
         },
         {
-            id: 4,
+            id: 2,
             icon: <FiClock />,
             title: 'Режим работы',
             values: [
-                { type: 'text', value: 'Пн-Сб: 9:00 - 20:00', label: 'Пн-Сб: 9:00 - 20:00' },
-                { type: 'text', value: 'Вс: 10:00 - 18:00', label: 'Вс: 10:00 - 18:00' }
+                { type: 'text', value: 'Ежедневно: 9:00 - 18:00', label: 'Ежедневно: 9:00 - 18:00' }
             ],
             note: 'Без выходных'
+        },
+        {
+            id: 3,
+            icon: <FiPhone />,
+            title: 'Общий отдел',
+            values: [
+                { type: 'tel', value: '+998941471116', label: '+998 94 147-11-16' },
+                { type: 'tel', value: '+998998783950', label: '+998 99 878 39 50' },
+                { type: 'tel', value: '+998977074046', label: '+998 97 707 40 46' },
+            ],
+            note: 'Для связи с менеджером'
+        },
+        {
+            id: 4,
+            icon: <FaTelegram />,
+            title: 'Telegram',
+            values: [
+                { type: 'link', value: '@debora_ceramica', label: '@debora_ceramica' }
+            ],
+            note: 'Быстрая связь',
+            link: {
+                href: 'https://t.me/debora_ceramica',
+                text: 'Перейти в Telegram'
+            }
         }
     ];
 
@@ -118,7 +139,7 @@ const Contacts = () => {
             name: 'Telegram',
             icon: <FaTelegram />,
             link: 'https://t.me/deboraceramica',
-            username: '@deboraceramica',
+            username: '@debora_ceramica',
             color: 'telegram'
         },
         {
@@ -126,15 +147,15 @@ const Contacts = () => {
             name: 'Instagram',
             icon: <FaInstagram />,
             link: 'https://instagram.com/deboraceramica',
-            username: '@deboraceramica',
+            username: '@debora_ceramica',
             color: 'instagram'
         },
         {
             id: 3,
-            name: 'Facebook',
-            icon: <FaFacebook />,
-            link: 'https://facebook.com/deboraceramica',
-            username: '/deboraceramica',
+            name: 'You Tube',
+            icon: <FaYoutube />,
+            link: 'https://www.youtube.com/@debora_ceramica',
+            username: '/debora_ceramica',
             color: 'facebook'
         }
     ];
@@ -145,10 +166,10 @@ const Contacts = () => {
             <section className="contacts-hero">
                 <div className="container">
                     <div className="hero-content">
-                        <span className="hero-badge">Свяжитесь с нами</span>
+                        <span className="hero-badge">3 магазина в Ташкенте</span>
                         <h1 className="contacts-title">Контакты</h1>
                         <p className="contacts-subtitle">
-                            Свяжитесь с нами любым удобным способом.
+                            Найдите нас в Абу Сахий, Урикзоре или Фархаде.
                             Мы всегда рады помочь с выбором сантехники для вашего дома.
                         </p>
                     </div>
@@ -194,15 +215,55 @@ const Contacts = () => {
                                 </div>
                                 <p className="info-note">{contact.note}</p>
                                 {contact.link && (
-                                    <Link
+                                    <a
                                         href={contact.link.href}
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                         className="info-link"
                                     >
                                         {contact.link.text}
                                         <FiArrowRight />
-                                    </Link>
+                                    </a>
                                 )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Локации магазинов */}
+            <section className="locations-section">
+                <div className="container">
+                    <h2 className="section-title">Наши магазины</h2>
+                    <div className="locations-grid">
+                        {locations.map((loc) => (
+                            <div key={loc.id} className="location-card">
+                                <div className="location-header">
+                                    <FiMapPin className="location-icon" />
+                                    <h3 className="location-market">{loc.market}</h3>
+                                </div>
+
+                                <div className="location-body">
+                                    <p className="location-address">
+                                        <strong>Адрес:</strong> {loc.address}
+                                    </p>
+                                    <a href={`tel:${loc.phone}`} className="location-phone">
+                                        <FiPhone className="location-phone-icon" />
+                                        {loc.phone}
+                                    </a>
+                                </div>
+
+                                <div className="location-footer">
+                                    <a
+                                        href={loc.mapLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="location-map-link"
+                                    >
+                                        <FiNavigation />
+                                        Открыть в картах
+                                    </a>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -238,143 +299,6 @@ const Contacts = () => {
                                 </div>
                             </a>
                         ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Карта и форма */}
-            <section className="contacts-map-form">
-                <div className="container">
-                    <div className="map-form-grid">
-                        {/* Карта */}
-                        <div className="map-wrapper">
-                            <h2 className="map-title">Как нас найти</h2>
-                            <div className="map-container">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.112234567891!2d69.278945!3d41.311475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aef4b8c8c8c8c8%3A0x8c8c8c8c8c8c8c8c!2z0KLQsNGI0LrQtdC90YIsINCj0LfQsdC10LrQuNGB0YLQsNC9!5e0!3m2!1sru!2s!4v1234567890123!5m2!1sru!2s"
-                                    width="100%"
-                                    height="100%"
-                                    style={{ border: 0, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                                    allowFullScreen
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    title="Debora Ceramica на карте"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Форма обратной связи */}
-                        <div className="form-wrapper">
-                            <div className="form-content">
-                                <h2 className="form-title">Остались вопросы?</h2>
-                                <p className="form-subtitle">
-                                    Заполните форму и мы свяжемся с вами в ближайшее время
-                                </p>
-
-                                {formStatus.submitted && formStatus.success && (
-                                    <div className="form-notification success">
-                                        <FiCheckCircle />
-                                        <span>{formStatus.message}</span>
-                                    </div>
-                                )}
-
-                                <form onSubmit={handleSubmit} className="contact-form">
-                                    <div className="form-row">
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Ваше имя *"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            className="form-input"
-                                            required
-                                            disabled={isSubmitting}
-                                        />
-                                    </div>
-                                    <div className="form-row">
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            placeholder="Номер телефона *"
-                                            value={formData.phone}
-                                            onChange={handleInputChange}
-                                            className="form-input"
-                                            required
-                                            disabled={isSubmitting}
-                                            pattern="[\+\d\s\(\)-]+"
-                                        />
-                                    </div>
-                                    <div className="form-row">
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            placeholder="Email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            className="form-input"
-                                            disabled={isSubmitting}
-                                        />
-                                    </div>
-                                    <div className="form-row">
-                                        <textarea
-                                            name="message"
-                                            placeholder="Ваш вопрос"
-                                            value={formData.message}
-                                            onChange={handleInputChange}
-                                            className="form-textarea"
-                                            rows="4"
-                                            disabled={isSubmitting}
-                                        ></textarea>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className={`btn btn-primary submit-btn ${isSubmitting ? 'loading' : ''}`}
-                                        disabled={isSubmitting}
-                                    >
-                                        {isSubmitting ? (
-                                            <>
-                                                <span className="spinner"></span>
-                                                Отправка...
-                                            </>
-                                        ) : (
-                                            'Отправить сообщение'
-                                        )}
-                                    </button>
-                                    <p className="form-privacy">
-                                        Нажимая на кнопку, вы соглашаетесь с
-                                        <Link href="/privacy" className="privacy-link"> политикой конфиденциальности</Link>
-                                    </p>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Дополнительная информация */}
-            <section className="contacts-extra">
-                <div className="container">
-                    <div className="extra-grid">
-                        <div className="extra-item">
-                            <h3>Реквизиты компании</h3>
-                            <p>ООО "Debora Ceramica"</p>
-                            <p>ИНН: 123456789</p>
-                            <p>ОГРН: 1234567890123</p>
-                        </div>
-                        <div className="extra-item">
-                            <h3>Для оптовых клиентов</h3>
-                            <p>Специальные условия для дизайнеров и строительных компаний</p>
-                            <a href="mailto:wholesale@deboraceramica.uz" className="extra-link">
-                                wholesale@deboraceramica.uz
-                            </a>
-                        </div>
-                        <div className="extra-item">
-                            <h3>Сервисный центр</h3>
-                            <p>Гарантийное и постгарантийное обслуживание</p>
-                            <a href="tel:+998998783951" className="extra-link">
-                                +998 99 878-39-51
-                            </a>
-                        </div>
                     </div>
                 </div>
             </section>
