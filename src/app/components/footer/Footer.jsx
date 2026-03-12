@@ -2,99 +2,169 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiPhone } from "react-icons/fi";
-import { FiMail } from "react-icons/fi";
-import { FiMapPin } from "react-icons/fi";
-import { FiClock } from "react-icons/fi";
-import { FiFacebook } from "react-icons/fi";
-import { FiInstagram } from "react-icons/fi";
-import { RiTelegram2Fill } from "react-icons/ri";
-
+import {
+    FiPhone,
+    FiMail,
+    FiMapPin,
+    FiClock,
+    FiArrowUp,
+    FiChevronRight,
+    FiCode
+} from 'react-icons/fi';
+import { FaFacebook, FaInstagram, FaTelegram, FaYoutube } from 'react-icons/fa';
 import './footer.css';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    const footerCategories = [
+        { name: 'Унитазы', slug: 'unitaz' },
+        { name: 'Ванны', slug: 'vanna' },
+        { name: 'Смесители', slug: 'smestitel' },
+        { name: 'Аксессуары', slug: 'akksesuar' },
+        { name: 'Зеркала', slug: 'oyna' },
+        { name: 'Шкафы', slug: 'play3' },
+    ];
+
+    const footerInfoLinks = [
+        { name: 'О нас', slug: '/about' },
+        { name: 'Доставка и оплата', slug: '/delivery' },
+        { name: 'Гарантия', slug: '/warranty' },
+        { name: 'Контакты', slug: '/contacts' },
+        { name: 'Корзина', slug: '/cart' },
+    ];
+
+    const footerSocialLinks = [
+        { icon: <FaFacebook />, href: 'https://facebook.com', label: 'Facebook' },
+        { icon: <FaInstagram />, href: 'https://instagram.com', label: 'Instagram' },
+        { icon: <FaTelegram />, href: 'https://telegram.org', label: 'Telegram' },
+        { icon: <FaYoutube />, href: 'https://youtube.com', label: 'YouTube' },
+    ];
+
     return (
-        <footer className="footer">
-            <div className="footer-main">
-                <div className="container">
-                    <div className="footer-grid">
+        <footer className="site-footer">
+            {/* Декоративная волна сверху */}
+            <div className="footer-wave-decoration">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path fill="var(--navy-dark)" fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+                </svg>
+            </div>
+
+            {/* Основной футер */}
+            <div className="footer-main-content">
+                <div className="footer-container">
+                    <div className="footer-columns">
                         {/* О компании */}
-                        <div className="footer-col">
-                            <div className="footer-logo">
+                        <div className="footer-column footer-about">
+                            <div className="footer-logo-block">
                                 <Image
                                     src="/images/logo.png"
                                     alt="Debora Ceramica"
-                                    width={150}
-                                    height={150}
-                                    className="footer-logo-img"
+                                    width={120}
+                                    height={120}
+                                    className="footer-logo-image"
                                 />
+                                <h3 className="footer-brand-name">Debora Ceramica</h3>
                             </div>
-                            <p className="footer-description">
+                            <p className="footer-company-description">
                                 Премиальная сантехника в Ташкенте с 2006 года.
                                 Только лучшие итальянские, немецкие и японские бренды.
                             </p>
-                            <div className="footer-social">
-                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                                    <FiFacebook />
-                                </a>
-                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                                    <FiInstagram />
-                                </a>
-                                <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="social-link">
-                                    <RiTelegram2Fill />
-                                </a>
+                            <div className="footer-social-links">
+                                {footerSocialLinks.map((social, index) => (
+                                    <a
+                                        key={index}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="footer-social-item"
+                                        aria-label={social.label}
+                                    >
+                                        {social.icon}
+                                    </a>
+                                ))}
                             </div>
                         </div>
 
                         {/* Категории */}
-                        <div className="footer-col">
-                            <h3 className="footer-title">Категории</h3>
-                            <ul className="footer-links">
-                                <li><Link href="/catalog/unitaz">Унитазы</Link></li>
-                                <li><Link href="/catalog/vanna">Ванны</Link></li>
-                                <li><Link href="/catalog/smestitel">Смесители</Link></li>
-                                <li><Link href="/catalog/akksesuar">Аксессуары</Link></li>
-                                <li><Link href="/catalog/oyna">Зеркала</Link></li>
-                                <li><Link href="/catalog/play3">Шкафы</Link></li>
+                        <div className="footer-column">
+                            <h3 className="footer-column-title">Категории</h3>
+                            <ul className="footer-menu-list">
+                                {footerCategories.map((cat) => (
+                                    <li key={cat.slug}>
+                                        <Link href={`/catalog/${cat.slug}`} className="footer-menu-link">
+                                            <FiChevronRight className="footer-link-icon" />
+                                            {cat.name}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
 
                         {/* Информация */}
-                        <div className="footer-col">
-                            <h3 className="footer-title">Информация</h3>
-                            <ul className="footer-links">
-                                <li><Link href="/about">О нас</Link></li>
-                                <li><Link href="/delivery">Доставка и оплата</Link></li>
-                                <li><Link href="/warranty">Гарантия</Link></li>
-                                <li><Link href="/contacts">Контакты</Link></li>
-                                <li><Link href="/cart">Корзина</Link></li>
+                        <div className="footer-column">
+                            <h3 className="footer-column-title">Информация</h3>
+                            <ul className="footer-menu-list">
+                                {footerInfoLinks.map((link) => (
+                                    <li key={link.slug}>
+                                        <Link href={link.slug} className="footer-menu-link">
+                                            <FiChevronRight className="footer-link-icon" />
+                                            {link.name}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
 
                         {/* Контакты */}
-                        <div className="footer-col">
-                            <h3 className="footer-title">Контакты</h3>
-                            <ul className="footer-contact">
-                                <li>
-                                    <FiMapPin className="contact-icon" />
-                                    <span>г. Ташкент, ул. Амира Темура, 123</span>
-                                </li>
-                                <li>
-                                    <FiPhone className="contact-icon" />
-                                    <div className="contact-phones">
-                                        <a href="tel:+998998783949">+998 99 878-39-49</a>
-                                        <a href="tel:+998998783950">+998 99 878-39-50</a>
+                        <div className="footer-column">
+                            <h3 className="footer-column-title">Контакты</h3>
+                            <ul className="footer-contact-list">
+                                <li className="footer-contact-item">
+                                    <div className="footer-contact-icon-wrapper">
+                                        <FiMapPin className="footer-contact-icon" />
+                                    </div>
+                                    <div className="footer-contact-details">
+                                        <span className="footer-contact-label">Адрес:</span>
+                                        <span>г. Ташкент, ул. Амира Темура, 123</span>
                                     </div>
                                 </li>
-                                <li>
-                                    <FiMail className="contact-icon" />
-                                    <a href="mailto:info@deboraceramica.uz">info@deboraceramica.uz</a>
+                                <li className="footer-contact-item">
+                                    <div className="footer-contact-icon-wrapper">
+                                        <FiPhone className="footer-contact-icon" />
+                                    </div>
+                                    <div className="footer-contact-details">
+                                        <span className="footer-contact-label">Телефоны:</span>
+                                        <div className="footer-contact-phones">
+                                            <a href="tel:+998998783949">+998 99 878-39-49</a>
+                                            <a href="tel:+998998783950">+998 99 878-39-50</a>
+                                        </div>
+                                    </div>
                                 </li>
-                                <li>
-                                    <FiClock className="contact-icon" />
-                                    <span>Пн-Сб: 9:00 - 20:00<br />Вс: 10:00 - 18:00</span>
+                                <li className="footer-contact-item">
+                                    <div className="footer-contact-icon-wrapper">
+                                        <FiMail className="footer-contact-icon" />
+                                    </div>
+                                    <div className="footer-contact-details">
+                                        <span className="footer-contact-label">Email:</span>
+                                        <a href="mailto:info@deboraceramica.uz">info@deboraceramica.uz</a>
+                                    </div>
+                                </li>
+                                <li className="footer-contact-item">
+                                    <div className="footer-contact-icon-wrapper">
+                                        <FiClock className="footer-contact-icon" />
+                                    </div>
+                                    <div className="footer-contact-details">
+                                        <span className="footer-contact-label">Режим работы:</span>
+                                        <span>Пн-Сб: 9:00 - 20:00<br />Вс: 10:00 - 18:00</span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -103,18 +173,37 @@ const Footer = () => {
             </div>
 
             {/* Нижний бар */}
-            <div className="footer-bottom">
-                <div className="container">
+            <div className="footer-bottom-bar">
+                <div className="footer-container">
                     <div className="footer-bottom-content">
-                        <div className="copyright">
+                        <div className="footer-copyright">
                             © {currentYear} Debora Ceramica. Все права защищены.
                         </div>
-                        <div className="payment-methods">
-                            <span className="payment-icon">Visa</span>
-                            <span className="payment-icon">MasterCard</span>
-                            <span className="payment-icon">UzCard</span>
-                            <span className="payment-icon">Humo</span>
+                        <div className="footer-payment-methods">
+                            <span className="footer-payment-icon" title="Visa">Visa</span>
+                            <span className="footer-payment-icon" title="MasterCard">MasterCard</span>
+                            <span className="footer-payment-icon" title="UzCard">UzCard</span>
+                            <span className="footer-payment-icon" title="Humo">Humo</span>
                         </div>
+                        <div className="footer-developer">
+                            <FiCode className="footer-developer-icon" />
+                            <span>Разработчик: </span>
+                            <a
+                                href="https://akbarsoft.uz"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="footer-developer-link"
+                            >
+                                Akbar Soft
+                            </a>
+                        </div>
+                        <button
+                            className="footer-scroll-top"
+                            onClick={scrollToTop}
+                            aria-label="Наверх"
+                        >
+                            <FiArrowUp />
+                        </button>
                     </div>
                 </div>
             </div>

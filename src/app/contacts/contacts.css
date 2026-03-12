@@ -1,0 +1,329 @@
+/* Contacts Page */
+.contacts-page {
+    background: var(--cream);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Hero секция */
+.contacts-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    padding: 80px 0;
+    text-align: center;
+    color: var(--white);
+}
+
+.contacts-title {
+    font-size: 3.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 15px;
+    color: var(--white);
+}
+
+.contacts-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Контактная информация */
+.contacts-info {
+    padding: 60px 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.info-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.info-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--cream);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+    color: var(--gold);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover .info-icon {
+    background: var(--gold);
+    color: var(--white);
+}
+
+.info-title {
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.info-value {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.info-value:hover {
+    color: var(--gold);
+}
+
+.info-note {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.info-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold);
+    text-decoration: none;
+    margin-top: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.info-link:hover {
+    gap: 12px;
+    color: var(--gold-dark);
+}
+
+/* Социальные сети */
+.contacts-social {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+.social-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--navy);
+    margin-bottom: 40px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.social-card {
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.3s ease;
+}
+
+.social-card:hover::before {
+    left: 0;
+}
+
+.social-card.telegram {
+    background: linear-gradient(135deg, #27A6E5 0%, #1E8CC7 100%);
+}
+
+.social-card.instagram {
+    background: linear-gradient(135deg, #E4405F 0%, #D62E4E 100%);
+}
+
+.social-card.facebook {
+    background: linear-gradient(135deg, #4267B2 0%, #365899 100%);
+}
+
+.social-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.social-icon {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+
+.social-name {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.social-link {
+    display: block;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Карта */
+.contacts-map {
+    padding: 60px 0 80px;
+}
+
+.map-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--navy);
+    margin-bottom: 30px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.map-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .info-grid {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 600px;
+    }
+
+    .contacts-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .contacts-hero {
+        padding: 60px 0;
+    }
+
+    .contacts-title {
+        font-size: 2.5rem;
+    }
+
+    .contacts-subtitle {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .social-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+
+    .social-title {
+        font-size: 2rem;
+    }
+
+    .map-title {
+        font-size: 2rem;
+    }
+
+    .map-container iframe {
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacts-title {
+        font-size: 2rem;
+    }
+
+    .info-card {
+        padding: 25px;
+    }
+
+    .info-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .info-title {
+        font-size: 1.2rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+
+    .social-card {
+        padding: 30px 20px;
+    }
+
+    .social-icon {
+        font-size: 3rem;
+    }
+
+    .social-name {
+        font-size: 1.3rem;
+    }
+
+    .social-link {
+        font-size: 0.9rem;
+    }
+
+    .map-container iframe {
+        height: 300px;
+    }
+}

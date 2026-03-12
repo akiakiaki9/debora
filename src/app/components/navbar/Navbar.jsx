@@ -1,9 +1,21 @@
+// Navbar.jsx - без изменений, тот же самый
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import {
+    FiSearch,
+    FiShoppingCart,
+    FiMenu,
+    FiX,
+    FiPhone,
+    FiClock,
+    FiAward,
+    FiChevronDown
+} from 'react-icons/fi';
 import { products } from '@/app/utils/data';
+import { useCart } from '@/app/context/CartContext';
 import './navbar.css';
 
 const Navbar = () => {
@@ -12,7 +24,13 @@ const Navbar = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState(false);
+    const [dropdownTimeout, setDropdownTimeout] = useState(null);
+    const searchRef = useRef(null);
+    const dropdownRef = useRef(null);
+    const menuRef = useRef(null);
     const router = useRouter();
+    const { cartCount } = useCart();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -21,6 +39,40 @@ const Navbar = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Закрытие поиска при клике вне
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setShowResults(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    // Закрытие меню при ресайзе
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 992 && isOpen) {
+                setIsOpen(false);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [isOpen]);
+
+    // Блокировка скролла при открытом меню
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
 
     const categories = [
         { name: 'Унитазы', slug: 'unitaz' },
@@ -36,10 +88,10 @@ const Navbar = () => {
         if (searchQuery.length > 1) {
             const results = products.filter(product =>
                 product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                product.category.toLowerCase().includes(searchQuery.toLowerCase())
+                product.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                product.category?.toLowerCase().includes(searchQuery.toLowerCase())
             );
-            setSearchResults(results.slice(0, 5)); // Показываем только 5 результатов
+            setSearchResults(results.slice(0, 5));
             setShowResults(true);
         } else {
             setSearchResults([]);
@@ -52,6 +104,8 @@ const Navbar = () => {
         if (searchQuery.trim()) {
             router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
             setShowResults(false);
+            setSearchQuery('');
+            setIsOpen(false);
         }
     };
 
@@ -59,138 +113,200 @@ const Navbar = () => {
         router.push(`/product/${productId}`);
         setShowResults(false);
         setSearchQuery('');
+        setIsOpen(false);
+    };
+
+    const closeMenu = () => {
+        setIsOpen(false);
+        setActiveDropdown(false);
+    };
+
+    // Обработчики для дропдауна с задержкой
+    const handleMouseEnter = () => {
+        if (dropdownTimeout) {
+            clearTimeout(dropdownTimeout);
+            setDropdownTimeout(null);
+        }
+        setActiveDropdown(true);
+    };
+
+    const handleMouseLeave = () => {
+        const timeout = setTimeout(() => {
+            setActiveDropdown(false);
+        }, 300);
+        setDropdownTimeout(timeout);
     };
 
     return (
         <>
-            <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-                {/* Верхний бар с контактами */}
-                <div className="navbar-top">
-                    <div className="container">
-                        <div className="navbar-top-inner">
-                            <div className="contact">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8 10a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92z"
-                                        stroke="currentColor" strokeWidth="1.5" />
-                                </svg>
-                                <span>+998 99 878-39-49</span>
-                            </div>
-                            <div className="years">
-                                <span>17 лет на рынке Ташкента</span>
-                            </div>
-                            <div className="social">
-                                <span>Премиум сантехника</span>
-                            </div>
+            {/* Верхний бар - скрыт на мобильных устройствах */}
+            <div className="navbar-top">
+                <div className="container">
+                    <div className="navbar-top-inner">
+                        <div className="contact-info">
+                            <FiPhone className="icon" />
+                            <a href="tel:+998998783949" className="phone-link">
+                                +998 99 878-39-49
+                            </a>
+                        </div>
+                        <div className="years-badge">
+                            <FiClock className="icon" />
+                            <span>17 лет на рынке Ташкента</span>
+                        </div>
+                        <div className="premium-badge">
+                            <FiAward className="icon" />
+                            <span>Премиум сантехника</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                {/* Основной навбар */}
-                <div className="navbar-main">
-                    <div className="container">
-                        <div className="navbar-main-inner">
-                            {/* Логотип - круглый */}
-                            <Link href="/" className="logo">
-                                <div className="logo-image">
-                                    <Image
-                                        src="/images/logo.png"
-                                        alt="Debora Ceramica"
-                                        width={60}
-                                        height={60}
-                                        priority
-                                        className="rounded-logo"
-                                    />
+            {/* Основной навбар - фиксированный */}
+            <nav className={`navbar-main ${scrolled ? 'scrolled' : ''}`}>
+                <div className="container">
+                    <div className="navbar-main-inner">
+                        {/* Логотип */}
+                        <Link href="/" className="logo" onClick={closeMenu}>
+                            <div className="logo-wrapper">
+                                <Image
+                                    src="/images/logo.png"
+                                    alt="Debora Ceramica"
+                                    width={60}
+                                    height={60}
+                                    priority
+                                    className="logo-image"
+                                />
+                            </div>
+                            <span className="logo-text">Debora Ceramica</span>
+                        </Link>
+
+                        {/* Десктоп меню */}
+                        <ul className={`nav-menu ${isOpen ? 'active' : ''}`} ref={menuRef}>
+                            <li className="nav-item">
+                                <Link href="/" onClick={closeMenu}>
+                                    Главная
+                                </Link>
+                            </li>
+                            <li
+                                className={`nav-item dropdown ${activeDropdown ? 'active' : ''}`}
+                                onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
+                                ref={dropdownRef}
+                            >
+                                <span className="dropdown-trigger">
+                                    Каталог
+                                    <FiChevronDown className="dropdown-arrow" />
+                                </span>
+                                <div className={`dropdown-menu ${activeDropdown ? 'show' : ''}`}>
+                                    {categories.map(cat => (
+                                        <Link
+                                            key={cat.slug}
+                                            href={`/catalog/${cat.slug}`}
+                                            className="dropdown-item"
+                                            onClick={closeMenu}
+                                        >
+                                            {cat.name}
+                                        </Link>
+                                    ))}
                                 </div>
-                            </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href="/about" onClick={closeMenu}>
+                                    О нас
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href="/contacts" onClick={closeMenu}>
+                                    Контакты
+                                </Link>
+                            </li>
 
-                            {/* Десктоп меню */}
-                            <ul className={`nav-menu ${isOpen ? 'active' : ''}`}>
-                                <li><Link href="/">Главная</Link></li>
-                                <li className="dropdown">
-                                    <span>Каталог</span>
-                                    <div className="dropdown-menu">
-                                        {categories.map(cat => (
-                                            <Link key={cat.slug} href={`/catalog/${cat.slug}`}>
-                                                {cat.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </li>
-                                <li><Link href="/collections">Коллекции</Link></li>
-                                <li><Link href="/about">О нас</Link></li>
-                                <li><Link href="/contacts">Контакты</Link></li>
-                            </ul>
+                            {/* Мобильный поиск */}
+                            <li className="nav-item mobile-search">
+                                <form onSubmit={handleSearch} className="mobile-search-form">
+                                    <input
+                                        type="text"
+                                        placeholder="Поиск товаров..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="mobile-search-input"
+                                    />
+                                    <button type="submit" className="mobile-search-button">
+                                        <FiSearch />
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
 
-                            {/* Поиск и корзина */}
-                            <div className="nav-actions">
-                                <div className="search-container">
-                                    <form onSubmit={handleSearch} className="search">
-                                        <input
-                                            type="text"
-                                            placeholder="Поиск..."
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                            onFocus={() => searchResults.length > 0 && setShowResults(true)}
-                                        />
-                                        <button type="submit" className="search-submit">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                                <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" />
-                                                <path d="M21 21L17 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                            </svg>
-                                        </button>
-                                    </form>
+                        {/* Поиск и корзина */}
+                        <div className="nav-actions">
+                            <div className="search-wrapper" ref={searchRef}>
+                                <form onSubmit={handleSearch} className="search-form">
+                                    <input
+                                        type="text"
+                                        placeholder="Поиск..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        onFocus={() => searchResults.length > 0 && setShowResults(true)}
+                                        className="search-input"
+                                    />
+                                    <button type="submit" className="search-button" aria-label="Поиск">
+                                        <FiSearch />
+                                    </button>
+                                </form>
 
-                                    {/* Результаты поиска */}
-                                    {showResults && searchResults.length > 0 && (
-                                        <div className="search-results">
-                                            {searchResults.map(product => (
-                                                <div
-                                                    key={product.id}
-                                                    className="search-result-item"
-                                                    onClick={() => handleProductClick(product.id)}
-                                                >
-                                                    <div className="result-image">
-                                                        <img src={product.image} alt={product.name} />
-                                                    </div>
-                                                    <div className="result-info">
-                                                        <div className="result-name">{product.name}</div>
-                                                        <div className="result-price">{product.price.toLocaleString()} сум</div>
+                                {/* Результаты поиска */}
+                                {showResults && searchResults.length > 0 && (
+                                    <div className="search-results">
+                                        {searchResults.map(product => (
+                                            <div
+                                                key={product.id}
+                                                className="search-result-item"
+                                                onClick={() => handleProductClick(product.id)}
+                                            >
+                                                <div className="result-image">
+                                                    <img src={product.image} alt={product.name} loading="lazy" />
+                                                </div>
+                                                <div className="result-info">
+                                                    <div className="result-name">{product.name}</div>
+                                                    <div className="result-price">
+                                                        {product.price.toLocaleString()} сум
                                                     </div>
                                                 </div>
-                                            ))}
-                                            <div className="search-results-footer">
-                                                <button onClick={handleSearch} className="view-all">
-                                                    Посмотреть все результаты
-                                                </button>
                                             </div>
+                                        ))}
+                                        <div className="search-results-footer">
+                                            <button onClick={handleSearch} className="view-all-button">
+                                                Все результаты ({searchResults.length})
+                                            </button>
                                         </div>
-                                    )}
-                                </div>
-
-                                <button className="cart">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                        <circle cx="9" cy="21" r="2" fill="currentColor" />
-                                        <circle cx="20" cy="21" r="2" fill="currentColor" />
-                                        <path d="M1 1H5L7.5 15H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                    </svg>
-                                    <span className="cart-count">3</span>
-                                </button>
-
-                                {/* Бургер меню */}
-                                <button
-                                    className={`burger ${isOpen ? 'active' : ''}`}
-                                    onClick={() => setIsOpen(!isOpen)}
-                                >
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </button>
+                                    </div>
+                                )}
                             </div>
+
+                            <Link href="/cart" className={`cart-button ${isOpen ? 'mobile-hidden' : ''}`} aria-label="Корзина">
+                                <FiShoppingCart />
+                                {cartCount > 0 && (
+                                    <span className="cart-badge">{cartCount}</span>
+                                )}
+                            </Link>
+
+                            {/* Бургер меню */}
+                            <button
+                                className={`burger-button ${isOpen ? 'active' : ''}`}
+                                onClick={() => setIsOpen(!isOpen)}
+                                aria-label="Меню"
+                                aria-expanded={isOpen}
+                            >
+                                {isOpen ? <FiX /> : <FiMenu />}
+                            </button>
                         </div>
                     </div>
                 </div>
             </nav>
-            <div className="navbar-offset"></div>
+
+            {/* Оффсет для фиксированного навбара */}
+            <div className="navbar-offset" />
         </>
     );
 };

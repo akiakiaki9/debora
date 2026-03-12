@@ -1,0 +1,871 @@
+/* contacts.css */
+
+.contacts-page {
+    background: var(--cream);
+    overflow-x: hidden;
+}
+
+/* Hero секция */
+.contacts-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    padding: 100px 0;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(197, 165, 114, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    border: 1px solid rgba(197, 165, 114, 0.3);
+}
+
+.contacts-title {
+    font-size: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 20px;
+    color: var(--white);
+    line-height: 1.1;
+    animation: fadeInUp 0.8s ease;
+}
+
+.contacts-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+    animation: fadeInUp 0.8s ease 0.1s both;
+}
+
+.hero-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.decoration-circle {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.05;
+}
+
+.decoration-circle:nth-child(1) {
+    top: -150px;
+    right: -150px;
+    animation: float 20s ease-in-out infinite;
+}
+
+.decoration-circle:nth-child(2) {
+    bottom: -150px;
+    left: -150px;
+    animation: float 15s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+}
+
+/* Контактная информация */
+.contacts-info {
+    padding: 80px 0 60px;
+    position: relative;
+    z-index: 3;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: -60px;
+}
+
+.info-card {
+    background: var(--white);
+    padding: 40px 30px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--gold);
+}
+
+.info-card:hover::before {
+    transform: translateX(0);
+}
+
+.info-icon-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.info-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--cream);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2.2rem;
+    color: var(--gold);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+.info-icon::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover .info-icon {
+    background: var(--gold);
+    color: var(--white);
+    transform: scale(1.1) rotateY(180deg);
+}
+
+.info-card:hover .info-icon::after {
+    border-color: var(--gold);
+    transform: scale(1.2);
+}
+
+.info-title {
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    display: inline-block;
+}
+
+.info-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+}
+
+.info-card:hover .info-title::after {
+    width: 50px;
+}
+
+.info-values {
+    margin-bottom: 15px;
+}
+
+.info-value {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 4px 0;
+}
+
+.info-value:hover {
+    color: var(--gold);
+    transform: translateX(5px);
+}
+
+.info-note {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--border);
+}
+
+.info-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold);
+    text-decoration: none;
+    margin-top: 15px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    background: var(--cream);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.info-link:hover {
+    gap: 12px;
+    background: var(--gold);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+/* Социальные сети */
+.contacts-social {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+.social-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--navy);
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    animation: fadeInUp 0.6s ease;
+}
+
+.social-subtitle {
+    text-align: center;
+    color: var(--gray);
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.social-card {
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.social-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-100%) rotate(45deg);
+    transition: transform 0.6s ease;
+}
+
+.social-card:hover::before {
+    transform: translateX(100%) rotate(45deg);
+}
+
+.social-card.telegram {
+    background: linear-gradient(135deg, #27A6E5 0%, #1E8CC7 100%);
+}
+
+.social-card.instagram {
+    background: linear-gradient(135deg, #E4405F 0%, #D62E4E 100%);
+}
+
+.social-card.facebook {
+    background: linear-gradient(135deg, #4267B2 0%, #365899 100%);
+}
+
+.social-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon-wrapper {
+    font-size: 3rem;
+    transition: transform 0.3s ease;
+}
+
+.social-card:hover .social-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.social-info {
+    flex: 1;
+}
+
+.social-name {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.social-link {
+    display: block;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.social-arrow {
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.social-card:hover .social-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Карта и форма */
+.contacts-map-form {
+    padding: 60px 0;
+    background: var(--cream);
+}
+
+.map-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    background: var(--white);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+/* Карта */
+.map-wrapper {
+    padding: 40px;
+    position: relative;
+}
+
+.map-title {
+    font-size: 2rem;
+    color: var(--navy);
+    margin-bottom: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.map-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Форма */
+.form-wrapper {
+    padding: 40px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: var(--gold);
+    opacity: 0.1;
+    border-radius: 50%;
+}
+
+.form-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: var(--gold);
+    opacity: 0.1;
+    border-radius: 50%;
+}
+
+.form-content {
+    position: relative;
+    z-index: 2;
+}
+
+.form-title {
+    font-size: 2.2rem;
+    color: var(--white);
+    margin-bottom: 10px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.form-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.form-notification {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    animation: slideInDown 0.3s ease;
+}
+
+.form-notification.success {
+    background: rgba(39, 174, 96, 0.2);
+    border: 1px solid #27ae60;
+    color: #27ae60;
+}
+
+.form-notification svg {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact-form {
+    text-align: left;
+}
+
+.form-row {
+    margin-bottom: 20px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
+}
+
+.form-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    resize: vertical;
+    font-family: inherit;
+}
+
+.form-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
+}
+
+.form-textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn.loading {
+    opacity: 0.8;
+    cursor: wait;
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.form-privacy {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin-top: 20px;
+}
+
+.privacy-link {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.privacy-link:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+/* Дополнительная информация */
+.contacts-extra {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+.extra-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.extra-item {
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    background: var(--cream);
+    transition: all 0.3s ease;
+}
+
+.extra-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.extra-item h3 {
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.extra-item p {
+    color: var(--gray);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.extra-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.extra-link:hover {
+    color: var(--navy);
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .info-grid {
+        gap: 20px;
+    }
+
+    .info-card {
+        padding: 30px 20px;
+    }
+
+    .extra-grid {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .contacts-title {
+        font-size: 3.5rem;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: -40px;
+    }
+
+    .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 600px;
+    }
+
+    .map-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .map-wrapper,
+    .form-wrapper {
+        padding: 30px;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+
+    .extra-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .contacts-hero {
+        padding: 60px 0;
+    }
+
+    .contacts-title {
+        font-size: 3rem;
+    }
+
+    .contacts-subtitle {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: -20px;
+    }
+
+    .social-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+
+    .social-card {
+        padding: 25px;
+    }
+
+    .extra-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .map-title {
+        font-size: 1.8rem;
+    }
+
+    .form-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacts-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-badge {
+        font-size: 0.8rem;
+        padding: 6px 15px;
+    }
+
+    .info-card {
+        padding: 25px;
+    }
+
+    .info-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .info-title {
+        font-size: 1.3rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+
+    .social-card {
+        padding: 20px;
+    }
+
+    .social-icon-wrapper {
+        font-size: 2.5rem;
+    }
+
+    .social-name {
+        font-size: 1.2rem;
+    }
+
+    .map-wrapper,
+    .form-wrapper {
+        padding: 20px;
+    }
+
+    .map-container {
+        height: 250px;
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+    }
+
+    .extra-item {
+        padding: 20px;
+    }
+
+    .extra-item h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Оптимизация производительности */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Улучшение для тач-устройств */
+@media (hover: none) {
+    .info-card:hover {
+        transform: none;
+    }
+
+    .social-card:hover {
+        transform: none;
+    }
+
+    .extra-item:hover {
+        transform: none;
+    }
+}

@@ -114,3 +114,30 @@ h6 {
   height: 2px;
   background: var(--gold);
 }
+
+/* Уведомление о добавлении в корзину */
+.cart-notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--gold);
+  color: var(--white);
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  animation: slideIn 0.3s ease;
+  font-weight: 500;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
