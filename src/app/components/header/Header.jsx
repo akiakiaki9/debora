@@ -16,7 +16,6 @@ const Header = () => {
             title: 'Чугунные ванны',
             subtitle: 'Премиум качество',
             description: 'Итальянские чугунные ванны с эмалевым покрытием. Ручная работа, 5 лет гарантии.',
-            price: 'от 2 450 000 сум',
             image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&auto=format',
             category: 'vanna',
             badge: 'Хит продаж'
@@ -26,7 +25,6 @@ const Header = () => {
             title: 'Унитазы Debora',
             subtitle: 'Подвесные и напольные',
             description: 'Японские системы смыва, микролифт, антибактериальное покрытие. Бесшумная работа.',
-            price: 'от 850 000 сум',
             image: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=1600&auto=format',
             category: 'unitaz',
             badge: 'Новинка'
@@ -36,7 +34,6 @@ const Header = () => {
             title: 'Смесители Grohe',
             subtitle: 'Германское качество',
             description: 'Однорычажные, термостаты, с душем. Керамический картридж, пожизненная гарантия.',
-            price: 'от 450 000 сум',
             image: 'https://images.unsplash.com/photo-1585123334904-845d60e97b29?w=1600&auto=format',
             category: 'smestitel',
             badge: 'Акция'
@@ -46,7 +43,6 @@ const Header = () => {
             title: 'Мебель для ванной',
             subtitle: '3-створчатые шкафы',
             description: 'Влагостойкие материалы, зеркала с LED подсветкой, системы хранения. Итальянский дизайн.',
-            price: 'от 1 250 000 сум',
             image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format',
             category: 'play3',
             badge: 'Премиум'
@@ -139,7 +135,6 @@ const Header = () => {
                                     <span className="slide-subtitle">{slide.subtitle}</span>
                                     <h1 className="slide-title">{slide.title}</h1>
                                     <p className="slide-description">{slide.description}</p>
-                                    <div className="slide-price">{slide.price}</div>
                                     <div className="slide-actions">
                                         <Link
                                             href={`/category/${slide.category}`}

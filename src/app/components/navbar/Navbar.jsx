@@ -12,7 +12,6 @@ import {
     FiClock,
     FiAward,
     FiChevronDown,
-    FiChevronRight
 } from 'react-icons/fi';
 import { products } from '@/app/utils/data';
 import { useCart } from '@/app/context/CartContext';

@@ -48,7 +48,7 @@ export const metadata = {
   },
   openGraph: {
     title: "Debora Ceramica | Премиальная сантехника в Ташкенте",
-    description: "Премиальная сантехника в Ташкенте с 2006 года. Чугунные ванны, унитазы, смесители Grohe, мебель для ванной.",
+    description: "Премиальная сантехника в Ташкенте с 2006 года. Чугунные ванны, унитазы, смесители, мебель для ванной.",
     url: "https://deboraceramica.uz",
     siteName: "Debora Ceramica",
     images: [
@@ -65,7 +65,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Debora Ceramica | Премиальная сантехника в Ташкенте",
-    description: "Премиальная сантехника в Ташкенте с 2006 года. Чугунные ванны, унитазы, смесители Grohe.",
+    description: "Премиальная сантехника в Ташкенте с 2006 года. Чугунные ванны, унитазы, смесители.",
     images: ["https://deboraceramica.uz/images/logo.png"],
   },
   robots: {
@@ -92,8 +92,8 @@ export const metadata = {
   },
   manifest: '/manifest.json',
   verification: {
-    google: 'google-site-verification-code', // Замените на реальный код
-    yandex: 'yandex-verification-code', // Замените на реальный код
+    google: 'google-site-verification-code',
+    yandex: 'yandex-verification-code',
   },
   category: 'sanitary ware',
 };
@@ -120,31 +120,14 @@ export default function RootLayout({ children }) {
               "image": "https://deboraceramica.uz/images/logo.png",
               "logo": "https://deboraceramica.uz/images/logo.png",
               "url": "https://deboraceramica.uz",
-              "telephone": "+998941471116",
               "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "ул. Амира Темура, 123",
                 "addressLocality": "Ташкент",
                 "addressCountry": "UZ"
               },
-              "openingHoursSpecification": [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                  "opens": "09:00",
-                  "closes": "18:00"
-                },
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": "Sunday",
-                  "opens": "10:00",
-                  "closes": "18:00"
-                }
-              ],
               "sameAs": [
-                "https://t.me/deboraceramica",
-                "https://instagram.com/deboraceramica",
-                "https://facebook.com/deboraceramica"
+                "https://t.me/debora_ceramica",
+                "https://instagram.com/debora_ceramica",
+                "https://www.youtube.com/@debora_ceramica"
               ]
             })
           }}
