@@ -1534,6 +1534,87 @@ export const products = [
             }
         }
     },
+    // Ванна
+    {
+        id: 92,
+        name: 'Ванна Debora',
+        category: 'vanna',
+        image: '/images/data/vanna/1.png',
+        inStock: true,
+        specs: {
+            model: "MF5015-1800D",
+            type: "DIAMOND",
+            size: "1500x750 mm",
+            additionalOptions: [
+                "Anti-slip coating",
+                "Chrome handles"
+            ]
+        }
+    },
+    {
+        id: 93,
+        name: 'Ванна Debora',
+        category: 'vanna',
+        image: '/images/data/vanna/2.png',
+        inStock: true,
+        specs: {
+            model: "MF5015-1800D",
+            type: "DONNI",
+            sizes: {
+                size_1: "1400x750mm",
+                size_2: "1500x750mm",
+                size_3: "1600x750mm",
+                size_4: "1700x750mm",
+                size_5: "1700x800mm",
+                size_6: "1800x800mm",
+            },
+            additionalOptions: [
+                "Anti-slip coating",
+                "Chrome handles"
+            ]
+        }
+    },
+    {
+        id: 94,
+        name: 'Ванна Debora',
+        category: 'vanna',
+        image: '/images/data/vanna/2.png',
+        inStock: true,
+        specs: {
+            model: "MF5015-1800D",
+            type: "COMFORT",
+            sizes: {
+                size_1: "1500x700mm",
+                size_2: "1700x700mm",
+                size_3: "1700x750mm",
+            },
+            additionalOptions: [
+                "Anti-slip coating"
+            ]
+        }
+    },
+    {
+        id: 95,
+        name: 'Ванна Debora',
+        category: 'vanna',
+        image: '/images/data/vanna/2.png',
+        inStock: true,
+        specs: {
+            model: "MF5015-1800D",
+            type: "ELITE",
+            sizes: {
+                size_1: "1600x700mm",
+                size_2: "1700x700mm",
+                size_3: "1700x750mm",
+                size_4: "1700x800mm",
+                size_5: "1800x750mm",
+                size_6: "1800x800mm",
+            },
+            additionalOptions: [
+                "Anti-slip coating"
+            ]
+        }
+    },
 ];
 
 export const featuredProducts = products.filter(product => product.featured);

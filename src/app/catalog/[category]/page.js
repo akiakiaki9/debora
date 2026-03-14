@@ -77,7 +77,7 @@ const GridProductCard = memo(({ product }) => {
     // Получаем основные характеристики для отображения
     const mainSpecs = useMemo(() => {
         if (!product.specs) return [];
-        
+
         // Приоритетные поля для каждой категории
         const priorityFields = {
             'unitaz': ['size', 'model', 'flushingSystem'],
@@ -95,12 +95,12 @@ const GridProductCard = memo(({ product }) => {
 
         const category = product.category;
         const fields = priorityFields[category] || ['size', 'model'];
-        
+
         return fields
             .map(field => {
                 const value = product.specs[field];
                 if (!value) return null;
-                
+
                 // Форматируем значение для отображения
                 if (typeof value === 'object') {
                     if (field === 'sizes') {
@@ -168,7 +168,7 @@ const ListProductCard = memo(({ product }) => {
     // Форматируем все характеристики для отображения в списке
     const allSpecs = useMemo(() => {
         if (!product.specs) return [];
-        
+
         return Object.entries(product.specs)
             .map(([key, value]) => {
                 if (typeof value === 'object') {
@@ -245,7 +245,7 @@ export default function CategoryPage() {
     const categoryInfo = useMemo(() => {
         const found = categories.find(c => c.slug === category);
         if (!found) return null;
-        
+
         return {
             ...found,
             icon: categoryIcons[found.slug] || categoryIcons.default,
@@ -262,7 +262,7 @@ export default function CategoryPage() {
     // Извлекаем все уникальные значения характеристик для фильтрации
     const filterOptions = useMemo(() => {
         const options = {};
-        
+
         categoryProducts.forEach(product => {
             if (product.specs) {
                 Object.entries(product.specs).forEach(([key, value]) => {
@@ -290,25 +290,25 @@ export default function CategoryPage() {
         Object.keys(options).forEach(key => {
             result[key] = Array.from(options[key]).sort();
         });
-        
+
         return result;
     }, [categoryProducts]);
 
     // Применяем фильтры
     const filteredProducts = useMemo(() => {
         setIsLoading(true);
-        
+
         const result = categoryProducts.filter(product => {
             // Если фильтры пустые - показываем все
             if (Object.keys(filters).length === 0) return true;
-            
+
             // Проверяем каждый активный фильтр
             return Object.entries(filters).every(([filterKey, filterValues]) => {
                 if (!filterValues || filterValues.length === 0) return true;
-                
+
                 // Разбираем ключ фильтра (может быть составным для вложенных объектов)
                 const keyParts = filterKey.split('_');
-                
+
                 if (keyParts.length === 2) {
                     // Вложенное свойство (например, sizes_mirror)
                     const [parentKey, childKey] = keyParts;
@@ -321,7 +321,7 @@ export default function CategoryPage() {
                 }
             });
         });
-        
+
         setTimeout(() => setIsLoading(false), 0);
         return result;
     }, [categoryProducts, filters]);
@@ -330,7 +330,7 @@ export default function CategoryPage() {
     const handleFilterChange = useCallback((filterKey, value, checked) => {
         setFilters(prev => {
             const newFilters = { ...prev };
-            
+
             if (checked) {
                 // Добавляем значение
                 if (!newFilters[filterKey]) {
@@ -347,7 +347,7 @@ export default function CategoryPage() {
                     }
                 }
             }
-            
+
             return newFilters;
         });
     }, []);
@@ -397,7 +397,7 @@ export default function CategoryPage() {
             'sizes_cabinet': 'Размер тумбы',
             'sizes_basin': 'Размер раковины'
         };
-        
+
         return labels[key] || key;
     }, []);
 

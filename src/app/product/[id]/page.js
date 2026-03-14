@@ -9,7 +9,11 @@ import {
     FiTruck,
     FiCreditCard,
     FiShield,
-    FiCheckCircle
+    FiCheckCircle,
+    FiChevronRight,
+    FiBox,
+    FiCpu,
+    FiPackage
 } from 'react-icons/fi';
 import './product.css';
 
@@ -20,6 +24,7 @@ export default function ProductPage() {
     const [quantity, setQuantity] = useState(1);
     const [activeImage, setActiveImage] = useState(0);
     const [activeTab, setActiveTab] = useState('specs');
+    const [selectedOptions, setSelectedOptions] = useState({});
 
     // Получаем id из params
     useEffect(() => {
@@ -29,54 +34,181 @@ export default function ProductPage() {
         }
     }, [params]);
 
-    // Форматирование характеристик для отображения
-    const formattedSpecs = useMemo(() => {
-        if (!product?.specs) return [];
+    // Функция для рекурсивного форматирования любого типа данных
+    const formatValue = (value) => {
+        if (value === null || value === undefined) return '—';
 
-        const formatValue = (key, value) => {
-            if (typeof value === 'object') {
-                if (key === 'sizes') {
-                    return Object.entries(value)
-                        .map(([k, v]) => `${k}: ${v}`)
-                        .join(' • ');
-                }
-                return JSON.stringify(value);
+        if (typeof value === 'object') {
+            if (Array.isArray(value)) {
+                return value.join(', ');
             }
-            return value;
-        };
+            // Для объектов показываем вложенные свойства
+            return Object.entries(value)
+                .map(([k, v]) => {
+                    const formattedKey = formatLabel(k);
+                    const formattedValue = formatValue(v);
+                    return `${formattedKey}: ${formattedValue}`;
+                })
+                .join(' • ');
+        }
 
-        const specLabels = {
+        return String(value);
+    };
+
+    // Форматирование названий полей
+    const formatLabel = (key) => {
+        const labels = {
+            // Основные
+            'id': 'ID',
+            'name': 'Название',
+            'category': 'Категория',
+            'image': 'Изображение',
+            'inStock': 'Наличие',
+            'specs': 'Характеристики',
+
+            // Размеры
             'size': 'Размер',
-            'model': 'Модель',
-            'material': 'Материал',
-            'color': 'Цвет',
-            'type': 'Тип',
-            'production': 'Производство',
-            'quality': 'Качество',
-            'body': 'Корпус',
-            'coating': 'Покрытие',
-            'flushingSystem': 'Система смыва',
-            'installation': 'Установка',
-            'mounting': 'Монтаж',
-            'mechanism': 'Механизм',
-            'cartridge': 'Картридж',
-            'pTrap': 'Выпуск (P-ловушка)',
-            'sTrap': 'Выпуск (S-ловушка)',
+            'sizes': 'Размеры',
             'width': 'Ширина',
-            'sinkMaterial': 'Материал раковины',
-            'furnitureMaterial': 'Материал мебели',
+            'height': 'Высота',
+            'depth': 'Глубина',
+            'length': 'Длина',
+            'pTrap': 'Выпуск (P)',
+            'sTrap': 'Выпуск (S)',
             'spoutHeight': 'Высота излива',
             'projection': 'Вылет',
-            'functions': 'Функции',
             'centreDistance': 'Межосевое расстояние',
-            'showerHoseLength': 'Длина шланга'
+            'showerHoseLength': 'Длина шланга',
+
+            // Материалы
+            'material': 'Материал',
+            'sinkMaterial': 'Материал раковины',
+            'furnitureMaterial': 'Материал мебели',
+            'body': 'Корпус',
+            'coating': 'Покрытие',
+
+            // Модели и производство
+            'model': 'Модель',
+            'type': 'Тип',
+            'production': 'Производство',
+            'furnitureProduction': 'Производство мебели',
+            'quality': 'Качество',
+            'brand': 'Бренд',
+
+            // Цвета
+            'color': 'Цвет',
+            'colors': 'Цвета',
+
+            // Системы
+            'flushingSystem': 'Система смыва',
+            'mechanism': 'Механизм',
+            'cartridge': 'Картридж',
+            'functions': 'Функции',
+            'installation': 'Установка',
+            'mounting': 'Монтаж',
+            'drain': 'Слив',
+            'waterIntake': 'Забор воды',
+            'tank': 'Бачок',
+            'set': 'Комплектация',
+
+            // Дополнительно
+            'additionalOptions': 'Дополнительные опции',
+            'options': 'Опции',
+            'features': 'Особенности',
+            'warranty': 'Гарантия',
+            'country': 'Страна',
+
+            // Для вложенных объектов
+            'mirror': 'Зеркало',
+            'cabinet': 'Тумба',
+            'basin': 'Раковина',
+            'size_1': 'Размер 1',
+            'size_2': 'Размер 2',
+            'size_3': 'Размер 3',
+            'size_4': 'Размер 4',
+            'size_5': 'Размер 5',
+            'size_6': 'Размер 6',
+            'color_1': 'Цвет 1',
+            'color_2': 'Цвет 2',
+            'color_3': 'Цвет 3',
+            'color_4': 'Цвет 4',
         };
 
-        return Object.entries(product.specs).map(([key, value]) => ({
-            label: specLabels[key] || key,
-            value: formatValue(key, value)
-        }));
+        return labels[key] || key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ');
+    };
+
+    // Получаем все характеристики товара (рекурсивно)
+    const getAllSpecs = useMemo(() => {
+        if (!product?.specs) return [];
+
+        const specs = [];
+
+        const extractSpecs = (obj, prefix = '') => {
+            if (!obj || typeof obj !== 'object') return;
+
+            Object.entries(obj).forEach(([key, value]) => {
+                const fullKey = prefix ? `${prefix}_${key}` : key;
+
+                if (value && typeof value === 'object' && !Array.isArray(value)) {
+                    // Если это объект с размерами или цветами, показываем как группу
+                    if (key === 'sizes' || key === 'colors' || key === 'additionalOptions') {
+                        specs.push({
+                            key: fullKey,
+                            label: formatLabel(key),
+                            value: value,
+                            type: 'group'
+                        });
+                    } else {
+                        // Рекурсивно обрабатываем вложенные объекты
+                        extractSpecs(value, fullKey);
+                    }
+                } else if (Array.isArray(value)) {
+                    specs.push({
+                        key: fullKey,
+                        label: formatLabel(key),
+                        value: value,
+                        type: 'array'
+                    });
+                } else {
+                    specs.push({
+                        key: fullKey,
+                        label: formatLabel(key),
+                        value: value,
+                        type: 'simple'
+                    });
+                }
+            });
+        };
+
+        extractSpecs(product.specs);
+        return specs;
     }, [product]);
+
+    // Основные характеристики для выделения
+    const mainSpecs = useMemo(() => {
+        if (!product?.specs) return [];
+
+        // Приоритетные поля для каждой категории
+        const priorityFields = {
+            'unitaz': ['model', 'size', 'material', 'flushingSystem'],
+            'bide': ['model', 'size', 'material', 'installation'],
+            'chasha': ['model', 'size', 'type', 'material'],
+            'rakovina': ['model', 'size', 'material', 'type'],
+            'pisuar': ['model', 'size', 'material', 'mechanism'],
+            'chashogen': ['model', 'size', 'color'],
+            'installation': ['model', 'size', 'material', 'type'],
+            'raktumba': ['width', 'sinkMaterial', 'furnitureMaterial'],
+            'vanna': ['model', 'type', 'size', 'material'],
+            'smestitel': ['model', 'type', 'cartridge', 'spoutHeight'],
+            'oyna': ['model', 'sizes'],
+        };
+
+        const fields = priorityFields[product.category] || ['model', 'size', 'material'];
+
+        return getAllSpecs
+            .filter(spec => fields.includes(spec.key))
+            .slice(0, 4);
+    }, [getAllSpecs, product]);
 
     // Получаем название категории
     const categoryName = useMemo(() => {
@@ -84,6 +216,45 @@ export default function ProductPage() {
         const category = categories.find(c => c.slug === product.category);
         return category?.name || product.category;
     }, [product]);
+
+    // Обработчик выбора опций
+    const handleOptionSelect = (optionKey, value) => {
+        setSelectedOptions(prev => ({
+            ...prev,
+            [optionKey]: value
+        }));
+    };
+
+    // Рендер значения в зависимости от типа
+    const renderValue = (value, type = 'simple') => {
+        if (type === 'array') {
+            return (
+                <div className="spec-array">
+                    {value.map((item, idx) => (
+                        <span key={idx} className="spec-array-item">
+                            <FiCheckCircle className="spec-array-icon" />
+                            {item}
+                        </span>
+                    ))}
+                </div>
+            );
+        }
+
+        if (type === 'group') {
+            return (
+                <div className="spec-group">
+                    {Object.entries(value).map(([k, v]) => (
+                        <div key={k} className="spec-group-item">
+                            <span className="spec-group-label">{formatLabel(k)}:</span>
+                            <span className="spec-group-value">{formatValue(v)}</span>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        return <span className="spec-value-text">{formatValue(value)}</span>;
+    };
 
     if (!product) {
         return (
@@ -117,13 +288,13 @@ export default function ProductPage() {
                     {/* Хлебные крошки */}
                     <div className="breadcrumb">
                         <Link href="/">Главная</Link>
-                        <span>/</span>
+                        <FiChevronRight className="breadcrumb-icon" />
                         <Link href="/catalog">Каталог</Link>
-                        <span>/</span>
+                        <FiChevronRight className="breadcrumb-icon" />
                         <Link href={`/catalog/${product.category}`}>
                             {categoryName}
                         </Link>
-                        <span>/</span>
+                        <FiChevronRight className="breadcrumb-icon" />
                         <span>{product.name}</span>
                     </div>
 
@@ -168,17 +339,40 @@ export default function ProductPage() {
                             </div>
 
                             {/* Основные характеристики */}
-                            <div className="product-highlights">
-                                {formattedSpecs.slice(0, 4).map((spec, index) => (
-                                    <div key={index} className="highlight-item">
-                                        <FiCheckCircle className="highlight-icon" />
-                                        <div className="highlight-content">
-                                            <span className="highlight-label">{spec.label}:</span>
-                                            <span className="highlight-value">{spec.value}</span>
+                            {mainSpecs.length > 0 && (
+                                <div className="product-highlights">
+                                    {mainSpecs.map((spec, index) => (
+                                        <div key={index} className="highlight-item">
+                                            <FiCheckCircle className="highlight-icon" />
+                                            <div className="highlight-content">
+                                                <span className="highlight-label">{spec.label}:</span>
+                                                <span className="highlight-value">
+                                                    {formatValue(spec.value)}
+                                                </span>
+                                            </div>
                                         </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Дополнительные опции (для выбора) */}
+                            {product.specs?.additionalOptions && (
+                                <div className="product-options">
+                                    <h3 className="options-title">Дополнительные опции</h3>
+                                    <div className="options-grid">
+                                        {product.specs.additionalOptions.map((option, index) => (
+                                            <label key={index} className="option-label">
+                                                <input
+                                                    type="checkbox"
+                                                    className="option-checkbox"
+                                                    onChange={(e) => handleOptionSelect(`option_${index}`, e.target.checked)}
+                                                />
+                                                <span className="option-text">{option}</span>
+                                            </label>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            )}
 
                             {/* Табы с подробной информацией */}
                             <div className="product-tabs">
@@ -187,29 +381,37 @@ export default function ProductPage() {
                                         className={`tab-btn ${activeTab === 'specs' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('specs')}
                                     >
+                                        <FiPackage className="tab-icon" />
                                         Характеристики
                                     </button>
                                     <button
                                         className={`tab-btn ${activeTab === 'description' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('description')}
                                     >
+                                        <FiBox className="tab-icon" />
                                         Описание
                                     </button>
                                     <button
                                         className={`tab-btn ${activeTab === 'delivery' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('delivery')}
                                     >
+                                        <FiTruck className="tab-icon" />
                                         Доставка
                                     </button>
                                 </div>
 
                                 <div className="tab-content">
                                     {activeTab === 'specs' && (
-                                        <div className="specs-grid">
-                                            {formattedSpecs.map((spec, index) => (
-                                                <div key={index} className="spec-row">
-                                                    <span className="spec-label">{spec.label}</span>
-                                                    <span className="spec-value">{spec.value}</span>
+                                        <div className="specs-container">
+                                            {getAllSpecs.map((spec, index) => (
+                                                <div key={index} className="spec-block">
+                                                    <div className="spec-block-label">
+                                                        <FiCpu className="spec-block-icon" />
+                                                        {spec.label}
+                                                    </div>
+                                                    <div className="spec-block-value">
+                                                        {renderValue(spec.value, spec.type)}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
@@ -217,14 +419,27 @@ export default function ProductPage() {
 
                                     {activeTab === 'description' && (
                                         <div className="description-content">
-                                            <p>{product.description || 'Описание отсутствует'}</p>
-                                            <ul className="features-list">
-                                                <li>✓ Премиум качество материалов</li>
-                                                <li>✓ Итальянский дизайн</li>
-                                                <li>✓ 5 лет гарантии</li>
-                                                <li>✓ Бесплатная доставка по Ташкенту</li>
-                                                <li>✓ Профессиональная установка</li>
-                                            </ul>
+                                            <p className="description-text">
+                                                {product.description || 'Описание отсутствует'}
+                                            </p>
+                                            <div className="features-grid">
+                                                <div className="feature-card">
+                                                    <FiCheckCircle className="feature-icon" />
+                                                    <span>Премиум качество</span>
+                                                </div>
+                                                <div className="feature-card">
+                                                    <FiCheckCircle className="feature-icon" />
+                                                    <span>Итальянский дизайн</span>
+                                                </div>
+                                                <div className="feature-card">
+                                                    <FiCheckCircle className="feature-icon" />
+                                                    <span>5 лет гарантии</span>
+                                                </div>
+                                                <div className="feature-card">
+                                                    <FiCheckCircle className="feature-icon" />
+                                                    <span>Бесплатная доставка</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
 
@@ -297,14 +512,16 @@ export default function ProductPage() {
                                                 <span className="related-badge">Под заказ</span>
                                             )}
                                         </div>
-                                        <h4>{item.name}</h4>
-                                        <div className="related-specs">
-                                            {item.specs?.model && (
-                                                <span className="related-spec">Модель: {item.specs.model}</span>
-                                            )}
-                                            {item.specs?.size && (
-                                                <span className="related-spec">{item.specs.size}</span>
-                                            )}
+                                        <div className="related-info">
+                                            <h4>{item.name}</h4>
+                                            <div className="related-specs">
+                                                {item.specs?.model && (
+                                                    <span className="related-spec">Модель: {item.specs.model}</span>
+                                                )}
+                                                {item.specs?.size && (
+                                                    <span className="related-spec">{item.specs.size}</span>
+                                                )}
+                                            </div>
                                         </div>
                                     </Link>
                                 ))}
