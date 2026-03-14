@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://deboraceramica.uz/sitemap.xml

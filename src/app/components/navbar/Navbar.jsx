@@ -241,11 +241,6 @@ const Navbar = () => {
                                 </div>
                             </li>
                             <li className="nav-item">
-                                <Link href="/about" onClick={closeMenu}>
-                                    О нас
-                                </Link>
-                            </li>
-                            <li className="nav-item">
                                 <Link href="/contacts" onClick={closeMenu}>
                                     Контакты
                                 </Link>
