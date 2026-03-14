@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,7 @@ import {
     FiAward,
     FiChevronDown,
 } from 'react-icons/fi';
-import { products } from '@/app/utils/data';
+import { products, categories } from '@/app/utils/data';
 import { useCart } from '@/app/context/CartContext';
 import './navbar.css';
 
@@ -88,14 +88,15 @@ const Navbar = () => {
         };
     }, [isOpen, showPhonesModal]);
 
-    const categories = [
-        { name: 'Унитазы', slug: 'unitaz' },
-        { name: 'Ванны', slug: 'vanna' },
-        { name: 'Смесители', slug: 'smestitel' },
-        { name: 'Аксессуары', slug: 'akksesuar' },
-        { name: 'Зеркала', slug: 'oyna' },
-        { name: 'Шкафы', slug: 'play3' },
-    ];
+    // Используем категории из data.js
+    const categoriesList = useMemo(() => {
+        // Если в data.js уже есть slug и name, используем как есть
+        // Если структура другая, делаем маппинг
+        return categories.map(cat => ({
+            name: cat.name,
+            slug: cat.slug
+        }));
+    }, []);
 
     const phones = [
         { name: 'Абу Сахий', number: '+998941471116', formatted: '+998 94 147-11-16' },
@@ -222,12 +223,12 @@ const Navbar = () => {
                                 onMouseLeave={handleMouseLeave(setActiveDropdown, setDropdownTimeout)}
                                 ref={dropdownRef}
                             >
-                                <span className="dropdown-trigger">
+                                <Link href="/catalog" className="dropdown-trigger" onClick={closeMenu}>
                                     Каталог
                                     <FiChevronDown className="dropdown-arrow" />
-                                </span>
+                                </Link>
                                 <div className={`dropdown-menu ${activeDropdown ? 'show' : ''}`}>
-                                    {categories.map(cat => (
+                                    {categoriesList.map(cat => (
                                         <Link
                                             key={cat.slug}
                                             href={`/catalog/${cat.slug}`}

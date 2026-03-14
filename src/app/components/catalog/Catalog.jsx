@@ -1,230 +1,105 @@
 'use client'
-import React, { useState, useMemo, useCallback, memo } from 'react';
+import React, { memo } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
     FiArrowRight,
-    FiHeart,
-    FiShoppingCart,
     FiBox,
     FiGrid,
 } from 'react-icons/fi';
 import { GiBathtub } from "react-icons/gi";
 import { GiMirrorMirror } from "react-icons/gi";
-import { FaShower } from 'react-icons/fa';
+import { FaShower, FaSink, FaWater } from 'react-icons/fa';
 import { PiToilet } from "react-icons/pi";
-import { products } from '@/app/utils/data';
-import { useCart } from '@/app/context/CartContext';
+import { MdKitchen, MdChair, MdShower } from 'react-icons/md';
+import { products, categories } from '@/app/utils/data';
 import './catalog.css';
 
-// Мемоизированная карточка товара для предотвращения лишних ререндеров
-const ProductCard = memo(({ product, categoryName, onAddToCart }) => {
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const [imageError, setImageError] = useState(false);
+// Маппинг иконок для категорий
+const categoryIcons = {
+    'unitaz': <PiToilet />,
+    'bide': <FaWater />,
+    'chasha': <FaSink />,
+    'rakovina': <FaSink />,
+    'pisuar': <MdShower />,
+    'chashogen': <MdKitchen />,
+    'installation': <FiBox />,
+    'raktumba': <MdChair />,
+    'vanna': <GiBathtub />,
+    'smestitel': <FaShower />,
+    'oyna': <GiMirrorMirror />,
+    'default': <FiGrid />
+};
+
+// URL изображений для категорий
+const categoryImages = {
+    'unitaz': 'https://ultrainterio.com/wp-content/uploads/2022/01/apartment-5346462_640.jpg',
+    'bide': 'https://www.oli-world.com/image_temp/960X600_618X535_crop_190522034156852.jpg',
+    'chasha': 'https://cdn.basicdecor.ru/files/media/app_pictures/dde/196290/w350/vannaya-zagorodnoe-bungalo-dvoih-foto-15.webp',
+    'rakovina': 'https://vitra.uz/cdn/shop/files/vitra-geo-7425b003-0012-03_1127x_f2f77ab3-1f94-4ea9-b49e-ae48c94ec419.jpg?v=1744611678&width=480',
+    'pisuar': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR6KkTWS1DRX29F3zfHOkBVcPm8ozwS12IKg&s',
+    'chashogen': 'https://www.jabrasanitary.com/image/cache/catalog/jabra/product/532/asian_squat_toilet-800x800.jpg',
+    'installation': 'https://shop.kerama-marazzi.ru/upload/iblock/307/017wrmzxyf7b86mk7uo4lpo13jc0ahg5/INST.PRO.WC.jpg',
+    'raktumba': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNfBAMdEhMibzbnfyiWEnoSAOjoMmVR5keng&s',
+    'vanna': 'https://usovi.ru/wp-content/uploads/2023/09/vanna_roca_belice_175x85_233550000_interier.jpg',
+    'smestitel': 'https://images.uzum.uz/d3lq2q3q345l7k05m8ng/original.jpg',
+    'oyna': 'https://static.insales-cdn.com/files/1/326/26378566/original/17-fresh-inspiring-bathroom-mirror-ideas-to-shake-up-your-morning-1-1676713043161.jpg',
+    'default': 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format'
+};
+
+// Красивая карточка категории с фото
+const CategoryCard = memo(({ category }) => {
+    const icon = categoryIcons[category.slug] || categoryIcons.default;
+    const imageUrl = categoryImages[category.slug] || categoryImages.default;
+    const productCount = products.filter(p => p.category === category.slug).length;
 
     return (
-        <div className="product-card-wrapper">
-            <Link
-                href={`/product/${product.id}`}
-                className="product-card"
-                prefetch={false}
-            >
-                <div className="product-image">
-                    {!imageLoaded && !imageError && (
-                        <div className="image-skeleton" />
-                    )}
-                    {imageError ? (
-                        <div className="image-error">
-                            <FiBox size={32} />
-                        </div>
-                    ) : (
-                        <img
-                            src={product.image}
-                            alt={product.name}
-                            loading="lazy"
-                            decoding="async"
-                            onLoad={() => setImageLoaded(true)}
-                            onError={() => setImageError(true)}
-                            style={{ opacity: imageLoaded ? 1 : 0 }}
-                        />
-                    )}
-                    {product.oldPrice && (
-                        <span className="product-badge sale">SALE</span>
-                    )}
-                    {!product.inStock && (
-                        <span className="product-badge out">Под заказ</span>
-                    )}
+        <Link href={`/catalog/${category.slug}`} className="category-card">
+            <div className="category-card-image">
+                <img src={imageUrl} alt={category.name} loading="lazy" />
+                <div className="category-card-overlay">
+                    <span className="category-card-icon">{icon}</span>
                 </div>
-
-                <div className="product-info">
-                    <h3 className="product-name">{product.name}</h3>
-                    <p className="product-category">{categoryName}</p>
-                    <div className="product-price">
-                        {product.oldPrice && (
-                            <span className="old-price">
-                                {product.oldPrice.toLocaleString()} сум
-                            </span>
-                        )}
-                        <span className="current-price">
-                            {product.price.toLocaleString()} сум
-                        </span>
-                    </div>
-                </div>
-            </Link>
-
-            <div className="product-actions">
-                <button
-                    className="action-btn cart-btn"
-                    aria-label="В корзину"
-                    onClick={(e) => onAddToCart(e, product)}
-                >
-                    <FiShoppingCart />
-                </button>
             </div>
-        </div>
-    );
-});
-
-ProductCard.displayName = 'ProductCard';
-
-// Мемоизированная кнопка категории
-const CategoryButton = memo(({ cat, isActive, onClick }) => {
-    return (
-        <button
-            onClick={onClick}
-            className={`category-pill ${isActive ? 'active' : ''}`}
-            aria-pressed={isActive}
-        >
-            <span className="category-icon">{cat.icon}</span>
-            <span className="category-name">{cat.name}</span>
-            {isActive && cat.slug !== 'all' && (
-                <span className="category-count">
-                    {products.filter(p => p.category === cat.slug).length}
+            <div className="category-card-content">
+                <h3 className="category-card-title">{category.name}</h3>
+                <p className="category-card-count">{productCount} товаров</p>
+                <span className="category-card-link">
+                    Перейти
+                    <FiArrowRight className="category-card-arrow" />
                 </span>
-            )}
-        </button>
+            </div>
+        </Link>
     );
 });
 
-CategoryButton.displayName = 'CategoryButton';
+CategoryCard.displayName = 'CategoryCard';
 
 const CatalogPreview = () => {
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const { addToCart } = useCart();
-
-    // Категории с react-icons - мемоизируем чтобы не создавать при каждом рендере
-    const categories = useMemo(() => [
-        { slug: 'all', name: 'Все товары', icon: <FiGrid /> },
-        { slug: 'unitaz', name: 'Унитазы', icon: <PiToilet /> },
-        { slug: 'vanna', name: 'Ванны', icon: <GiBathtub /> },
-        { slug: 'smestitel', name: 'Смесители', icon: <FaShower /> },
-        { slug: 'akksesuar', name: 'Аксессуары', icon: <FiBox /> },
-        { slug: 'oyna', name: 'Зеркала', icon: <GiMirrorMirror /> },
-        { slug: 'play3', name: 'Шкафы', icon: <FiGrid /> },
-    ], []);
-
-    // Мемоизируем отфильтрованные товары
-    const filteredProducts = useMemo(() => {
-        return selectedCategory === 'all'
-            ? products
-            : products.filter(p => p.category === selectedCategory);
-    }, [selectedCategory]);
-
-    // Берем первые 8 товаров
-    const previewProducts = useMemo(() => {
-        return filteredProducts.slice(0, 8);
-    }, [filteredProducts]);
-
-    // Мемоизируем маппинг категорий для быстрого доступа
-    const categoryMap = useMemo(() => {
-        return categories.reduce((acc, cat) => {
-            acc[cat.slug] = cat.name;
-            return acc;
-        }, {});
-    }, [categories]);
-
-    // Обработчик добавления в корзину с debounce для предотвращения множественных кликов
-    const handleAddToCart = useCallback((e, product) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        // Добавляем небольшую задержку чтобы предотвратить множественные клики
-        if (e.detail > 1) return;
-
-        addToCart(product);
-
-        // Визуальная обратная связь
-        const btn = e.currentTarget;
-        btn.classList.add('clicked');
-        setTimeout(() => btn.classList.remove('clicked'), 200);
-    }, [addToCart]);
-
-    // Обработчик смены категории
-    const handleCategoryChange = useCallback((slug) => {
-        setSelectedCategory(slug);
-        // Плавный скролл к началу секции
-        const section = document.querySelector('.catalog-preview');
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }, []);
-
     return (
         <section className="catalog-preview">
             <div className="container">
                 {/* Заголовок секции */}
                 <div className="section-header">
                     <div>
-                        <span className="section-subtitle">Наш ассортимент</span>
-                        <h2 className="section-title">Популярные товары</h2>
+                        <span className="section-subtitle">Категории</span>
+                        <h2 className="section-title">Выберите категорию</h2>
                     </div>
-                    <Link
-                        href="/catalog"
-                        className="view-all-btn"
-                        prefetch={false}
-                    >
-                        Смотреть все
+                </div>
+
+                {/* Сетка категорий с фото */}
+                <div className="categories-grid-premium">
+                    {categories.map((category) => (
+                        <CategoryCard key={category.id} category={category} />
+                    ))}
+                </div>
+
+                {/* Общая кнопка каталога */}
+                <div className="catalog-button-wrapper">
+                    <Link href="/catalog" className="catalog-main-btn" prefetch={false}>
+                        <span>Перейти в полный каталог</span>
                         <FiArrowRight className="btn-icon" />
                     </Link>
                 </div>
-
-                {/* Категории с иконками */}
-                <div className="categories-row">
-                    {categories.map((cat) => (
-                        <CategoryButton
-                            key={cat.slug}
-                            cat={cat}
-                            isActive={selectedCategory === cat.slug}
-                            onClick={() => handleCategoryChange(cat.slug)}
-                        />
-                    ))}
-                </div>
-
-                {/* Сетка товаров */}
-                <div className="products-grid">
-                    {previewProducts.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            categoryName={categoryMap[product.category]}
-                            onAddToCart={handleAddToCart}
-                        />
-                    ))}
-                </div>
-
-                {/* Кнопка "Показать еще" */}
-                {filteredProducts.length > 8 && (
-                    <div className="show-more">
-                        <Link
-                            href={`/catalog${selectedCategory !== 'all' ? `/${selectedCategory}` : ''}`}
-                            className="show-more-btn"
-                            prefetch={false}
-                        >
-                            Показать еще {filteredProducts.length - 8} товаров
-                            <FiArrowRight />
-                        </Link>
-                    </div>
-                )}
 
                 {/* Баннер */}
                 <div className="premium-banner">

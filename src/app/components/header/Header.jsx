@@ -13,38 +13,56 @@ const Header = () => {
     const slides = [
         {
             id: 1,
-            title: 'Чугунные ванны',
-            subtitle: 'Премиум качество',
-            description: 'Итальянские чугунные ванны с эмалевым покрытием. Ручная работа, 5 лет гарантии.',
-            image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&auto=format',
-            category: 'vanna',
-            badge: 'Хит продаж'
+            title: 'Премиальные унитазы',
+            subtitle: 'Лучшие технологии',
+            description: 'Унитазы с системой микролифт, антибактериальным покрытием и бесшумным смывом. Подвесные и напольные модели премиум-класса.',
+            image: 'https://ultrainterio.com/wp-content/uploads/2022/01/apartment-5346462_640.jpg',
+            category: 'unitaz',
+            badge: 'Топ продаж'
         },
         {
             id: 2,
-            title: 'Унитазы Debora',
-            subtitle: 'Подвесные и напольные',
-            description: 'Японские системы смыва, микролифт, антибактериальное покрытие. Бесшумная работа.',
-            image: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=1600&auto=format',
-            category: 'unitaz',
-            badge: 'Новинка'
+            title: 'Лучшие ванны',
+            subtitle: 'Чугун и акрил',
+            description: 'Эксклюзивные ванны из Италии. Гидромассаж, эмалевое покрытие ручной работы, эргономичные формы для максимального комфорта.',
+            image: 'https://usovi.ru/wp-content/uploads/2023/09/vanna_roca_belice_175x85_233550000_interier.jpg',
+            category: 'vanna',
+            badge: 'Премиум'
         },
         {
             id: 3,
+            title: 'Дизайнерские раковины',
+            subtitle: 'Керамика и камень',
+            description: 'Раковины из природного камня и высококачественной керамики. Настольные, встраиваемые и подвесные модели для любого интерьера.',
+            image: 'https://vitra.uz/cdn/shop/files/vitra-geo-7425b003-0012-03_1127x_f2f77ab3-1f94-4ea9-b49e-ae48c94ec419.jpg?v=1744611678&width=480',
+            category: 'rakovina',
+            badge: 'Хит сезона'
+        },
+        {
+            id: 4,
             title: 'Смесители Grohe',
             subtitle: 'Германское качество',
-            description: 'Однорычажные, термостаты, с душем. Керамический картридж, пожизненная гарантия.',
-            image: 'https://images.unsplash.com/photo-1585123334904-845d60e97b29?w=1600&auto=format',
+            description: 'Профессиональные смесители с керамическим картриджем. Термостаты, сенсорное управление, защита от известковых отложений.',
+            image: 'https://images.uzum.uz/d3lq2q3q345l7k05m8ng/original.jpg',
             category: 'smestitel',
             badge: 'Акция'
         },
         {
-            id: 4,
+            id: 5,
+            title: 'Зеркала с подсветкой',
+            subtitle: 'LED технологии',
+            description: 'Зеркала с мягкой LED подсветкой, антизапотевающим покрытием и сенсорным управлением. Создайте идеальный интерьер ванной.',
+            image: 'https://static.insales-cdn.com/files/1/326/26378566/original/17-fresh-inspiring-bathroom-mirror-ideas-to-shake-up-your-morning-1-1676713043161.jpg',
+            category: 'oyna',
+            badge: 'Новинка'
+        },
+        {
+            id: 6,
             title: 'Мебель для ванной',
-            subtitle: '3-створчатые шкафы',
-            description: 'Влагостойкие материалы, зеркала с LED подсветкой, системы хранения. Итальянский дизайн.',
-            image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format',
-            category: 'play3',
+            subtitle: 'Влагостойкие материалы',
+            description: 'Тумбы, пеналы и шкафы из влагостойких материалов. LED подсветка, бесшумные доводчики, вместительные системы хранения.',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNfBAMdEhMibzbnfyiWEnoSAOjoMmVR5keng&s',
+            category: 'raktumba',
             badge: 'Премиум'
         }
     ];
@@ -91,11 +109,9 @@ const Header = () => {
 
     const handleTouchEnd = () => {
         if (touchStart - touchEnd > 100) {
-            // Свайп влево
             nextSlide();
         }
         if (touchStart - touchEnd < -100) {
-            // Свайп вправо
             prevSlide();
         }
     };
@@ -137,7 +153,7 @@ const Header = () => {
                                     <p className="slide-description">{slide.description}</p>
                                     <div className="slide-actions">
                                         <Link
-                                            href={`/category/${slide.category}`}
+                                            href={`/catalog/${slide.category}`}
                                             className="btn btn-primary"
                                             tabIndex={index === currentSlide ? 0 : -1}
                                         >

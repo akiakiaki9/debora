@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useMemo, useCallback, useEffect, memo } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
     FiGrid,
     FiList,
@@ -9,17 +8,35 @@ import {
     FiHeart,
     FiShoppingCart,
     FiX,
-    FiChevronDown
+    FiBox,
 } from 'react-icons/fi';
 import { GiBathtub } from "react-icons/gi";
 import { PiToilet } from "react-icons/pi";
 import { GiMirrorMirror } from "react-icons/gi";
-import { FaShower } from 'react-icons/fa';
+import { FaShower, FaSink, FaWater } from 'react-icons/fa';
+import { MdKitchen, MdChair, MdShower } from 'react-icons/md';
+import { GiWashingMachine, GiMirror } from "react-icons/gi";
 import { useCart } from '@/app/context/CartContext';
 import Navbar from '@/app/components/navbar/Navbar';
 import Footer from '@/app/components/footer/Footer';
-import { products } from '../utils/data';
+import { products, categories } from '../utils/data';
 import './catalog.css';
+
+// Маппинг иконок для категорий
+const categoryIcons = {
+    'unitaz': <PiToilet />,
+    'bide': <FaWater />,
+    'chasha': <FaSink />,
+    'rakovina': <FaSink />,
+    'pisuar': <MdShower />,
+    'chashogen': <MdKitchen />,
+    'installation': <FiBox />,
+    'raktumba': <MdChair />,
+    'vanna': <GiBathtub />,
+    'smestitel': <FaShower />,
+    'oyna': <GiMirrorMirror />,
+    'default': <FiGrid />
+};
 
 // Мемоизированная карточка товара для сетки
 const GridProductCard = memo(({ product, categoryName, onAddToCart }) => {
@@ -70,7 +87,7 @@ const GridProductCard = memo(({ product, categoryName, onAddToCart }) => {
                             </span>
                         )}
                         <span className="current-price">
-                            {product.price.toLocaleString()} сум
+                            {product.price?.toLocaleString() || 'Цена по запросу'}
                         </span>
                     </div>
                 </div>
@@ -151,10 +168,15 @@ const ListProductCard = memo(({ product, categoryName, onAddToCart }) => {
                             </span>
                         )}
                         <span className="current-price">
-                            {product.price.toLocaleString()} сум
+                            {product.price?.toLocaleString() || 'Цена по запросу'}
                         </span>
                     </div>
-                    <p className="product-description">{product.description}</p>
+                    <p className="product-description">
+                        {product.specs && Object.entries(product.specs)
+                            .slice(0, 3)
+                            .map(([key, value]) => `${key}: ${value}`)
+                            .join(' • ')}
+                    </p>
                 </div>
             </Link>
 
@@ -173,16 +195,35 @@ const ListProductCard = memo(({ product, categoryName, onAddToCart }) => {
 
 ListProductCard.displayName = 'ListProductCard';
 
-// Мемоизированная кнопка категории
+// Красивая кнопка категории для главной страницы
+const CategoryButton = memo(({ category, icon }) => {
+    return (
+        <Link href={`/catalog/${category.slug}`} className="category-button">
+            <span className="category-button-icon">{icon}</span>
+            <span className="category-button-name">{category.name}</span>
+            <span className="category-button-count">
+                {products.filter(p => p.category === category.slug).length}
+            </span>
+        </Link>
+    );
+});
+
+CategoryButton.displayName = 'CategoryButton';
+
+// Мемоизированная кнопка категории для фильтра
 const CategoryFilterButton = memo(({ cat, isActive, onClick }) => {
+    const icon = categoryIcons[cat.slug] || categoryIcons.default;
+
     return (
         <button
             className={`category-filter-btn ${isActive ? 'active' : ''}`}
             onClick={onClick}
         >
-            <span className="category-icon">{cat.icon}</span>
+            <span className="category-icon">{icon}</span>
             <span className="category-name">{cat.name}</span>
-            <span className="category-count">{cat.count}</span>
+            <span className="category-count">
+                {products.filter(p => p.category === cat.slug).length}
+            </span>
         </button>
     );
 });
@@ -199,16 +240,14 @@ export default function CatalogPage() {
     const [isLoading, setIsLoading] = useState(false);
     const { addToCart } = useCart();
 
-    // Мемоизация категорий с подсчетом
-    const categories = useMemo(() => [
-        { slug: 'all', name: 'Все товары', icon: <FiGrid />, count: products.length },
-        { slug: 'unitaz', name: 'Унитазы', icon: <PiToilet />, count: products.filter(p => p.category === 'unitaz').length },
-        { slug: 'vanna', name: 'Ванны', icon: <GiBathtub />, count: products.filter(p => p.category === 'vanna').length },
-        { slug: 'smestitel', name: 'Смесители', icon: <FaShower />, count: products.filter(p => p.category === 'smestitel').length },
-        { slug: 'akksesuar', name: 'Аксессуары', icon: <FiGrid />, count: products.filter(p => p.category === 'akksesuar').length },
-        { slug: 'oyna', name: 'Зеркала', icon: <GiMirrorMirror />, count: products.filter(p => p.category === 'oyna').length },
-        { slug: 'play3', name: 'Шкафы', icon: <FiGrid />, count: products.filter(p => p.category === 'play3').length },
-    ], []);
+    // Категории с иконками и подсчетом
+    const categoriesWithIcons = useMemo(() => {
+        return categories.map(cat => ({
+            ...cat,
+            icon: categoryIcons[cat.slug] || categoryIcons.default,
+            count: products.filter(p => p.category === cat.slug).length
+        }));
+    }, []);
 
     // Мемоизация маппинга категорий
     const categoryMap = useMemo(() => {
@@ -216,23 +255,20 @@ export default function CatalogPage() {
             acc[cat.slug] = cat.name;
             return acc;
         }, {});
-    }, [categories]);
+    }, []);
 
-    // Фильтрация товаров с debounce
+    // Фильтрация товаров
     const filteredProducts = useMemo(() => {
         setIsLoading(true);
 
-        // Используем requestAnimationFrame для неблокирующей фильтрации
         const result = products.filter(product => {
             if (selectedCategory !== 'all' && product.category !== selectedCategory) return false;
             if (inStockOnly && !product.inStock) return false;
-            if (product.price < priceRange.min || product.price > priceRange.max) return false;
+            if (product.price && (product.price < priceRange.min || product.price > priceRange.max)) return false;
             return true;
         });
 
-        // Имитация асинхронной обработки
         setTimeout(() => setIsLoading(false), 0);
-
         return result;
     }, [selectedCategory, inStockOnly, priceRange.min, priceRange.max]);
 
@@ -242,10 +278,10 @@ export default function CatalogPage() {
 
         switch (sortBy) {
             case 'price-asc':
-                sorted.sort((a, b) => a.price - b.price);
+                sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
                 break;
             case 'price-desc':
-                sorted.sort((a, b) => b.price - a.price);
+                sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
                 break;
             case 'name':
                 sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -257,7 +293,7 @@ export default function CatalogPage() {
         return sorted;
     }, [filteredProducts, sortBy]);
 
-    // Обработчик добавления в корзину с защитой от множественных кликов
+    // Обработчик добавления в корзину
     const handleAddToCart = useCallback((e, product) => {
         e.preventDefault();
         e.stopPropagation();
@@ -266,7 +302,6 @@ export default function CatalogPage() {
 
         addToCart(product);
 
-        // Визуальная обратная связь
         const btn = e.currentTarget;
         btn.classList.add('clicked');
         setTimeout(() => btn.classList.remove('clicked'), 200);
@@ -277,7 +312,6 @@ export default function CatalogPage() {
         setSelectedCategory(slug);
         setShowFilters(false);
 
-        // Плавный скролл к началу
         const catalogSection = document.querySelector('.catalog-products');
         if (catalogSection) {
             catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -293,7 +327,7 @@ export default function CatalogPage() {
         setShowFilters(false);
     }, []);
 
-    // Блокировка скролла при открытых фильтрах на мобилке
+    // Блокировка скролла при открытых фильтрах
     useEffect(() => {
         if (showFilters) {
             document.body.style.overflow = 'hidden';
@@ -330,6 +364,20 @@ export default function CatalogPage() {
                         </button>
                     </div>
 
+                    {/* Красивые кнопки категорий перед каталогом */}
+                    <div className="categories-showcase">
+                        <h2 className="categories-showcase-title">Категории</h2>
+                        <div className="categories-grid">
+                            {categoriesWithIcons.map(category => (
+                                <CategoryButton
+                                    key={category.id}
+                                    category={category}
+                                    icon={category.icon}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
                     <div className="catalog-content">
                         {/* Фильтры - десктоп */}
                         <aside className={`catalog-filters ${showFilters ? 'mobile-show' : ''}`}>
@@ -348,7 +396,12 @@ export default function CatalogPage() {
                             <div className="filter-section">
                                 <h4 className="filter-title">Категории</h4>
                                 <div className="category-list">
-                                    {categories.map(cat => (
+                                    <CategoryFilterButton
+                                        cat={{ slug: 'all', name: 'Все товары' }}
+                                        isActive={selectedCategory === 'all'}
+                                        onClick={() => handleCategoryChange('all')}
+                                    />
+                                    {categoriesWithIcons.map(cat => (
                                         <CategoryFilterButton
                                             key={cat.slug}
                                             cat={cat}
@@ -499,4 +552,4 @@ export default function CatalogPage() {
             )}
         </>
     );
-}
+};

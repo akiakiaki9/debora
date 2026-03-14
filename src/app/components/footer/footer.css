@@ -719,3 +719,78 @@
         font-size: 0.9rem;
     }
 }
+
+/* Добавить в конец файла footer.css */
+
+/* Стили для категорий с иконками */
+.footer-category-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    color: var(--gold);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.footer-menu-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.footer-menu-link .footer-link-icon {
+    margin-left: auto;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+    color: var(--gold);
+}
+
+.footer-menu-list li:hover .footer-menu-link {
+    color: var(--gold);
+    transform: translateX(5px);
+}
+
+.footer-menu-list li:hover .footer-category-icon {
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+.footer-menu-list li:hover .footer-link-icon {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Адаптивность для категорий */
+@media (max-width: 768px) {
+    .footer-category-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 0.9rem;
+    }
+    
+    .footer-menu-link {
+        justify-content: flex-start;
+        padding: 6px 0;
+    }
+    
+    .footer-menu-list li:hover {
+        transform: translateX(5px);
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-category-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 0.85rem;
+    }
+}

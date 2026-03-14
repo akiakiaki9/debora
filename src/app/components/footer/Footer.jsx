@@ -8,9 +8,16 @@ import {
     FiClock,
     FiArrowUp,
     FiChevronRight,
-    FiCode
+    FiCode,
+    FiGrid
 } from 'react-icons/fi';
 import { FaYoutube, FaInstagram, FaTelegram } from 'react-icons/fa';
+import { GiBathtub } from "react-icons/gi";
+import { GiMirrorMirror } from "react-icons/gi";
+import { FaShower, FaSink, FaWater } from 'react-icons/fa';
+import { PiToilet } from "react-icons/pi";
+import { MdKitchen, MdChair, MdShower } from 'react-icons/md';
+import { categories } from '@/app/utils/data';
 import './footer.css';
 
 const Footer = () => {
@@ -23,27 +30,35 @@ const Footer = () => {
         });
     };
 
-    const footerCategories = [
-        { name: 'Унитазы', slug: 'unitaz' },
-        { name: 'Ванны', slug: 'vanna' },
-        { name: 'Смесители', slug: 'smestitel' },
-        { name: 'Аксессуары', slug: 'akksesuar' },
-        { name: 'Зеркала', slug: 'oyna' },
-        { name: 'Шкафы', slug: 'play3' },
-    ];
+    // Маппинг иконок для категорий
+    const categoryIcons = {
+        'unitaz': <PiToilet />,
+        'bide': <FaWater />,
+        'chasha': <FaSink />,
+        'rakovina': <FaSink />,
+        'pisuar': <MdShower />,
+        'chashogen': <MdKitchen />,
+        'installation': <FiGrid />,
+        'raktumba': <MdChair />,
+        'vanna': <GiBathtub />,
+        'smestitel': <FaShower />,
+        'oyna': <GiMirrorMirror />,
+    };
+
+    // Берем только первые 6 категорий для футера (самые важные)
+    const mainCategories = categories.slice(0, 6);
 
     const footerInfoLinks = [
         { name: 'О нас', slug: '/about' },
-        { name: 'Доставка и оплата', slug: '/delivery' },
-        { name: 'Гарантия', slug: '/warranty' },
         { name: 'Контакты', slug: '/contacts' },
         { name: 'Корзина', slug: '/cart' },
+        { name: 'Каталог', slug: '/catalog' },
     ];
 
     const footerSocialLinks = [
         { icon: <FaTelegram />, href: 'https://t.me/debora_ceramica', label: 'Telegram' },
         { icon: <FaInstagram />, href: 'https://instagram.com/debora_ceramica', label: 'Instagram' },
-        { icon: <FaYoutube />, href: 'https://www.youtube.com/@debora_ceramica', label: 'You Tube' },
+        { icon: <FaYoutube />, href: 'https://www.youtube.com/@debora_ceramica', label: 'YouTube' },
     ];
 
     const locations = [
@@ -71,15 +86,15 @@ const Footer = () => {
                                 <Image
                                     src="/images/logo.png"
                                     alt="Debora Ceramica"
-                                    width={120}
-                                    height={120}
+                                    width={100}
+                                    height={100}
                                     className="footer-logo-image"
                                 />
                                 <h3 className="footer-brand-name">Debora Ceramica</h3>
                             </div>
                             <p className="footer-company-description">
                                 Премиальная сантехника в Ташкенте.
-                                Только лучшие бренды.
+                                Итальянские, немецкие и японские бренды.
                             </p>
                             <div className="footer-social-links">
                                 {footerSocialLinks.map((social, index) => (
@@ -97,14 +112,16 @@ const Footer = () => {
                             </div>
                         </div>
 
-                        {/* Категории */}
+                        {/* Категории (только основные) */}
                         <div className="footer-column">
                             <h3 className="footer-column-title">Категории</h3>
                             <ul className="footer-menu-list">
-                                {footerCategories.map((cat) => (
-                                    <li key={cat.slug}>
+                                {mainCategories.map((cat) => (
+                                    <li key={cat.id}>
                                         <Link href={`/catalog/${cat.slug}`} className="footer-menu-link">
-                                            <FiChevronRight className="footer-link-icon" />
+                                            <span className="footer-category-icon">
+                                                {categoryIcons[cat.slug] || <FiGrid />}
+                                            </span>
                                             {cat.name}
                                         </Link>
                                     </li>
@@ -177,9 +194,9 @@ const Footer = () => {
                             © {currentYear} Debora Ceramica. Все права защищены.
                         </div>
                         <div className="footer-payment-methods">
-                            <span className="footer-payment-icon" title="Visa">Visa</span>
-                            <span className="footer-payment-icon" title="UzCard">UzCard</span>
-                            <span className="footer-payment-icon" title="Humo">Humo</span>
+                            <span className="footer-payment-icon">Visa</span>
+                            <span className="footer-payment-icon">UzCard</span>
+                            <span className="footer-payment-icon">Humo</span>
                         </div>
                         <div className="footer-developer">
                             <FiCode className="footer-developer-icon" />
