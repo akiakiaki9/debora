@@ -92,8 +92,8 @@ export const metadata = {
   },
   manifest: '/manifest.json',
   verification: {
-    google: 'google-site-verification-code',
-    yandex: 'yandex-verification-code',
+    google: 'pDr_UoSKPefWSuL9sn0_rrLr4AMv-i5isno9fjPVMBs',
+    yandex: '2394eab2d9d75970',
   },
   category: 'sanitary ware',
 };
@@ -132,22 +132,6 @@ export default function RootLayout({ children }) {
             })
           }}
         />
-
-        {/* Global site tag (gtag.js) - Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" // Замените на реальный ID
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'GA_MEASUREMENT_ID');
-            `
-          }}
-        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CartProvider>
@@ -156,4 +140,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}
+};
