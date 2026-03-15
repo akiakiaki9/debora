@@ -109,7 +109,7 @@
     justify-content: space-between;
 }
 
-/* Логотип - УВЕЛИЧЕН */
+/* Логотип - адаптивные размеры */
 .logo {
     display: flex;
     align-items: center;
@@ -124,31 +124,72 @@
     height: 70px;
     flex-shrink: 0;
     transition: all 0.3s ease;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--gold);
+}
+
+/* Адаптивные размеры логотипа */
+@media (max-width: 1200px) {
+    .logo-wrapper {
+        width: 65px;
+        height: 65px;
+    }
+}
+
+@media (max-width: 992px) {
+    .logo-wrapper {
+        width: 60px;
+        height: 60px;
+    }
 }
 
 @media (max-width: 768px) {
     .logo-wrapper {
         width: 55px;
         height: 55px;
+        border-width: 2px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .logo-wrapper {
         width: 50px;
         height: 50px;
     }
 }
 
+@media (max-width: 480px) {
+    .logo-wrapper {
+        width: 45px;
+        height: 45px;
+        border-width: 1.5px;
+    }
+}
+
+@media (max-width: 375px) {
+    .logo-wrapper {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo-wrapper {
+        width: 35px;
+        height: 35px;
+    }
+}
+
 .logo-image {
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 2px solid var(--gold);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logo:hover .logo-image {
-    transform: scale(1.05);
+    transform: scale(1.1);
     border-color: var(--white);
     box-shadow: var(--shadow-gold);
 }
@@ -161,15 +202,28 @@
     white-space: nowrap;
 }
 
-@media (max-width: 768px) {
+/* Адаптивные размеры текста логотипа */
+@media (max-width: 1200px) {
+    .logo-text {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 992px) {
     .logo-text {
         font-size: 1.1rem;
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .logo-text {
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-text {
+        font-size: 0.95rem;
     }
 }
 
@@ -179,6 +233,19 @@
     }
 }
 
+@media (max-width: 375px) {
+    .logo-text {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* Остальные стили остаются без изменений */
 /* Навигационное меню */
 .nav-menu {
     display: flex;
@@ -319,6 +386,25 @@
     align-items: center;
     gap: 20px;
     z-index: 1001;
+}
+
+/* Адаптивные размеры для кнопок */
+@media (max-width: 768px) {
+    .nav-actions {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-actions {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 375px) {
+    .nav-actions {
+        gap: 5px;
+    }
 }
 
 /* Телефоны в навбаре - десктоп */
@@ -470,11 +556,19 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .mobile-phone-icon-btn {
         width: 36px;
         height: 36px;
         font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .mobile-phone-icon-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
     }
 }
 
@@ -651,6 +745,12 @@
     }
 }
 
+@media (max-width: 992px) {
+    .search-wrapper {
+        display: none;
+    }
+}
+
 .search-input::placeholder {
     color: var(--gray);
 }
@@ -743,6 +843,13 @@
     transition: transform 0.3s ease;
 }
 
+@media (max-width: 480px) {
+    .result-image {
+        width: 45px;
+        height: 45px;
+    }
+}
+
 .search-result-item:hover .result-image {
     transform: scale(1.05);
 }
@@ -765,6 +872,12 @@
     transition: color 0.3s ease;
 }
 
+@media (max-width: 480px) {
+    .result-name {
+        font-size: 0.9rem;
+    }
+}
+
 .search-result-item:hover .result-name {
     color: var(--gold);
 }
@@ -773,6 +886,12 @@
     color: var(--gold);
     font-weight: 600;
     font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+    .result-price {
+        font-size: 0.85rem;
+    }
 }
 
 .search-results-footer {
@@ -825,11 +944,19 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .cart-button {
         width: 38px;
         height: 38px;
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .cart-button {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
     }
 }
 
@@ -874,6 +1001,17 @@
         width: 18px;
         height: 18px;
         font-size: 0.65rem;
+        top: -4px;
+        right: -4px;
+    }
+}
+
+@media (max-width: 375px) {
+    .cart-badge {
+        width: 16px;
+        height: 16px;
+        font-size: 0.6rem;
+        border-width: 1.5px;
     }
 }
 
@@ -902,11 +1040,19 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .burger-button {
         width: 38px;
         height: 38px;
         font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .burger-button {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
     }
 }
 
@@ -932,10 +1078,6 @@
 
 /* Мобильное меню */
 @media (max-width: 992px) {
-    .search-wrapper {
-        display: none;
-    }
-
     .nav-menu {
         position: fixed;
         top: 0;
@@ -1110,9 +1252,15 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .navbar-offset {
         height: 60px;
+    }
+}
+
+@media (max-width: 375px) {
+    .navbar-offset {
+        height: 55px;
     }
 }
 
@@ -1121,6 +1269,14 @@
 .nav-menu::-webkit-scrollbar,
 .phones-modal-content::-webkit-scrollbar {
     width: 6px;
+}
+
+@media (max-width: 576px) {
+    .search-results::-webkit-scrollbar,
+    .nav-menu::-webkit-scrollbar,
+    .phones-modal-content::-webkit-scrollbar {
+        width: 4px;
+    }
 }
 
 .search-results::-webkit-scrollbar-track,

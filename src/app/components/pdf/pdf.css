@@ -1,0 +1,666 @@
+/* Плавающая кнопка PDF */
+.pdf-floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(197, 165, 114, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.pdf-floating-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(197, 165, 114, 0.6);
+}
+
+.pdf-floating-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.pdf-floating-icon {
+    font-size: 1.4rem;
+}
+
+.pdf-floating-text {
+    margin-right: 5px;
+}
+
+.pdf-floating-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Модальное окно PDF */
+.pdf-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.pdf-modal-container {
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90vh;
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.pdf-modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--navy);
+}
+
+.pdf-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pdf-modal-title-icon {
+    font-size: 2rem;
+    color: var(--gold);
+}
+
+.pdf-modal-title h2 {
+    color: var(--white);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.pdf-modal-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-modal-close:hover {
+    background: var(--gold);
+    transform: rotate(90deg);
+}
+
+.pdf-modal-search {
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--border);
+    background: var(--cream);
+}
+
+.pdf-modal-search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.pdf-modal-search-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.1);
+}
+
+.pdf-modal-grid {
+    padding: 30px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-height: 50vh;
+    background: var(--cream);
+}
+
+.pdf-modal-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.pdf-modal-grid::-webkit-scrollbar-track {
+    background: var(--cream);
+}
+
+.pdf-modal-grid::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 3px;
+}
+
+.pdf-modal-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--gray);
+    font-size: 1.1rem;
+}
+
+/* PDF карточка в модальном окне */
+.pdf-modal-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    min-height: 320px;
+}
+
+.pdf-modal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.pdf-modal-card-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: var(--cream);
+    flex-shrink: 0;
+}
+
+.pdf-modal-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.pdf-modal-card:hover .pdf-modal-card-image img {
+    transform: scale(1.05);
+}
+
+.pdf-modal-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pdf-modal-card-overlay.active {
+    opacity: 1;
+}
+
+.pdf-modal-view-btn {
+    padding: 10px 20px;
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.pdf-modal-view-btn:hover {
+    background: #9c7c4b;
+    transform: scale(1.05);
+}
+
+.pdf-modal-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-modal-card-content {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-modal-card-title {
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: 8px;
+    font-weight: 600;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em;
+}
+
+.pdf-modal-card-meta {
+    display: flex;
+    gap: 8px;
+    color: var(--gray);
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.pdf-modal-open-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--gold);
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.pdf-modal-open-btn:hover {
+    background: #9c7c4b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(197, 165, 114, 0.4);
+}
+
+.pdf-modal-footer {
+    padding: 20px 30px;
+    border-top: 1px solid var(--border);
+    text-align: right;
+    background: var(--cream);
+}
+
+.pdf-modal-close-btn {
+    padding: 10px 30px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--navy);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pdf-modal-close-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+}
+
+/* ========== АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ========== */
+
+/* Планшеты */
+@media (max-width: 992px) {
+    .pdf-modal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .pdf-modal-card {
+        min-height: 300px;
+    }
+    
+    .pdf-modal-card-image {
+        height: 160px;
+    }
+}
+
+/* Маленькие планшеты и большие телефоны */
+@media (max-width: 768px) {
+    /* Кнопка */
+    .pdf-floating-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .pdf-floating-text {
+        display: none;
+    }
+    
+    .pdf-floating-btn {
+        border-radius: 50px;
+        padding: 12px 15px;
+    }
+    
+    /* Модальное окно */
+    .pdf-modal-container {
+        width: 95%;
+        max-height: 95vh;
+        border-radius: 20px;
+    }
+    
+    .pdf-modal-header {
+        padding: 15px 20px;
+    }
+    
+    .pdf-modal-title h2 {
+        font-size: 1.2rem;
+    }
+    
+    .pdf-modal-title-icon {
+        font-size: 1.5rem;
+    }
+    
+    .pdf-modal-search,
+    .pdf-modal-footer {
+        padding: 15px 20px;
+    }
+    
+    .pdf-modal-grid {
+        padding: 15px;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        max-height: 55vh;
+    }
+    
+    /* Карточки */
+    .pdf-modal-card {
+        min-height: 280px;
+    }
+    
+    .pdf-modal-card-image {
+        height: 140px;
+    }
+    
+    .pdf-modal-card-title {
+        font-size: 0.95rem;
+        min-height: 2.6em;
+    }
+    
+    .pdf-modal-card-meta {
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+    }
+    
+    .pdf-modal-open-btn {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .pdf-modal-view-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .pdf-modal-badge {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Телефоны */
+@media (max-width: 576px) {
+    /* Кнопка */
+    .pdf-floating-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 15px;
+    }
+    
+    .pdf-floating-icon {
+        font-size: 1.2rem;
+    }
+    
+    .pdf-floating-count {
+        padding: 2px 8px;
+        font-size: 0.8rem;
+    }
+    
+    /* Модальное окно */
+    .pdf-modal-container {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .pdf-modal-header {
+        padding: 12px 15px;
+    }
+    
+    .pdf-modal-title h2 {
+        font-size: 1.1rem;
+    }
+    
+    .pdf-modal-title-icon {
+        font-size: 1.3rem;
+    }
+    
+    .pdf-modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .pdf-modal-search {
+        padding: 12px 15px;
+    }
+    
+    .pdf-modal-search-input {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .pdf-modal-grid {
+        padding: 12px;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-height: 65vh;
+    }
+    
+    /* Карточки во всю ширину */
+    .pdf-modal-card {
+        min-height: auto;
+        flex-direction: row;
+        align-items: stretch;
+    }
+    
+    .pdf-modal-card-image {
+        width: 120px;
+        height: 120px;
+        flex-shrink: 0;
+    }
+    
+    .pdf-modal-card-content {
+        padding: 12px;
+        flex: 1;
+    }
+    
+    .pdf-modal-card-title {
+        font-size: 0.9rem;
+        min-height: auto;
+        -webkit-line-clamp: 2;
+        margin-bottom: 4px;
+    }
+    
+    .pdf-modal-card-meta {
+        margin-bottom: 8px;
+        font-size: 0.75rem;
+    }
+    
+    .pdf-modal-open-btn {
+        padding: 8px;
+        font-size: 0.85rem;
+        border-radius: 6px;
+    }
+    
+    .pdf-modal-view-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .pdf-modal-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+        top: 5px;
+        right: 5px;
+    }
+    
+    .pdf-modal-footer {
+        padding: 12px 15px;
+    }
+    
+    .pdf-modal-close-btn {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+}
+
+/* Очень маленькие телефоны */
+@media (max-width: 375px) {
+    .pdf-modal-card {
+        flex-direction: column;
+    }
+    
+    .pdf-modal-card-image {
+        width: 100%;
+        height: 160px;
+    }
+    
+    .pdf-modal-card-content {
+        padding: 12px;
+    }
+    
+    .pdf-modal-open-btn {
+        padding: 10px;
+    }
+}
+
+/* Альбомная ориентация на телефонах */
+@media (max-width: 896px) and (orientation: landscape) {
+    .pdf-modal-container {
+        width: 95%;
+        height: 95vh;
+    }
+    
+    .pdf-modal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        max-height: 60vh;
+    }
+    
+    .pdf-modal-card {
+        min-height: 260px;
+    }
+    
+    .pdf-modal-card-image {
+        height: 130px;
+    }
+}
+
+/* Улучшение для тач-устройств */
+@media (hover: none) {
+    .pdf-modal-card-overlay {
+        opacity: 0;
+        display: none;
+    }
+    
+    .pdf-modal-card:active {
+        transform: scale(0.98);
+    }
+    
+    .pdf-floating-btn:active {
+        transform: scale(0.95);
+    }
+    
+    .pdf-modal-open-btn {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .pdf-modal-open-btn:active {
+        transform: scale(0.95);
+        background: #9c7c4b;
+    }
+}

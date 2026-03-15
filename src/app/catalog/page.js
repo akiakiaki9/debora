@@ -15,12 +15,12 @@ import { PiToilet } from "react-icons/pi";
 import { GiMirrorMirror } from "react-icons/gi";
 import { FaShower, FaSink, FaWater } from 'react-icons/fa';
 import { MdKitchen, MdChair, MdShower } from 'react-icons/md';
-import { GiWashingMachine, GiMirror } from "react-icons/gi";
 import { useCart } from '@/app/context/CartContext';
 import Navbar from '@/app/components/navbar/Navbar';
 import Footer from '@/app/components/footer/Footer';
 import { products, categories } from '../utils/data';
 import './catalog.css';
+import PdfFloatingButton from '../components/pdf/Pdf';
 
 // Маппинг иконок для категорий
 const categoryIcons = {
@@ -94,16 +94,6 @@ const GridProductCard = memo(({ product, categoryName, onAddToCart }) => {
             </Link>
 
             <div className="product-actions">
-                <button
-                    className="action-btn"
-                    aria-label="В избранное"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }}
-                >
-                    <FiHeart />
-                </button>
                 <button
                     className="action-btn cart-btn"
                     aria-label="В корзину"
@@ -343,6 +333,7 @@ export default function CatalogPage() {
     return (
         <>
             <Navbar />
+            <PdfFloatingButton />
             <main className="catalog-page">
                 <div className="container">
                     {/* Заголовок */}

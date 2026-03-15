@@ -1,10 +1,9 @@
-/* footer.css - новые классы, стили не менялись */
-
 .site-footer {
     background: var(--navy-dark);
     color: var(--white);
     margin-top: 80px;
     position: relative;
+    z-index: 1001;
 }
 
 /* Декоративная волна */

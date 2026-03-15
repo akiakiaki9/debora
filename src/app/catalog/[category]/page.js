@@ -6,11 +6,12 @@ import {
     FiGrid,
     FiList,
     FiFilter,
-    FiShoppingCart,
     FiX,
     FiArrowLeft,
     FiChevronRight,
-    FiBox
+    FiBox,
+    FiShoppingCart,
+    FiHeart
 } from 'react-icons/fi';
 import { PiToilet } from "react-icons/pi";
 import { GiBathtub } from "react-icons/gi";
@@ -22,6 +23,7 @@ import Navbar from '@/app/components/navbar/Navbar';
 import Footer from '@/app/components/footer/Footer';
 import { products, categories } from '@/app/utils/data';
 import './category.css';
+import PdfFloatingButton from '@/app/components/pdf/Pdf';
 
 // Маппинг иконок для категорий
 const categoryIcons = {
@@ -70,7 +72,7 @@ const categoryBanners = {
 };
 
 // Мемоизированная карточка товара для сетки
-const GridProductCard = memo(({ product }) => {
+const GridProductCard = memo(({ product, onAddToCart }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
 
@@ -154,6 +156,17 @@ const GridProductCard = memo(({ product }) => {
                     </div>
                 </div>
             </Link>
+
+            <div className="product-actions">
+                <button
+                    className="action-btn cart-btn"
+                    aria-label="В корзину"
+                    onClick={(e) => onAddToCart(e, product)}
+                    disabled={!product.inStock}
+                >
+                    <FiShoppingCart />
+                </button>
+            </div>
         </div>
     );
 });
@@ -161,7 +174,7 @@ const GridProductCard = memo(({ product }) => {
 GridProductCard.displayName = 'GridProductCard';
 
 // Мемоизированная карточка товара для списка
-const ListProductCard = memo(({ product }) => {
+const ListProductCard = memo(({ product, onAddToCart }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
 
@@ -226,6 +239,16 @@ const ListProductCard = memo(({ product }) => {
                     </div>
                 </div>
             </Link>
+
+            {product.inStock && (
+                <button
+                    className="list-cart-btn"
+                    onClick={(e) => onAddToCart(e, product)}
+                >
+                    <FiShoppingCart />
+                    В корзину
+                </button>
+            )}
         </div>
     );
 });
@@ -325,6 +348,22 @@ export default function CategoryPage() {
         setTimeout(() => setIsLoading(false), 0);
         return result;
     }, [categoryProducts, filters]);
+
+    // Обработчик добавления в корзину
+    const handleAddToCart = useCallback((e, product) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (e.detail > 1) return;
+        if (!product.inStock) return;
+
+        addToCart(product);
+
+        // Визуальная обратная связь
+        const btn = e.currentTarget;
+        btn.classList.add('clicked');
+        setTimeout(() => btn.classList.remove('clicked'), 200);
+    }, [addToCart]);
 
     // Обработчик изменения фильтра
     const handleFilterChange = useCallback((filterKey, value, checked) => {
@@ -426,6 +465,7 @@ export default function CategoryPage() {
     return (
         <>
             <Navbar />
+            <PdfFloatingButton />
             <main className="category-page">
                 {/* Баннер категории */}
                 <div
@@ -591,11 +631,13 @@ export default function CategoryPage() {
                                             <GridProductCard
                                                 key={product.id}
                                                 product={product}
+                                                onAddToCart={handleAddToCart}
                                             />
                                         ) : (
                                             <ListProductCard
                                                 key={product.id}
                                                 product={product}
+                                                onAddToCart={handleAddToCart}
                                             />
                                         )
                                     ))}
@@ -616,4 +658,4 @@ export default function CategoryPage() {
             )}
         </>
     );
-};
+};  

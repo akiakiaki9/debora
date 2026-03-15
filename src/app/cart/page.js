@@ -8,12 +8,11 @@ import {
     FiArrowLeft,
     FiPlus,
     FiMinus,
-    FiCreditCard,
     FiTruck,
     FiClock,
-    FiCheckCircle,
     FiX,
-    FiPhone
+    FiPhone,
+    FiBox
 } from 'react-icons/fi';
 import { useCart } from '@/app/context/CartContext';
 import Navbar from '@/app/components/navbar/Navbar';
@@ -22,15 +21,40 @@ import './cart.css';
 
 export default function CartPage() {
     const router = useRouter();
-    const { cartItems, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart();
+    const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
     const [showModal, setShowModal] = useState(false);
 
-    const subtotal = getTotalPrice();
-    const shipping = subtotal > 1000000 ? 0 : 150000;
-    const total = subtotal + shipping;
+    // Так как цен нет, просто считаем количество товаров
+    const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
     const handleCheckout = () => {
         setShowModal(true);
+    };
+
+    // Получаем основные характеристики товара для отображения
+    const getMainSpec = (product) => {
+        if (!product.specs) return null;
+
+        // Приоритетные поля для каждой категории
+        const priorityFields = {
+            'unitaz': product.specs.model || product.specs.size,
+            'bide': product.specs.model || product.specs.size,
+            'chasha': product.specs.type || product.specs.model,
+            'rakovina': product.specs.model || product.specs.size,
+            'pisuar': product.specs.model || product.specs.mechanism,
+            'chashogen': product.specs.model || product.specs.color,
+            'installation': product.specs.model || product.specs.size,
+            'raktumba': product.specs.width || product.specs.furnitureMaterial,
+            'vanna': product.specs.type || product.specs.size,
+            'smestitel': product.specs.model || product.specs.type,
+            'oyna': product.specs.model || 'Зеркало'
+        };
+
+        const spec = priorityFields[product.category];
+        if (typeof spec === 'object') {
+            return Object.values(spec).join(' • ');
+        }
+        return spec || 'Сантехника';
     };
 
     if (cartItems.length === 0) {
@@ -69,7 +93,10 @@ export default function CartPage() {
                 <div className="container">
                     {/* Заголовок */}
                     <div className="cart-header">
-                        <h1 className="cart-title">Корзина</h1>
+                        <h1 className="cart-title">
+                            Корзина
+                            <span className="cart-count">{totalItems} товара</span>
+                        </h1>
                         <button
                             onClick={clearCart}
                             className="clear-cart-btn"
@@ -82,102 +109,116 @@ export default function CartPage() {
                     <div className="cart-content">
                         {/* Список товаров */}
                         <div className="cart-items">
-                            {cartItems.map((item) => (
-                                <div key={item.id} className="cart-item">
-                                    <div className="cart-item-image">
-                                        <img
-                                            src={item.image}
-                                            alt={item.name}
-                                            loading="lazy"
-                                        />
-                                    </div>
+                            {cartItems.map((item) => {
+                                const mainSpec = getMainSpec(item);
 
-                                    <div className="cart-item-info">
-                                        <div className="cart-item-header">
-                                            <Link
-                                                href={`/product/${item.id}`}
-                                                className="cart-item-title"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                            <button
-                                                onClick={() => removeFromCart(item.id)}
-                                                className="cart-item-remove"
-                                                aria-label="Удалить"
-                                            >
-                                                <FiTrash2 />
-                                            </button>
+                                return (
+                                    <div key={item.id} className="cart-item">
+                                        <div className="cart-item-image">
+                                            <img
+                                                src={item.image}
+                                                alt={item.name}
+                                                loading="lazy"
+                                            />
+                                            {!item.inStock && (
+                                                <span className="cart-item-badge">Под заказ</span>
+                                            )}
                                         </div>
 
-                                        <div className="cart-item-price">
-                                            {item.price.toLocaleString()} сум
-                                        </div>
-
-                                        <div className="cart-item-actions">
-                                            <div className="quantity-control">
-                                                <button
-                                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                    className="quantity-btn"
-                                                    disabled={item.quantity <= 1}
+                                        <div className="cart-item-info">
+                                            <div className="cart-item-header">
+                                                <Link
+                                                    href={`/product/${item.id}`}
+                                                    className="cart-item-title"
                                                 >
-                                                    <FiMinus />
-                                                </button>
-                                                <span className="quantity-value">{item.quantity}</span>
+                                                    {item.name}
+                                                </Link>
                                                 <button
-                                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                    className="quantity-btn"
+                                                    onClick={() => removeFromCart(item.id)}
+                                                    className="cart-item-remove"
+                                                    aria-label="Удалить"
                                                 >
-                                                    <FiPlus />
+                                                    <FiTrash2 />
                                                 </button>
                                             </div>
 
-                                            <div className="cart-item-total">
-                                                Итого: <span>{(item.price * item.quantity).toLocaleString()} сум</span>
+                                            {mainSpec && (
+                                                <div className="cart-item-spec">
+                                                    <FiBox className="cart-item-spec-icon" />
+                                                    <span>{mainSpec}</span>
+                                                </div>
+                                            )}
+
+                                            <div className="cart-item-actions">
+                                                <div className="quantity-control">
+                                                    <button
+                                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                        className="quantity-btn"
+                                                        disabled={item.quantity <= 1}
+                                                    >
+                                                        <FiMinus />
+                                                    </button>
+                                                    <span className="quantity-value">{item.quantity}</span>
+                                                    <button
+                                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                        className="quantity-btn"
+                                                    >
+                                                        <FiPlus />
+                                                    </button>
+                                                </div>
+
+                                                <div className="cart-item-status">
+                                                    {item.inStock ? (
+                                                        <span className="status-in">В наличии</span>
+                                                    ) : (
+                                                        <span className="status-out">Под заказ (3-5 дней)</span>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
-                        {/* Боковая панель с итогами */}
+                        {/* Боковая панель */}
                         <div className="cart-sidebar">
                             <div className="cart-summary">
                                 <h2 className="summary-title">Ваш заказ</h2>
 
                                 <div className="summary-row">
                                     <span>Товары ({cartItems.length})</span>
-                                    <span>{subtotal.toLocaleString()} сум</span>
+                                    <span>{cartItems.length} позиций</span>
                                 </div>
 
                                 <div className="summary-row">
-                                    <span>Доставка</span>
-                                    <span className={shipping === 0 ? 'free-shipping' : ''}>
-                                        {shipping === 0 ? 'Бесплатно' : `${shipping.toLocaleString()} сум`}
-                                    </span>
+                                    <span>Общее количество</span>
+                                    <span>{totalItems} шт.</span>
                                 </div>
 
                                 <div className="summary-total">
-                                    <span>Итого</span>
-                                    <span>{total.toLocaleString()} сум</span>
+                                    <span>Итого товаров</span>
+                                    <span>{totalItems} шт.</span>
                                 </div>
 
-                                {shipping > 0 && (
-                                    <div className="shipping-hint">
-                                        <FiTruck />
+                                {/* Информация о наличии */}
+                                <div className="stock-info">
+                                    <FiClock className="stock-info-icon" />
+                                    <div className="stock-info-text">
+                                        <strong>Товары под заказ:</strong>
                                         <span>
-                                            Бесплатная доставка при заказе от 1 000 000 сум
+                                            {cartItems.filter(i => !i.inStock).length} позиций
                                         </span>
                                     </div>
-                                )}
+                                </div>
 
                                 {/* Кнопка оформления */}
                                 <button
                                     onClick={handleCheckout}
                                     className="btn btn-primary checkout-btn"
                                 >
-                                    <FiCreditCard />
-                                    Оформить заказ
+                                    <FiPhone />
+                                    Позвонить для заказа
                                 </button>
 
                                 {/* Преимущества */}
@@ -185,15 +226,15 @@ export default function CartPage() {
                                     <div className="benefit-item">
                                         <FiTruck className="benefit-icon" />
                                         <div className="benefit-text">
-                                            <strong>Бесплатная доставка</strong>
-                                            <span>от 1 000 000 сум</span>
+                                            <strong>Доставка по городу</strong>
+                                            <span>от 2 часов</span>
                                         </div>
                                     </div>
                                     <div className="benefit-item">
                                         <FiClock className="benefit-icon" />
                                         <div className="benefit-text">
-                                            <strong>Доставка за 24 часа</strong>
-                                            <span>по Ташкенту</span>
+                                            <strong>Под заказ</strong>
+                                            <span>3-5 дней</span>
                                         </div>
                                     </div>
                                     <div className="benefit-item">
@@ -215,7 +256,7 @@ export default function CartPage() {
                 </div>
             </main>
 
-            {/* Модальное окно - просто номер телефона */}
+            {/* Модальное окно */}
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -240,18 +281,29 @@ export default function CartPage() {
                             {/* Список товаров */}
                             <div className="modal-order-list">
                                 <h3>Ваш заказ:</h3>
-                                {cartItems.map(item => (
-                                    <div key={item.id} className="modal-order-item">
-                                        <span className="modal-item-name">{item.name}</span>
-                                        <span className="modal-item-quantity">{item.quantity} шт.</span>
-                                        <span className="modal-item-price">
-                                            {(item.price * item.quantity).toLocaleString()} сум
-                                        </span>
-                                    </div>
-                                ))}
+                                {cartItems.map(item => {
+                                    const mainSpec = getMainSpec(item);
+
+                                    return (
+                                        <div key={item.id} className="modal-order-item">
+                                            <div className="modal-item-info">
+                                                <span className="modal-item-name">{item.name}</span>
+                                                {mainSpec && (
+                                                    <span className="modal-item-spec">{mainSpec}</span>
+                                                )}
+                                            </div>
+                                            <div className="modal-item-details">
+                                                <span className="modal-item-quantity">{item.quantity} шт.</span>
+                                                <span className="modal-item-status">
+                                                    {item.inStock ? '✓ В наличии' : '⌛ Под заказ'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                                 <div className="modal-order-total">
-                                    <strong>Итого:</strong>
-                                    <strong>{total.toLocaleString()} сум</strong>
+                                    <strong>Всего товаров:</strong>
+                                    <strong>{totalItems} шт.</strong>
                                 </div>
                             </div>
 
