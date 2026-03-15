@@ -15,24 +15,24 @@ export default function ContactsPage() {
     const locations = [
         {
             id: 1,
-            market: 'Абу Сахий',
-            address: '1 этаж, 10 магазин',
-            coordinates: '41.333122,69.311549',
+            market: 'Globalstroy',
+            address: 'Катта дархон, дом 15',
+            coordinates: '41.333109,69.311588',
             phone: '+998941471116',
-            mapLink: 'https://maps.google.com/maps?q=41.333122,69.311549&ll=41.333122,69.311549&z=16'
+            mapLink: 'https://maps.google.com/maps?q=41.333109,69.311588&ll=41.333109,69.311588&z=16'
         },
         {
             id: 2,
-            market: 'Урикзор',
-            address: '5 ряд, 27 магазин',
+            market: "Qo'yliq qurilish bozori",
+            address: 'Туёна 4А',
             coordinates: '41.237603,69.335270',
             phone: '+998977074046',
             mapLink: 'https://maps.google.com/maps?q=41.237603,69.335270&ll=41.237603,69.335270&z=16'
         },
         {
             id: 3,
-            market: 'Фархад',
-            address: '1 этаж, 133 магазин',
+            market: 'Jomi bozori',
+            address: 'Уста Ширин 125',
             coordinates: '41.356032,69.246443',
             phone: '+998974008180',
             mapLink: 'https://maps.google.com/maps?q=41.356032,69.246443&ll=41.356032,69.246443&z=16'

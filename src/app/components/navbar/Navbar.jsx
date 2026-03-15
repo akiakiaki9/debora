@@ -12,6 +12,9 @@ import {
     FiClock,
     FiAward,
     FiChevronDown,
+    FiUsers,
+    FiMapPin,
+    FiUser
 } from 'react-icons/fi';
 import { products, categories } from '@/app/utils/data';
 import { useCart } from '@/app/context/CartContext';
@@ -26,6 +29,7 @@ const Navbar = () => {
     const [activeDropdown, setActiveDropdown] = useState(false);
     const [activePhones, setActivePhones] = useState(false);
     const [showPhonesModal, setShowPhonesModal] = useState(false);
+    const [showDealersModal, setShowDealersModal] = useState(false);
     const [dropdownTimeout, setDropdownTimeout] = useState(null);
     const [phonesTimeout, setPhonesTimeout] = useState(null);
     const searchRef = useRef(null);
@@ -34,6 +38,34 @@ const Navbar = () => {
     const menuRef = useRef(null);
     const router = useRouter();
     const { cartCount } = useCart();
+
+    // Данные дилеров
+    const dealers = [
+        {
+            id: 1,
+            region: 'Navoiy viloyati',
+            phone: '+998907394437',
+            formattedPhone: '+998 90 739-44-37',
+            name: 'Shuxrat aka',
+            icon: <FiUser />
+        },
+        {
+            id: 2,
+            region: 'Buxoro viloyati',
+            phone: '+998919266789',
+            formattedPhone: '+998 91 926-67-89',
+            name: 'Doston',
+            icon: <FiUser />
+        },
+        {
+            id: 3,
+            region: 'Samarqand viloyati',
+            phone: '+998915307708',
+            formattedPhone: '+998 91 530-77-08',
+            name: 'Jonibek',
+            icon: <FiUser />
+        }
+    ];
 
     useEffect(() => {
         const handleScroll = () => {
@@ -54,16 +86,19 @@ const Navbar = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Закрытие модалки при клике вне
+    // Закрытие модалок при клике вне
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (showPhonesModal && !event.target.closest('.phones-modal-content') && !event.target.closest('.mobile-phone-icon-btn')) {
                 setShowPhonesModal(false);
             }
+            if (showDealersModal && !event.target.closest('.dealers-modal-content') && !event.target.closest('.dealers-trigger') && !event.target.closest('.mobile-dealers-icon-btn')) {
+                setShowDealersModal(false);
+            }
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [showPhonesModal]);
+    }, [showPhonesModal, showDealersModal]);
 
     // Закрытие меню при ресайзе
     useEffect(() => {
@@ -78,7 +113,7 @@ const Navbar = () => {
 
     // Блокировка скролла при открытом меню
     useEffect(() => {
-        if (isOpen || showPhonesModal) {
+        if (isOpen || showPhonesModal || showDealersModal) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
@@ -86,12 +121,10 @@ const Navbar = () => {
         return () => {
             document.body.style.overflow = 'unset';
         };
-    }, [isOpen, showPhonesModal]);
+    }, [isOpen, showPhonesModal, showDealersModal]);
 
     // Используем категории из data.js
     const categoriesList = useMemo(() => {
-        // Если в data.js уже есть slug и name, используем как есть
-        // Если структура другая, делаем маппинг
         return categories.map(cat => ({
             name: cat.name,
             slug: cat.slug
@@ -249,6 +282,16 @@ const Navbar = () => {
 
                         {/* Поиск и корзина */}
                         <div className="nav-actions">
+                            {/* Кнопка дилеров - ДЛЯ ПК */}
+                            <button
+                                className="dealers-pc-btn"
+                                onClick={() => setShowDealersModal(true)}
+                                aria-label="Дилеры"
+                            >
+                                <FiUsers className="dealers-pc-icon" />
+                                <span className="dealers-pc-text">Дилеры</span>
+                            </button>
+
                             {/* Телефоны - десктоп версия */}
                             <div
                                 className="phones-wrapper desktop-only"
@@ -284,6 +327,15 @@ const Navbar = () => {
                                 <FiPhone />
                             </button>
 
+                            {/* Иконка дилеров для мобильных */}
+                            <button
+                                className="mobile-dealers-icon-btn"
+                                onClick={() => setShowDealersModal(true)}
+                                aria-label="Дилеры"
+                            >
+                                <FiUsers />
+                            </button>
+
                             <div className="search-wrapper" ref={searchRef}>
                                 <form onSubmit={handleSearch} className="search-form">
                                     <input
@@ -313,8 +365,8 @@ const Navbar = () => {
                                                 </div>
                                                 <div className="result-info">
                                                     <div className="result-name">{product.name}</div>
-                                                    <div className="result-price">
-                                                        {product.price.toLocaleString()} сум
+                                                    <div className="result-category">
+                                                        {categories.find(c => c.slug === product.category)?.name}
                                                     </div>
                                                 </div>
                                             </div>
@@ -380,6 +432,56 @@ const Navbar = () => {
                             <button
                                 className="phones-modal-btn"
                                 onClick={() => setShowPhonesModal(false)}
+                            >
+                                Закрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Модальное окно с дилерами */}
+            {showDealersModal && (
+                <div className="dealers-modal-overlay" onClick={() => setShowDealersModal(false)}>
+                    <div className="dealers-modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="dealers-modal-header">
+                            <FiUsers className="dealers-modal-icon" />
+                            <h3 className="dealers-modal-title">Наши дилеры</h3>
+                            <button
+                                className="dealers-modal-close"
+                                onClick={() => setShowDealersModal(false)}
+                            >
+                                <FiX />
+                            </button>
+                        </div>
+                        <div className="dealers-modal-body">
+                            {dealers.map((dealer) => (
+                                <div key={dealer.id} className="dealer-item">
+                                    <div className="dealer-region">
+                                        <FiMapPin className="dealer-region-icon" />
+                                        <span className="dealer-region-name">{dealer.region}</span>
+                                    </div>
+                                    <div className="dealer-info">
+                                        <div className="dealer-name">
+                                            <FiUser className="dealer-name-icon" />
+                                            <span>{dealer.name}</span>
+                                        </div>
+                                        <a
+                                            href={`tel:${dealer.phone}`}
+                                            className="dealer-phone"
+                                            onClick={() => setShowDealersModal(false)}
+                                        >
+                                            <FiPhone className="dealer-phone-icon" />
+                                            {dealer.formattedPhone}
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="dealers-modal-footer">
+                            <button
+                                className="dealers-modal-btn"
+                                onClick={() => setShowDealersModal(false)}
                             >
                                 Закрыть
                             </button>

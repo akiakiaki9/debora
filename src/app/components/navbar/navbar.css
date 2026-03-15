@@ -1298,3 +1298,956 @@
 .phones-modal-content::-webkit-scrollbar-thumb:hover {
     background: var(--navy);
 }
+
+/* Дилеры в навбаре */
+.dealers-nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.dealers-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: var(--navy);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+}
+
+.dealers-trigger:hover {
+    color: var(--gold);
+}
+
+.dealers-icon {
+    font-size: 1.1rem;
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.dealers-trigger:hover .dealers-icon {
+    color: var(--navy);
+}
+
+/* Иконка дилеров для мобильных */
+.mobile-dealers-icon-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.mobile-dealers-icon-btn:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+}
+
+@media (max-width: 992px) {
+    .mobile-dealers-icon-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-dealers-icon-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .mobile-dealers-icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .mobile-dealers-icon-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+}
+
+/* Модальное окно дилеров */
+.dealers-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.dealers-modal-content {
+    background: var(--white);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s ease;
+}
+
+.dealers-modal-header {
+    padding: 25px 25px 15px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    border-radius: 24px 24px 0 0;
+}
+
+.dealers-modal-icon {
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.dealers-modal-title {
+    font-size: 1.5rem;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+}
+
+.dealers-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.dealers-modal-close:hover {
+    background: var(--gold);
+    transform: rotate(90deg);
+}
+
+.dealers-modal-body {
+    padding: 25px;
+    background: var(--cream);
+}
+
+.dealer-item {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.dealer-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.dealer-region {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.dealer-region-icon {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.dealer-region-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.dealer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dealer-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray);
+    font-size: 1rem;
+}
+
+.dealer-name-icon {
+    color: var(--gold);
+    font-size: 1rem;
+}
+
+.dealer-phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    background: var(--cream);
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.dealer-phone:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateX(5px);
+}
+
+.dealer-phone-icon {
+    font-size: 1rem;
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.dealer-phone:hover .dealer-phone-icon {
+    color: var(--white);
+}
+
+.dealers-modal-footer {
+    padding: 15px 25px 25px;
+    text-align: center;
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+}
+
+.dealers-modal-btn {
+    padding: 12px 30px;
+    background: var(--navy);
+    border: none;
+    border-radius: 40px;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.dealers-modal-btn:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+/* Мобильное меню - добавляем пункт дилеров */
+@media (max-width: 992px) {
+    .dealers-nav-item {
+        width: 100%;
+    }
+    
+    .dealers-trigger {
+        width: 100%;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 1.1rem;
+    }
+    
+    .mobile-dealers-icon-btn {
+        display: flex;
+    }
+}
+
+/* Адаптивность для модалки дилеров */
+@media (max-width: 576px) {
+    .dealers-modal-content {
+        width: 95%;
+    }
+    
+    .dealers-modal-header {
+        padding: 20px 20px 15px;
+    }
+    
+    .dealers-modal-icon {
+        font-size: 2rem;
+    }
+    
+    .dealers-modal-title {
+        font-size: 1.3rem;
+    }
+    
+    .dealers-modal-body {
+        padding: 20px;
+    }
+    
+    .dealer-item {
+        padding: 15px;
+    }
+    
+    .dealer-region-name {
+        font-size: 1.1rem;
+    }
+    
+    .dealer-phone {
+        font-size: 1.1rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 375px) {
+    .dealer-phone {
+        font-size: 1rem;
+    }
+}
+
+/* Иконка дилеров для мобильных - ВСЕГДА ВИДНА */
+.mobile-dealers-icon-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    position: relative;
+}
+
+.mobile-dealers-icon-btn:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+}
+
+.mobile-dealers-icon-btn::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--white);
+}
+
+@media (max-width: 992px) {
+    .mobile-dealers-icon-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-dealers-icon-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .mobile-dealers-icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .mobile-dealers-icon-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+}
+
+/* Модальное окно дилеров */
+.dealers-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.dealers-modal-content {
+    background: var(--white);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s ease;
+}
+
+.dealers-modal-header {
+    padding: 25px 25px 15px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--navy) 0%, #1a2f4f 100%);
+    border-radius: 24px 24px 0 0;
+}
+
+.dealers-modal-icon {
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.dealers-modal-title {
+    font-size: 1.5rem;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+}
+
+.dealers-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.dealers-modal-close:hover {
+    background: var(--gold);
+    transform: rotate(90deg);
+}
+
+.dealers-modal-body {
+    padding: 25px;
+    background: var(--cream);
+}
+
+.dealer-item {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.dealer-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.dealer-region {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.dealer-region-icon {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.dealer-region-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.dealer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dealer-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray);
+    font-size: 1rem;
+}
+
+.dealer-name-icon {
+    color: var(--gold);
+    font-size: 1rem;
+}
+
+.dealer-phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    background: var(--cream);
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.dealer-phone:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateX(5px);
+}
+
+.dealer-phone-icon {
+    font-size: 1rem;
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.dealer-phone:hover .dealer-phone-icon {
+    color: var(--white);
+}
+
+.dealers-modal-footer {
+    padding: 15px 25px 25px;
+    text-align: center;
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+}
+
+.dealers-modal-btn {
+    padding: 12px 30px;
+    background: var(--navy);
+    border: none;
+    border-radius: 40px;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.dealers-modal-btn:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+/* Адаптивность для модалки дилеров */
+@media (max-width: 768px) {
+    .dealers-modal-header {
+        padding: 20px 20px 15px;
+    }
+    
+    .dealers-modal-icon {
+        font-size: 2rem;
+    }
+    
+    .dealers-modal-title {
+        font-size: 1.3rem;
+    }
+    
+    .dealers-modal-body {
+        padding: 20px;
+    }
+    
+    .dealer-item {
+        padding: 15px;
+    }
+    
+    .dealer-region-name {
+        font-size: 1.1rem;
+    }
+    
+    .dealer-phone {
+        font-size: 1.1rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dealers-modal-content {
+        width: 95%;
+    }
+    
+    .dealer-phone {
+        font-size: 1rem;
+    }
+}
+
+/* Кнопка дилеров для ПК */
+.dealers-pc-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--navy);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 5px;
+}
+
+.dealers-pc-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+.dealers-pc-icon {
+    font-size: 1.1rem;
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.dealers-pc-btn:hover .dealers-pc-icon {
+    color: var(--white);
+}
+
+.dealers-pc-text {
+    font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+    .dealers-pc-btn {
+        display: none;
+    }
+}
+
+/* Иконка дилеров для мобильных */
+.mobile-dealers-icon-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    position: relative;
+}
+
+.mobile-dealers-icon-btn:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+}
+
+@media (max-width: 992px) {
+    .mobile-dealers-icon-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-dealers-icon-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .mobile-dealers-icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .mobile-dealers-icon-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+}
+
+/* Остальные стили для модалки дилеров */
+.dealers-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.dealers-modal-content {
+    background: var(--white);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s ease;
+}
+
+.dealers-modal-header {
+    padding: 25px 25px 15px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--navy) 0%, #1a2f4f 100%);
+    border-radius: 24px 24px 0 0;
+}
+
+.dealers-modal-icon {
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.dealers-modal-title {
+    font-size: 1.5rem;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+}
+
+.dealers-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.dealers-modal-close:hover {
+    background: var(--gold);
+    transform: rotate(90deg);
+}
+
+.dealers-modal-body {
+    padding: 25px;
+    background: var(--cream);
+}
+
+.dealer-item {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.dealer-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gold);
+}
+
+.dealer-region {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.dealer-region-icon {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.dealer-region-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.dealer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dealer-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray);
+    font-size: 1rem;
+}
+
+.dealer-name-icon {
+    color: var(--gold);
+    font-size: 1rem;
+}
+
+.dealer-phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    background: var(--cream);
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.dealer-phone:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateX(5px);
+}
+
+.dealer-phone-icon {
+    font-size: 1rem;
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.dealer-phone:hover .dealer-phone-icon {
+    color: var(--white);
+}
+
+.dealers-modal-footer {
+    padding: 15px 25px 25px;
+    text-align: center;
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+}
+
+.dealers-modal-btn {
+    padding: 12px 30px;
+    background: var(--navy);
+    border: none;
+    border-radius: 40px;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.dealers-modal-btn:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+/* Адаптивность для модалки */
+@media (max-width: 768px) {
+    .dealers-modal-header {
+        padding: 20px 20px 15px;
+    }
+    
+    .dealers-modal-icon {
+        font-size: 2rem;
+    }
+    
+    .dealers-modal-title {
+        font-size: 1.3rem;
+    }
+    
+    .dealers-modal-body {
+        padding: 20px;
+    }
+    
+    .dealer-item {
+        padding: 15px;
+    }
+    
+    .dealer-region-name {
+        font-size: 1.1rem;
+    }
+    
+    .dealer-phone {
+        font-size: 1.1rem;
+    }
+}
