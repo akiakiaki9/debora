@@ -49,22 +49,21 @@ const Footer = () => {
     const mainCategories = categories.slice(0, 6);
 
     const footerInfoLinks = [
-        { name: 'О нас', slug: '/about' },
         { name: 'Контакты', slug: '/contacts' },
         { name: 'Корзина', slug: '/cart' },
         { name: 'Каталог', slug: '/catalog' },
     ];
 
     const footerSocialLinks = [
-        { icon: <FaTelegram />, href: 'https://t.me/debora_ceramica', label: 'Telegram' },
+        { icon: <FaTelegram />, href: 'https://t.me/debora_ceramic', label: 'Telegram' },
         { icon: <FaInstagram />, href: 'https://instagram.com/debora_ceramica', label: 'Instagram' },
         { icon: <FaYoutube />, href: 'https://www.youtube.com/@debora_ceramica', label: 'YouTube' },
     ];
 
     const locations = [
-        { name: 'Абу Сахий', address: '1 этаж, 10 магазин', phone: '+998941471116' },
-        { name: 'Урикзор', address: '5 ряд, 27 магазин', phone: '+998977074046' },
-        { name: 'Фархад', address: '1 этаж, 133 магазин', phone: '+998974008180' }
+        { name: 'Globalstroy', address: '1 этаж, 10 магазин', phone: '+998941471116' },
+        { name: "O'rikzor", address: '5 ряд, 27 магазин', phone: '+998977074046' },
+        { name: 'Jomi bozori', address: '1 этаж, 133 магазин', phone: '+998974008180' }
     ];
 
     return (

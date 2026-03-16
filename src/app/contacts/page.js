@@ -94,7 +94,7 @@ export default function ContactsPage() {
                                     <FaTelegram />
                                 </div>
                                 <h3 className="info-title">Telegram</h3>
-                                <a href="https://t.me/deboraceramica" target="_blank" rel="noopener noreferrer" className="info-value">
+                                <a href="https://t.me/debora_ceramic" target="_blank" rel="noopener noreferrer" className="info-value">
                                     @debora_ceramica
                                 </a>
                                 <p className="info-note">Быстрая связь</p>
@@ -147,7 +147,7 @@ export default function ContactsPage() {
                     <div className="container">
                         <h2 className="social-title">Мы в соцсетях</h2>
                         <div className="social-grid">
-                            <a href="https://t.me/debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card telegram">
+                            <a href="https://t.me/debora_ceramic" target="_blank" rel="noopener noreferrer" className="social-card telegram">
                                 <FaTelegram className="social-icon" />
                                 <span className="social-name">Telegram</span>
                                 <span className="social-link">@debora_ceramica</span>

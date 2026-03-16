@@ -127,7 +127,7 @@ const Contacts = () => {
             ],
             note: 'Быстрая связь',
             link: {
-                href: 'https://t.me/debora_ceramica',
+                href: 'https://t.me/debora_ceramic',
                 text: 'Перейти в Telegram'
             }
         }
@@ -138,15 +138,15 @@ const Contacts = () => {
             id: 1,
             name: 'Telegram',
             icon: <FaTelegram />,
-            link: 'https://t.me/deboraceramica',
-            username: '@debora_ceramica',
+            link: 'https://t.me/debora_ceramic',
+            username: '@debora_ceramic',
             color: 'telegram'
         },
         {
             id: 2,
             name: 'Instagram',
             icon: <FaInstagram />,
-            link: 'https://instagram.com/deboraceramica',
+            link: 'https://instagram.com/debora_ceramica',
             username: '@debora_ceramica',
             color: 'instagram'
         },
@@ -169,7 +169,7 @@ const Contacts = () => {
                         <span className="hero-badge">3 магазина в Ташкенте</span>
                         <h1 className="contacts-title">Контакты</h1>
                         <p className="contacts-subtitle">
-                            Найдите нас в Абу Сахий, Урикзоре или Фархаде.
+                            Найдите нас в Globalstroy, Qo'yliq или Jomi bozori.
                             Мы всегда рады помочь с выбором сантехники для вашего дома.
                         </p>
                     </div>

@@ -150,9 +150,9 @@ const Navbar = () => {
     }, []);
 
     const phones = [
-        { name: 'Абу Сахий', number: '+998941471116', formatted: '+998 94 147-11-16' },
-        { name: 'Урикзор', number: '+998977074046', formatted: '+998 97 707-40-46' },
-        { name: 'Фархад', number: '+998974008180', formatted: '+998 97 400-81-80' },
+        { name: 'Globalstroy', number: '+998941471116', formatted: '+998 94 147-11-16' },
+        { name: "Qo'yliq", number: '+998977074046', formatted: '+998 97 707-40-46' },
+        { name: 'Jomi bozori', number: '+998974008180', formatted: '+998 97 400-81-80' },
     ];
 
     // Поиск по товарам
