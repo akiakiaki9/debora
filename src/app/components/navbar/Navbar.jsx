@@ -64,7 +64,23 @@ const Navbar = () => {
             formattedPhone: '+998 91 530-77-08',
             name: 'Jonibek',
             icon: <FiUser />
-        }
+        },
+        {
+            id: 4,
+            region: "Qo'qon shahri",
+            phone: '+998911556555',
+            formattedPhone: '+998 91 155-65-55',
+            name: 'Abdulhamid',
+            icon: <FiUser />
+        },
+        {
+            id: 5,
+            region: "Andijon viloyati",
+            phone: '+998950000112',
+            formattedPhone: '+998 95 000-01-12',
+            name: 'Muhammadumar',
+            icon: <FiUser />
+        },
     ];
 
     useEffect(() => {
