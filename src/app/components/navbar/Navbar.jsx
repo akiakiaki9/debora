@@ -69,7 +69,9 @@ const Navbar = () => {
             id: 4,
             region: "Qo'qon shahri",
             phone: '+998911556555',
+            phone: '+998903058887',
             formattedPhone: '+998 91 155-65-55',
+            formattedPhone: '+998 90 305-88-87',
             name: 'Abdulhamid',
             icon: <FiUser />
         },
