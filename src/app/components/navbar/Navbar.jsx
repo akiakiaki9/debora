@@ -246,7 +246,6 @@ const Navbar = () => {
             <nav className={`navbar-main ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container">
                     <div className="navbar-main-inner">
-                        {/* Логотип - УВЕЛИЧЕН */}
                         <Link href="/" className="logo" onClick={closeMenu}>
                             <div className="logo-wrapper">
                                 <Image

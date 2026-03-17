@@ -157,7 +157,7 @@ export default function ContactsPage() {
                                 <span className="social-name">Instagram</span>
                                 <span className="social-link">@debora_ceramica</span>
                             </a>
-                            <a href="https://www.youtube.com/@debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card facebook">
+                            <a href="https://www.youtube.com/@debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card youtube">
                                 <FaYoutube className="social-icon" />
                                 <span className="social-name">You Tube</span>
                                 <span className="social-link">debora_ceramica</span>
