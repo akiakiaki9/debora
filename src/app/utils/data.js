@@ -779,148 +779,265 @@ export const products = [
         }
     },
     // РАКОВИНЫ
-    {
+    { // YES
         id: 34,
         name: 'Раковина для столешницы',
         category: 'rakovina',
         image: '/images/data/rakovina/1.png',
+        image_1: '/images/data/rakovina/1.1.png',
         inStock: true,
         specs: {
-            size: "1005x515x220 mm",
-            width: "60-100 sm",
+            size: "1200x500x195 mm",
             material: "Керамика",
-            model: "1176-100",
+            model: "8512",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Cabinet basin"
         }
     },
-    {
+    { // YES
         id: 35,
         name: 'Раковина для столешницы',
         category: 'rakovina',
         image: '/images/data/rakovina/2.png',
+        image_1: '/images/data/rakovina/2.1.png',
         inStock: true,
         specs: {
-            size: "605x520x225 mm",
-            width: "60-100 sm",
+            size: "905x535x200 mm",
             material: "Керамика",
-            model: "1176-60",
+            model: "9790",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Cabinet basin"
         }
     },
-    {
+    { // YES
         id: 36,
-        name: 'Раковина для столешницы',
+        name: 'Раковина Debora',
         category: 'rakovina',
         image: '/images/data/rakovina/3.png',
+        image_1: '/images/data/rakovina/3.1.png',
         inStock: true,
         specs: {
-            size: "705x520x225 mm",
-            width: "60-100 sm",
+            size: "1005x500x210 mm",
             material: "Керамика",
-            model: "1176-70",
+            model: "9810",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Cabinet basin"
         }
     },
-    {
+    { // YES
         id: 37,
-        name: 'Раковина для столешницы',
+        name: 'Раковина Debora',
         category: 'rakovina',
         image: '/images/data/rakovina/4.png',
+        image_1: '/images/data/rakovina/4.1.png',
         inStock: true,
         specs: {
-            size: "805x520x225 mm",
-            width: "60-100 sm",
+            size: "505x420x195 mm",
             material: "Керамика",
-            model: "1176-80",
+            model: "841-50",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Cabinet basin"
         }
     },
-    {
+    { // YES
         id: 38,
-        name: 'Раковина для столешницы',
+        name: 'Раковина Debora',
         category: 'rakovina',
         image: '/images/data/rakovina/5.png',
         inStock: true,
         specs: {
-            size: "900x515x225 mm",
-            width: "60-100 sm",
+            size: "560x460x450 mm",
             material: "Керамика",
-            model: "1176-90",
+            model: "B215",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Wall-hung Basin",
         }
     },
-    {
+    { // YES
         id: 39,
-        name: 'Раковина для столешницы',
+        name: 'Раковина Debora',
         category: 'rakovina',
         image: '/images/data/rakovina/6.png',
         inStock: true,
         specs: {
-            size: "1000x500x160 mm",
-            width: "60-100 sm",
+            size: "610x460x490 mm",
             material: "Керамика",
-            model: "1173-100",
+            model: "B192",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Wall-hung Basin",
         }
     },
-    {
+    { // YES
         id: 40,
-        name: 'Раковина для столешницы',
+        name: 'Раковина Debora',
         category: 'rakovina',
         image: '/images/data/rakovina/7.png',
         inStock: true,
         specs: {
-            size: "900x500x160 mm",
-            width: "60-100 sm",
+            size: "520x440x490 mm",
             material: "Керамика",
-            model: "1173-90",
+            model: "B193",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Wall-hung Basin",
         }
     },
-    {
+    { // YES
         id: 41,
-        name: 'Раковина для столешницы',
+        name: 'Раковина Debora',
         category: 'rakovina',
         image: '/images/data/rakovina/8.png',
         inStock: true,
         specs: {
-            size: "800x500x160 mm",
-            width: "60-100 sm",
+            size: "540x460x560 mm",
             material: "Керамика",
-            model: "1173-80",
+            model: "B201",
             production: "Китай",
             quality: "Высокое",
             body: "Керамический",
-            type: "Thin Side Basin",
-            mounting: "Above cabinet"
+            type: "Wall-hung Basin",
+        }
+    },
+    { // YES
+        id: 42,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/9.png',
+        image_1: '/images/data/rakovina/9.1.png',
+        inStock: true,
+        specs: {
+            size: "510x475x195 mm",
+            material: "Керамика",
+            model: "836-50",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Wall-hung Basin",
+        }
+    },
+    { // YES
+        id: 43,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/10.png',
+        inStock: true,
+        specs: {
+            size: "540x460x560 mm",
+            material: "Керамика",
+            model: "B201",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Wall-hung Basin",
+        }
+    },
+    {
+        id: 44,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/11.png',
+        inStock: true,
+        specs: {
+            size: "610x460x880 mm",
+            material: "Керамика",
+            model: "B182",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Basin with Pedestal",
+        }
+    },
+    {
+        id: 45,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/12.png',
+        inStock: true,
+        specs: {
+            size: "520x440x830 mm",
+            material: "Керамика",
+            model: "B183",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Basin with Pedestal",
+        }
+    },
+    {
+        id: 46,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/13.png',
+        inStock: true,
+        specs: {
+            size: "560x470x805 mm",
+            material: "Керамика",
+            model: "B214",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Basin with Pedestal",
+        }
+    },
+    {
+        id: 47,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/14.png',
+        inStock: true,
+        specs: {
+            size: "560x470x830 mm",
+            material: "Керамика",
+            model: "B215",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Basin with Pedestal",
+        }
+    },
+    {
+        id: 48,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/15.png',
+        inStock: true,
+        specs: {
+            size: "570x450x845 mm",
+            material: "Керамика",
+            model: "B216",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Basin with Pedestal",
+        }
+    },
+    {
+        id: 49,
+        name: 'Раковина Debora',
+        category: 'rakovina',
+        image: '/images/data/rakovina/16.png',
+        inStock: true,
+        specs: {
+            size: "615x455x835 mm",
+            material: "Керамика",
+            model: "B190",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Керамический",
+            type: "Basin with Pedestal",
         }
     },
     // ПИСУАР
@@ -1258,7 +1375,7 @@ export const products = [
         }
     },
     // Инсталяция
-    {
+    { // YES
         id: 46,
         name: 'Инсталяция Debora',
         category: 'installation',
@@ -1276,7 +1393,7 @@ export const products = [
             set: "Бачок, кнопки для смыва, крепления, гофра"
         }
     },
-    {
+    { // YES
         id: 47,
         name: 'Инсталяция Debora',
         category: 'installation',
@@ -1294,8 +1411,152 @@ export const products = [
             set: "Бачок, кнопки для смыва, крепления, гофра"
         }
     },
-    // Раковина с тумбой
+    { // YES
+        id: 471,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/3.png',
+        inStock: true,
+        specs: {
+            size: "580x92x1152 mm",
+            material: "Металл",
+            model: "S003",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    { // YES
+        id: 472,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/4.png',
+        inStock: true,
+        specs: {
+            size: "400x148x820 mm",
+            material: "Металл",
+            model: "S004",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    { // YES
+        id: 473,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/5.png',
+        inStock: true,
+        specs: {
+            size: "1085x80x545 mm",
+            material: "Металл",
+            model: "A002",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
     {
+        id: 474,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/6.png',
+        inStock: true,
+        specs: {
+            size: "510x80x1080 mm",
+            material: "Металл",
+            model: "S003",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    {
+        id: 475,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/7.png',
+        inStock: true,
+        specs: {
+            size: "580x80x1090 mm",
+            material: "Металл",
+            model: "S005",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    {
+        id: 476,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/8.png',
+        inStock: true,
+        specs: {
+            size: "580x80x1090 mm",
+            material: "Металл",
+            model: "S001",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    {
+        id: 477,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/9.png',
+        inStock: true,
+        specs: {
+            size: "580x80x1140 mm",
+            material: "Металл",
+            model: "S006",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    {
+        id: 478,
+        name: 'Инсталяция Debora',
+        category: 'installation',
+        image: '/images/data/installation/10.png',
+        inStock: true,
+        specs: {
+            size: "485x78x1060 mm",
+            material: "Металл",
+            model: "S009",
+            production: "Китай",
+            quality: "Высокое",
+            body: "Металлический каркас",
+            type: "Embedded Type",
+            tank: "Concealed Tank",
+            set: "Бачок, кнопки для смыва, крепления, гофра"
+        }
+    },
+    // Раковина с тумбой
+    { // YES
         id: 48,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1310,7 +1571,7 @@ export const products = [
             width: "90 cm"
         }
     },
-    {
+    { // YES
         id: 49,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1325,7 +1586,7 @@ export const products = [
             width: "120 cm"
         }
     },
-    {
+    { // YES
         id: 50,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1340,7 +1601,7 @@ export const products = [
             width: "90 cm"
         }
     },
-    {
+    { // YES
         id: 51,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1355,7 +1616,7 @@ export const products = [
             width: "80 cm"
         }
     },
-    {
+    { // YES
         id: 52,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1370,7 +1631,7 @@ export const products = [
             width: "60 cm"
         }
     },
-    {
+    { // YES
         id: 53,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1385,7 +1646,7 @@ export const products = [
             width: "56 cm"
         }
     },
-    {
+    { // YES
         id: 54,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1400,7 +1661,7 @@ export const products = [
             width: "80 cm"
         }
     },
-    {
+    { // YES
         id: 55,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1415,7 +1676,7 @@ export const products = [
             width: "80 cm"
         }
     },
-    {
+    { // YES
         id: 56,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1430,7 +1691,7 @@ export const products = [
             width: "80 cm"
         }
     },
-    {
+    { // YES
         id: 57,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1445,7 +1706,7 @@ export const products = [
             width: "90 cm"
         }
     },
-    {
+    { // YES
         id: 58,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1460,7 +1721,7 @@ export const products = [
             width: "60 cm"
         }
     },
-    {
+    { // YES
         id: 59,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1475,7 +1736,7 @@ export const products = [
             width: "90 cm"
         }
     },
-    {
+    { // YES
         id: 60,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1490,7 +1751,7 @@ export const products = [
             width: "100 cm"
         }
     },
-    {
+    { // YES
         id: 61,
         name: 'Раковина с тумбой',
         category: 'raktumba',
@@ -1503,6 +1764,115 @@ export const products = [
             furnitureProduction: "Узбекистан",
             quality: "Высокое",
             width: "80 cm"
+        }
+    },
+    { // YES
+        id: 611,
+        name: 'Раковина с тумбой',
+        category: 'raktumba',
+        image: '/images/data/raktumba/15.png',
+        image_1: '/images/data/raktumba/15.1.png',
+        image_2: '/images/data/raktumba/15.2.png',
+        image_3: '/images/data/raktumba/15.3.png',
+        image_4: '/images/data/raktumba/15.4.png',
+        inStock: true,
+        specs: {
+            model: "L5010",
+            sinkMaterial: "Керамика",
+            furnitureMaterial: "ПВС (прессованный водоустойчивый пластик)",
+            production: "Китай",
+            furnitureProduction: "Узбекистан",
+            quality: "Высокое",
+            color: "Lauren Black Gold"
+        }
+    },
+    { // YES
+        id: 612,
+        name: 'Раковина с тумбой',
+        category: 'raktumba',
+        image: '/images/data/raktumba/16.png',
+        image_1: '/images/data/raktumba/16.1.png',
+        image_2: '/images/data/raktumba/16.2.png',
+        inStock: true,
+        specs: {
+            model: "L5001",
+            sinkMaterial: "Керамика",
+            furnitureMaterial: "ПВС (прессованный водоустойчивый пластик)",
+            production: "Китай",
+            furnitureProduction: "Узбекистан",
+            quality: "Высокое",
+            color: "Lauren Black Gold"
+        }
+    },
+    { // YES
+        id: 613,
+        name: 'Раковина с тумбой',
+        category: 'raktumba',
+        image: '/images/data/raktumba/17.png',
+        image_1: '/images/data/raktumba/17.1.png',
+        image_2: '/images/data/raktumba/17.2.png',
+        image_3: '/images/data/raktumba/17.3.png',
+        inStock: true,
+        specs: {
+            model: "L5005",
+            sinkMaterial: "Керамика",
+            furnitureMaterial: "ПВС (прессованный водоустойчивый пластик)",
+            production: "Китай",
+            furnitureProduction: "Узбекистан",
+            quality: "Высокое",
+            color: "Lauren Black Gold"
+        }
+    },
+    { // YES
+        id: 614,
+        name: 'Раковина с тумбой',
+        category: 'raktumba',
+        image: '/images/data/raktumba/18.png',
+        image_1: '/images/data/raktumba/18.1.png',
+        inStock: true,
+        specs: {
+            model: "L5007",
+            sinkMaterial: "Керамика",
+            furnitureMaterial: "ПВС (прессованный водоустойчивый пластик)",
+            production: "Китай",
+            furnitureProduction: "Узбекистан",
+            quality: "Высокое",
+            color: "Lauren Black Gold"
+        }
+    },
+    { // YES
+        id: 615,
+        name: 'Раковина с тумбой',
+        category: 'raktumba',
+        image: '/images/data/raktumba/19.png',
+        image_1: '/images/data/raktumba/19.1.png',
+        inStock: true,
+        specs: {
+            model: "L5008",
+            sinkMaterial: "Керамика",
+            furnitureMaterial: "ПВС (прессованный водоустойчивый пластик)",
+            production: "Китай",
+            furnitureProduction: "Узбекистан",
+            quality: "Высокое",
+            color: "Lauren Black Gold"
+        }
+    },
+    { // YES
+        id: 616,
+        name: 'Раковина с тумбой',
+        category: 'raktumba',
+        image: '/images/data/raktumba/20.png',
+        image_1: '/images/data/raktumba/20.1.png',
+        image_2: '/images/data/raktumba/20.2.png',
+        inStock: true,
+        specs: {
+            model: "L3001",
+            sinkMaterial: "Керамика",
+            furnitureMaterial: "ПВС (прессованный водоустойчивый пластик)",
+            production: "Китай",
+            furnitureProduction: "Узбекистан",
+            quality: "Высокое",
+            color: "Lauren Black Gold"
         }
     },
     // Сместители
@@ -1979,7 +2349,7 @@ export const products = [
         }
     },
     // ЗЕРКАЛО С ТУМБОЙ (oyna)
-    {
+    { // YES
         id: 86,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2000,7 +2370,7 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 87,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2021,7 +2391,7 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 88,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2042,11 +2412,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 89,
         name: 'MF5008-1600',
         category: 'oyna',
         image: '/images/data/oyna/4.png',
+        image_1: '/images/data/oyna/4.1.png',
         inStock: true,
         specs: {
             model: "MF5015-1600",
@@ -2064,7 +2435,7 @@ export const products = [
         }
     },
     //
-    {
+    { // YES
         id: 90,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2083,7 +2454,7 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 91,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2102,7 +2473,7 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 911,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2121,11 +2492,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 912,
         name: 'Зеркало с тумбой',
         category: 'oyna',
         image: '/images/data/oyna/8.png',
+        image_: '/images/data/oyna/8.1.png',
         inStock: true,
         specs: {
             model: "MF5009-1800",
@@ -2141,7 +2513,7 @@ export const products = [
         }
     },
     //
-    {
+    { // YES
         id: 913,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2160,7 +2532,7 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 914,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2179,7 +2551,7 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 915,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2199,7 +2571,7 @@ export const products = [
         }
     },
     //
-    {
+    { // YES
         id: 916,
         name: 'Зеркало с тумбой',
         category: 'oyna',
@@ -2220,11 +2592,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 917,
         name: 'Зеркало с тумбой',
         category: 'oyna',
         image: '/images/data/oyna/13.png',
+        image_1: '/images/data/oyna/13.1.png',
         inStock: true,
         specs: {
             model: "MF5011-1000",
@@ -2241,11 +2614,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 917,
         name: 'Зеркало с тумбой',
         category: 'oyna',
         image: '/images/data/oyna/14.png',
+        image_1: '/images/data/oyna/13.1.png',
         inStock: true,
         specs: {
             model: "MF5011-1200",
@@ -2262,11 +2636,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 918,
         name: 'Зеркало с тумбой',
         category: 'oyna',
         image: '/images/data/oyna/15.png',
+        image_1: '/images/data/oyna/13.1.png',
         inStock: true,
         specs: {
             model: "MF5011-1800",
@@ -2284,11 +2659,12 @@ export const products = [
         }
     },
     //
-    {
+    { // YES
         id: 919,
         name: 'Зеркало с тумбой',
         category: 'oyna',
         image: '/images/data/oyna/16.png',
+        image_1: '/images/data/oyna/16.1.png',
         inStock: true,
         specs: {
             model: "MF5012-1000",
@@ -2302,11 +2678,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 920,
         name: 'Зеркало с тумбой',
         category: 'oyna',
         image: '/images/data/oyna/17.png',
+        image_1: '/images/data/oyna/17.1.png',
         inStock: true,
         specs: {
             model: "MF5012-1500",
@@ -2320,11 +2697,12 @@ export const products = [
             }
         }
     },
-    {
+    { // YES
         id: 921,
         name: 'Зеркало с тумбой',
         category: 'oyna',
-        image: '/images/data/oyna/18.png',
+        image: '/images/data/oyna/17.png',
+        image_1: '/images/data/oyna/17.1.png',
         inStock: true,
         specs: {
             model: "MF5012-1800",
@@ -2339,11 +2717,12 @@ export const products = [
         }
     },
     //
-    {
+    { // YES
         id: 922,
         name: 'Зеркало с тумбой',
         category: 'oyna',
-        image: '/images/data/oyna/19.png',
+        image: '/images/data/oyna/17.png',
+        image_1: '/images/data/oyna/17.1.png',
         inStock: true,
         specs: {
             model: "MF5013-1400",
@@ -2358,11 +2737,13 @@ export const products = [
         }
     },
     //
-    {
+    { // YES
         id: 923,
         name: 'Зеркало с тумбой',
         category: 'oyna',
-        image: '/images/data/oyna/20.png',
+        image: '/images/data/oyna/18.png',
+        image_1: '/images/data/oyna/18.1.png',
+        image_2: '/images/data/oyna/18.2.png',
         inStock: true,
         specs: {
             model: "MF5014-1200",
@@ -2432,19 +2813,19 @@ export const products = [
         leg_colors: {
             color_1: {
                 color: "Gold",
-                url: "/images/vanna/legs/1.png"
+                url: "/images/data/vanna/legs/1.png"
             },
             color_2: {
                 color: "White",
-                url: "/images/vanna/legs/2.png"
+                url: "/images/data/vanna/legs/2.png"
             },
             color_3: {
                 color: "Silver",
-                url: "/images/vanna/legs/3.png"
+                url: "/images/data/vanna/legs/3.png"
             },
             color_4: {
                 color: "Coppery",
-                url: "/images/vanna/legs/4.png"
+                url: "/images/data/vanna/legs/4.png"
             },
         }
     },

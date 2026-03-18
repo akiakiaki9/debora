@@ -740,3 +740,284 @@
         scroll-behavior: auto !important;
     }
 }
+
+/* Дополнительные стили для product.css */
+
+/* Бейдж типа изображения */
+.image-type-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    color: var(--white);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--gold);
+    z-index: 2;
+}
+
+.image-type-badge svg {
+    color: var(--gold);
+}
+
+/* Бейдж на миниатюре */
+.thumb-badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 0.7rem;
+    border: 2px solid var(--white);
+}
+
+.thumb.leg {
+    position: relative;
+}
+
+/* Секция опций */
+.product-options-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--cream);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.options-title {
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin: 0 0 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.options-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--gold);
+    border-radius: 2px;
+}
+
+/* Сетка цветов ножек */
+.leg-colors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.leg-color-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.leg-color-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--gold);
+}
+
+.leg-color-btn.active {
+    border-color: var(--gold);
+    background: rgba(197, 165, 114, 0.05);
+}
+
+.leg-color-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leg-color-name {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--navy);
+    font-weight: 500;
+    text-align: left;
+}
+
+.leg-color-icon {
+    color: var(--gold);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Сетка опций */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-label:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.option-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--gold);
+}
+
+.option-text {
+    font-size: 0.95rem;
+    color: var(--navy);
+    flex: 1;
+}
+
+/* Спецификации в виде блоков */
+.specs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spec-block {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--white);
+}
+
+.spec-block-label {
+    padding: 12px 20px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.spec-block-icon {
+    color: var(--gold);
+}
+
+.spec-block-value {
+    padding: 20px;
+}
+
+.spec-array {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.spec-array-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--cream);
+    border-radius: 30px;
+    font-size: 0.9rem;
+    color: var(--navy);
+    border: 1px solid var(--border);
+}
+
+.spec-array-icon {
+    color: var(--gold);
+    font-size: 0.8rem;
+}
+
+.spec-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.spec-group-item {
+    display: flex;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.spec-group-item:last-child {
+    border-bottom: none;
+}
+
+.spec-group-label {
+    width: 150px;
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.spec-group-value {
+    flex: 1;
+    color: var(--navy);
+    font-weight: 500;
+}
+
+.spec-value-text {
+    color: var(--navy);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .leg-colors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .spec-group-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .spec-group-label {
+        width: 100%;
+    }
+    
+    .image-type-badge {
+        bottom: 10px;
+        left: 10px;
+        padding: 4px 10px;
+        font-size: 0.7rem;
+    }
+}

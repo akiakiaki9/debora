@@ -1127,3 +1127,334 @@
         transform: scale(0.98);
     }
 }
+
+.product-specs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.spec-pill {
+    background: var(--cream);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--navy);
+    border: 1px solid var(--border);
+}
+
+.product-specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.spec-item {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.spec-label {
+    color: var(--gray);
+    min-width: 100px;
+}
+
+.spec-value {
+    color: var(--navy);
+    font-weight: 500;
+}
+
+.photo-indicator {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.hover-image {
+    transition: transform 0.3s ease;
+}
+
+.product-image img {
+    transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    min-width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--navy);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.pagination-btn.active {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .spec-item {
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .spec-label {
+        min-width: auto;
+    }
+    
+    .pagination-btn {
+        min-width: 35px;
+        height: 35px;
+    }
+}
+
+/* Плавная смена изображений */
+.product-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background: var(--cream);
+}
+
+.product-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
+}
+
+.product-img.fade-in {
+    opacity: 1;
+    z-index: 2;
+}
+
+.product-img.fade-out {
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Индикатор количества фото */
+.photo-indicator {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 4px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+.photo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.photo-dot.active {
+    background: var(--gold);
+    transform: scale(1.2);
+}
+
+/* При наведении показываем все фото */
+.product-card-grid:hover .photo-indicator {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+}
+
+/* Для товаров с несколькими фото добавляем анимацию */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.product-card-grid[data-has-multiple="true"] .product-img {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Улучшенная анимация при наведении */
+.product-card-grid:hover .product-img {
+    transform: scale(1.05);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .photo-indicator {
+        padding: 4px 8px;
+    }
+    
+    .photo-dot {
+        width: 4px;
+        height: 4px;
+    }
+}
+
+/* Спецификации для списка */
+.product-specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.spec-item {
+    display: flex;
+    gap: 15px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.spec-label {
+    color: var(--gray);
+    min-width: 120px;
+    font-weight: 400;
+}
+
+.spec-value {
+    color: var(--navy);
+    font-weight: 500;
+    flex: 1;
+}
+
+/* Цветные теги */
+.colors-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.color-tag {
+    background: var(--cream);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.color-tag:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Спецификации для сетки */
+.product-specs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.spec-pill {
+    background: var(--cream);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--navy);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spec-pill:hover {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .spec-item {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .spec-label {
+        min-width: auto;
+        font-size: 0.85rem;
+    }
+    
+    .spec-value {
+        font-size: 0.9rem;
+    }
+    
+    .product-specs-grid {
+        gap: 4px;
+    }
+    
+    .spec-pill {
+        padding: 3px 8px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Темная тема (если есть) */
+@media (prefers-color-scheme: dark) {
+    .spec-pill {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .color-tag {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}

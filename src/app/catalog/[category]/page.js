@@ -1,3 +1,4 @@
+// category.jsx
 'use client'
 import React, { useState, useMemo, useCallback, useEffect, memo } from 'react';
 import Link from 'next/link';
@@ -10,8 +11,7 @@ import {
     FiArrowLeft,
     FiChevronRight,
     FiBox,
-    FiShoppingCart,
-    FiHeart
+    FiShoppingCart
 } from 'react-icons/fi';
 import { PiToilet } from "react-icons/pi";
 import { GiBathtub } from "react-icons/gi";
@@ -25,6 +25,59 @@ import { products, categories } from '@/app/utils/data';
 import './category.css';
 import PdfFloatingButton from '@/app/components/pdf/Pdf';
 
+// Словарь для перевода характеристик на русский
+const specTranslations = {
+    // Основные
+    size: 'Размер',
+    material: 'Материал',
+    model: 'Модель',
+    production: 'Производство',
+    quality: 'Качество',
+    
+    // Для унитазов
+    pTrap: 'Выпуск в пол',
+    sTrap: 'Выпуск в стену',
+    flushingSystem: 'Система смыва',
+    coating: 'Покрытие',
+    body: 'Тип корпуса',
+    
+    // Для ванн
+    type: 'Тип',
+    additionalOptions: 'Дополнительно',
+    leg_colors: 'Цвета ножек',
+    
+    // Для раковин с тумбой
+    sinkMaterial: 'Материал раковины',
+    furnitureMaterial: 'Материал тумбы',
+    width: 'Ширина',
+    color: 'Цвет',
+    
+    // Для зеркал
+    sizes: 'Размеры',
+    mirror: 'Зеркало',
+    cabinet: 'Тумба',
+    basin: 'Раковина',
+    colors: 'Цвета',
+    
+    // Для смесителей
+    cartridge: 'Картридж',
+    spoutHeight: 'Высота излива',
+    projection: 'Вылет',
+    functions: 'Функции',
+    centreDistance: 'Межосевое расстояние',
+    showerHoseLength: 'Длина шланга',
+    
+    // Для инсталляции
+    tank: 'Бачок',
+    set: 'Комплектация',
+    
+    // Общее
+    color_1: 'Цвет 1',
+    color_2: 'Цвет 2',
+    color_3: 'Цвет 3',
+    color_4: 'Цвет 4',
+};
+
 // Маппинг иконок для категорий
 const categoryIcons = {
     'unitaz': <PiToilet />,
@@ -37,6 +90,7 @@ const categoryIcons = {
     'raktumba': <MdChair />,
     'vanna': <GiBathtub />,
     'smestitel': <FaShower />,
+    'smestitel_dush': <FaShower />,
     'oyna': <GiMirrorMirror />,
     'default': <FiGrid />
 };
@@ -71,49 +125,251 @@ const categoryBanners = {
     'oyna': 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&auto=format'
 };
 
-// Мемоизированная карточка товара для сетки
-const GridProductCard = memo(({ product, onAddToCart }) => {
+// Функция для форматирования значения характеристики
+const formatSpecValue = (key, value) => {
+    // Если это массив
+    if (Array.isArray(value)) {
+        return value.join(', ');
+    }
+    
+    // Если это объект с размерами (mirror, cabinet, basin)
+    if (key === 'sizes' && value && typeof value === 'object') {
+        return Object.entries(value)
+            .map(([sizeKey, sizeValue]) => {
+                const translations = {
+                    mirror: 'Зеркало',
+                    cabinet: 'Тумба',
+                    basin: 'Раковина'
+                };
+                return `${translations[sizeKey] || sizeKey}: ${sizeValue}`;
+            })
+            .join(' • ');
+    }
+    
+    // Если это объект с цветами
+    if (key === 'colors' && value && typeof value === 'object') {
+        return Object.values(value)
+            .filter(v => typeof v === 'string')
+            .join(', ');
+    }
+    
+    // Если это объект с цветами ножек
+    if (key === 'leg_colors' && value && typeof value === 'object') {
+        return Object.values(value)
+            .map(item => item.color)
+            .join(', ');
+    }
+    
+    // Если это объект с color_1, color_2 и т.д.
+    if (key.startsWith('color_') && value) {
+        return value;
+    }
+    
+    // Обычные значения
+    if (typeof value === 'object' && value !== null) {
+        return JSON.stringify(value);
+    }
+    
+    return String(value);
+};
+
+// Компонент для отображения характеристик
+const ProductSpecs = memo(({ specs, viewMode }) => {
+    if (!specs) return null;
+    
+    // Для списка показываем подробно
+    if (viewMode === 'list') {
+        // Специальная обработка для разных типов товаров
+        const renderSpecs = () => {
+            const elements = [];
+            
+            Object.entries(specs).forEach(([key, value]) => {
+                // Пропускаем служебные поля
+                if (key === 'id' || key === 'category') return;
+                
+                // Обработка sizes (для зеркал с тумбой)
+                if (key === 'sizes' && value && typeof value === 'object') {
+                    Object.entries(value).forEach(([sizeKey, sizeValue]) => {
+                        const translations = {
+                            mirror: 'Зеркало',
+                            cabinet: 'Тумба',
+                            basin: 'Раковина'
+                        };
+                        elements.push(
+                            <div key={`${key}-${sizeKey}`} className="spec-item">
+                                <span className="spec-label">{translations[sizeKey] || sizeKey}:</span>
+                                <span className="spec-value">{sizeValue}</span>
+                            </div>
+                        );
+                    });
+                }
+                // Обработка colors (для зеркал с тумбой)
+                else if (key === 'colors' && value && typeof value === 'object') {
+                    const colors = Object.values(value).filter(v => typeof v === 'string');
+                    if (colors.length > 0) {
+                        elements.push(
+                            <div key={key} className="spec-item">
+                                <span className="spec-label">Цвета:</span>
+                                <span className="spec-value colors-list">
+                                    {colors.map((color, idx) => (
+                                        <span key={idx} className="color-tag">{color}</span>
+                                    ))}
+                                </span>
+                            </div>
+                        );
+                    }
+                }
+                // Обработка leg_colors (для ванн)
+                else if (key === 'leg_colors' && value && typeof value === 'object') {
+                    const legColors = Object.values(value).map(item => item.color);
+                    if (legColors.length > 0) {
+                        elements.push(
+                            <div key={key} className="spec-item">
+                                <span className="spec-label">Цвета ножек:</span>
+                                <span className="spec-value colors-list">
+                                    {legColors.map((color, idx) => (
+                                        <span key={idx} className="color-tag">{color}</span>
+                                    ))}
+                                </span>
+                            </div>
+                        );
+                    }
+                }
+                // Обработка additionalOptions (для ванн)
+                else if (key === 'additionalOptions' && Array.isArray(value)) {
+                    elements.push(
+                        <div key={key} className="spec-item">
+                            <span className="spec-label">Дополнительно:</span>
+                            <span className="spec-value">
+                                {value.join(', ')}
+                            </span>
+                        </div>
+                    );
+                }
+                // Обработка color_1, color_2 и т.д.
+                else if (key.startsWith('color_') && value) {
+                    // Пропускаем, так как обработали выше в colors
+                    return;
+                }
+                // Обычные характеристики
+                else if (value && typeof value !== 'object') {
+                    elements.push(
+                        <div key={key} className="spec-item">
+                            <span className="spec-label">{specTranslations[key] || key}:</span>
+                            <span className="spec-value">{value}</span>
+                        </div>
+                    );
+                }
+            });
+            
+            return elements;
+        };
+        
+        return (
+            <div className="product-specs-list">
+                {renderSpecs()}
+            </div>
+        );
+    }
+    
+    // Для сетки показываем в виде компактных пилюль
+    const getGridSpecs = () => {
+        const pills = [];
+        
+        // Приоритетные характеристики для разных категорий
+        if (specs.sizes) {
+            // Для зеркал с тумбой показываем размеры
+            const sizes = specs.sizes;
+            if (sizes.cabinet) pills.push(`Тумба: ${sizes.cabinet}`);
+            if (sizes.mirror) pills.push(`Зеркало: ${sizes.mirror}`);
+        } else if (specs.colors) {
+            // Для товаров с цветами
+            const colors = Object.values(specs.colors).filter(v => typeof v === 'string');
+            if (colors.length > 0) pills.push(`${colors.length} цвета`);
+        } else if (specs.leg_colors) {
+            // Для ванн с цветными ножками
+            const legColors = Object.values(specs.leg_colors).length;
+            pills.push(`${legColors} цвета ножек`);
+        } else if (specs.size) {
+            // Основной размер
+            pills.push(specs.size);
+        } else if (specs.material) {
+            // Материал
+            pills.push(specs.material);
+        } else if (specs.model) {
+            // Модель
+            pills.push(`Модель: ${specs.model}`);
+        } else if (specs.type) {
+            // Тип
+            pills.push(specs.type);
+        }
+        
+        // Добавляем еще пару характеристик
+        Object.entries(specs).forEach(([key, value]) => {
+            if (pills.length >= 3) return;
+            if (['sizes', 'colors', 'size', 'material', 'model', 'leg_colors', 'type'].includes(key)) return;
+            if (key.startsWith('color_')) return;
+            if (typeof value === 'string' && value.length < 30 && !key.includes('image')) {
+                pills.push(`${specTranslations[key] || key}: ${value}`);
+            }
+        });
+        
+        return pills.slice(0, 3);
+    };
+    
+    if (viewMode === 'grid') {
+        const gridSpecs = getGridSpecs();
+        return (
+            <div className="product-specs-grid">
+                {gridSpecs.map((spec, index) => (
+                    <div key={index} className="spec-pill" title={spec}>
+                        {spec}
+                    </div>
+                ))}
+            </div>
+        );
+    }
+    
+    return null;
+});
+
+ProductSpecs.displayName = 'ProductSpecs';
+
+// Мемоизированная карточка товара для сетки с плавной сменой фото
+const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave, isHovered }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const [currentImage, setCurrentImage] = useState(product.image);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    
+    // Плавная смена изображения при наведении
+    useEffect(() => {
+        if (isHovered && product.image_1) {
+            setIsTransitioning(true);
+            // Небольшая задержка для плавности
+            setTimeout(() => {
+                setCurrentImage(product.image_1);
+                setTimeout(() => setIsTransitioning(false), 50);
+            }, 50);
+        } else {
+            if (currentImage !== product.image) {
+                setIsTransitioning(true);
+                setTimeout(() => {
+                    setCurrentImage(product.image);
+                    setTimeout(() => setIsTransitioning(false), 50);
+                }, 50);
+            }
+        }
+    }, [isHovered, product.image, product.image_1]);
 
-    // Получаем основные характеристики для отображения
-    const mainSpecs = useMemo(() => {
-        if (!product.specs) return [];
-
-        // Приоритетные поля для каждой категории
-        const priorityFields = {
-            'unitaz': ['size', 'model', 'flushingSystem'],
-            'bide': ['size', 'model', 'installation'],
-            'chasha': ['size', 'model', 'type'],
-            'rakovina': ['size', 'model', 'mounting'],
-            'pisuar': ['size', 'model', 'mechanism'],
-            'chashogen': ['size', 'model', 'color'],
-            'installation': ['size', 'model', 'type'],
-            'raktumba': ['width', 'sinkMaterial', 'furnitureMaterial'],
-            'vanna': ['size', 'material'],
-            'smestitel': ['model', 'type', 'cartridge'],
-            'oyna': ['model', 'sizes']
-        };
-
-        const category = product.category;
-        const fields = priorityFields[category] || ['size', 'model'];
-
-        return fields
-            .map(field => {
-                const value = product.specs[field];
-                if (!value) return null;
-
-                // Форматируем значение для отображения
-                if (typeof value === 'object') {
-                    if (field === 'sizes') {
-                        return `Зеркало: ${value.mirror || ''}`;
-                    }
-                    return JSON.stringify(value).slice(0, 30);
-                }
-                return `${field}: ${value}`;
-            })
-            .filter(Boolean)
-            .slice(0, 2);
+    // Подсчет количества изображений
+    const imageCount = useMemo(() => {
+        let count = 1; // основное фото
+        if (product.image_1) count++;
+        if (product.image_2) count++;
+        if (product.image_3) count++;
+        if (product.image_4) count++;
+        return count;
     }, [product]);
 
     return (
@@ -122,6 +378,8 @@ const GridProductCard = memo(({ product, onAddToCart }) => {
                 href={`/product/${product.id}`}
                 className="product-card-link"
                 prefetch={false}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
             >
                 <div className="product-image">
                     {!imageLoaded && !imageError && (
@@ -132,28 +390,54 @@ const GridProductCard = memo(({ product, onAddToCart }) => {
                             <FiGrid size={32} />
                         </div>
                     ) : (
-                        <img
-                            src={product.image}
-                            alt={product.name}
-                            loading="lazy"
-                            decoding="async"
-                            onLoad={() => setImageLoaded(true)}
-                            onError={() => setImageError(true)}
-                            style={{ opacity: imageLoaded ? 1 : 0 }}
-                        />
+                        <>
+                            <img
+                                src={currentImage}
+                                alt={product.name}
+                                loading="lazy"
+                                decoding="async"
+                                onLoad={() => setImageLoaded(true)}
+                                onError={() => setImageError(true)}
+                                className={`product-img ${isTransitioning ? 'fade-out' : 'fade-in'}`}
+                            />
+                            {/* Второе изображение для кросс-фейда */}
+                            {isHovered && product.image_1 && currentImage === product.image_1 && (
+                                <img
+                                    src={product.image}
+                                    alt={`${product.name} основное`}
+                                    className="product-img fade-out"
+                                    style={{ position: 'absolute', top: 0, left: 0 }}
+                                />
+                            )}
+                        </>
+                    )}
+                    
+                    {/* Бейджи */}
+                    {product.oldPrice && (
+                        <span className="product-badge sale">SALE</span>
                     )}
                     {!product.inStock && (
                         <span className="product-badge out">Под заказ</span>
+                    )}
+                    
+                    {/* Индикатор количества фото */}
+                    {imageCount > 1 && (
+                        <span className="photo-indicator">
+                            {Array.from({ length: imageCount }).map((_, idx) => (
+                                <span 
+                                    key={idx} 
+                                    className={`photo-dot ${idx === 0 && !isHovered ? 'active' : ''} ${idx === 1 && isHovered ? 'active' : ''}`} 
+                                />
+                            ))}
+                        </span>
                     )}
                 </div>
 
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-                    <div className="product-specs">
-                        {mainSpecs.map((spec, index) => (
-                            <span key={index} className="product-spec">{spec}</span>
-                        ))}
-                    </div>
+                    
+                    {/* Характеристики */}
+                    <ProductSpecs specs={product.specs} viewMode="grid" />
                 </div>
             </Link>
 
@@ -177,25 +461,6 @@ GridProductCard.displayName = 'GridProductCard';
 const ListProductCard = memo(({ product, onAddToCart }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
-
-    // Форматируем все характеристики для отображения в списке
-    const allSpecs = useMemo(() => {
-        if (!product.specs) return [];
-
-        return Object.entries(product.specs)
-            .map(([key, value]) => {
-                if (typeof value === 'object') {
-                    if (key === 'sizes') {
-                        return Object.entries(value)
-                            .map(([k, v]) => `${k}: ${v}`)
-                            .join(' • ');
-                    }
-                    return `${key}: ${JSON.stringify(value)}`;
-                }
-                return `${key}: ${value}`;
-            })
-            .slice(0, 4);
-    }, [product]);
 
     return (
         <div className="product-card-list">
@@ -226,17 +491,20 @@ const ListProductCard = memo(({ product, onAddToCart }) => {
                     {!product.inStock && (
                         <span className="product-badge out">Под заказ</span>
                     )}
+                    
+                    {/* Индикатор количества фото для списка */}
+                    {Object.keys(product).filter(key => key.startsWith('image_')).length > 0 && (
+                        <span className="photo-indicator list">
+                            +{Object.keys(product).filter(key => key.startsWith('image_')).length}
+                        </span>
+                    )}
                 </div>
 
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-                    <div className="product-specs-list">
-                        {allSpecs.map((spec, index) => (
-                            <div key={index} className="product-spec-item">
-                                {spec}
-                            </div>
-                        ))}
-                    </div>
+                    
+                    {/* Подробные характеристики для списка */}
+                    <ProductSpecs specs={product.specs} viewMode="list" />
                 </div>
             </Link>
 
@@ -263,6 +531,9 @@ export default function CategoryPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [filters, setFilters] = useState({});
     const { addToCart } = useCart();
+    
+    // Состояние для hover эффекта
+    const [hoveredProductId, setHoveredProductId] = useState(null);
 
     // Находим информацию о категории из импортированных данных
     const categoryInfo = useMemo(() => {
@@ -365,6 +636,15 @@ export default function CategoryPage() {
         setTimeout(() => btn.classList.remove('clicked'), 200);
     }, [addToCart]);
 
+    // Обработчики hover для смены изображения
+    const handleMouseEnter = useCallback((productId) => {
+        setHoveredProductId(productId);
+    }, []);
+
+    const handleMouseLeave = useCallback(() => {
+        setHoveredProductId(null);
+    }, []);
+
     // Обработчик изменения фильтра
     const handleFilterChange = useCallback((filterKey, value, checked) => {
         setFilters(prev => {
@@ -427,14 +707,24 @@ export default function CategoryPage() {
             'mounting': 'Монтаж',
             'mechanism': 'Механизм',
             'cartridge': 'Картридж',
-            'pTrap': 'Выпуск (P-ловушка)',
-            'sTrap': 'Выпуск (S-ловушка)',
+            'pTrap': 'Выпуск в пол',
+            'sTrap': 'Выпуск в стену',
             'width': 'Ширина',
             'sinkMaterial': 'Материал раковины',
-            'furnitureMaterial': 'Материал мебели',
+            'furnitureMaterial': 'Материал тумбы',
             'sizes_mirror': 'Размер зеркала',
             'sizes_cabinet': 'Размер тумбы',
-            'sizes_basin': 'Размер раковины'
+            'sizes_basin': 'Размер раковины',
+            'additionalOptions': 'Дополнительно',
+            'leg_colors': 'Цвета ножек',
+            'colors': 'Цвета',
+            'tank': 'Бачок',
+            'set': 'Комплектация',
+            'spoutHeight': 'Высота излива',
+            'projection': 'Вылет',
+            'functions': 'Функции',
+            'centreDistance': 'Межосевое расстояние',
+            'showerHoseLength': 'Длина шланга'
         };
 
         return labels[key] || key;
@@ -466,6 +756,7 @@ export default function CategoryPage() {
         <>
             <Navbar />
             <PdfFloatingButton />
+            
             <main className="category-page">
                 {/* Баннер категории */}
                 <div
@@ -632,6 +923,9 @@ export default function CategoryPage() {
                                                 key={product.id}
                                                 product={product}
                                                 onAddToCart={handleAddToCart}
+                                                onMouseEnter={() => handleMouseEnter(product.id)}
+                                                onMouseLeave={handleMouseLeave}
+                                                isHovered={hoveredProductId === product.id}
                                             />
                                         ) : (
                                             <ListProductCard
@@ -658,4 +952,4 @@ export default function CategoryPage() {
             )}
         </>
     );
-};  
+};

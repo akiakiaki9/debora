@@ -1,6 +1,7 @@
+// product.jsx
 'use client'
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Navbar from '@/app/components/navbar/Navbar';
 import { products, categories } from '@/app/utils/data';
 import Link from 'next/link';
@@ -13,8 +14,10 @@ import {
     FiChevronRight,
     FiBox,
     FiCpu,
-    FiPackage
+    FiPackage,
+    FiImage
 } from 'react-icons/fi';
+import { GiBathtub } from "react-icons/gi";
 import './product.css';
 
 export default function ProductPage() {
@@ -25,14 +28,117 @@ export default function ProductPage() {
     const [activeImage, setActiveImage] = useState(0);
     const [activeTab, setActiveTab] = useState('specs');
     const [selectedOptions, setSelectedOptions] = useState({});
+    const [selectedLegColor, setSelectedLegColor] = useState(null);
+    const [activeImageType, setActiveImageType] = useState('main');
 
     // Получаем id из params
     useEffect(() => {
         if (params?.id) {
             const found = products.find(p => p.id === parseInt(params.id));
             setProduct(found);
+            // Сбрасываем выбранный цвет ножек при смене товара
+            setSelectedLegColor(null);
+            setActiveImageType('main');
+            setActiveImage(0);
         }
     }, [params]);
+
+    // ОТЛАДКА: выводим информацию о товаре в консоль
+    useEffect(() => {
+        if (product) {
+            console.log('=== PRODUCT DEBUG ===');
+            console.log('Product ID:', product.id);
+            console.log('Product name:', product.name);
+            console.log('Category:', product.category);
+            console.log('Has leg_colors:', !!product.leg_colors);
+            console.log('leg_colors data:', product.leg_colors);
+
+            // Проверяем все URL изображений
+            const urls = [];
+            if (product.image) urls.push({ type: 'main', url: product.image });
+            if (product.image_1) urls.push({ type: 'main', url: product.image_1 });
+            if (product.image_2) urls.push({ type: 'main', url: product.image_2 });
+            if (product.image_3) urls.push({ type: 'main', url: product.image_3 });
+            if (product.image_4) urls.push({ type: 'main', url: product.image_4 });
+
+            if (product.leg_colors) {
+                Object.entries(product.leg_colors).forEach(([key, leg]) => {
+                    urls.push({ type: 'leg', color: leg.color, url: leg.url });
+                });
+            }
+
+            console.log('All image URLs:', urls);
+
+            // Проверяем, существуют ли изображения
+            urls.forEach((item, index) => {
+                const img = new Image();
+                img.onload = () => console.log(`✅ Image ${index} (${item.type}) loaded:`, item.url);
+                img.onerror = () => console.log(`❌ Image ${index} (${item.type}) FAILED:`, item.url);
+                img.src = item.url;
+            });
+        }
+    }, [product]);
+
+    // Собираем все изображения товара
+    const allImages = useMemo(() => {
+        if (!product) return [];
+
+        const images = [];
+
+        // 1. ОСНОВНЫЕ ИЗОБРАЖЕНИЯ ТОВАРА
+        if (product.image) {
+            images.push({
+                type: 'main',
+                url: product.image,
+                label: 'Основное',
+                category: 'main'
+            });
+        }
+
+        // Дополнительные изображения (image_1, image_2, image_3, image_4)
+        const extraImages = ['image_1', 'image_2', 'image_3', 'image_4'];
+        extraImages.forEach((imgKey, index) => {
+            if (product[imgKey]) {
+                images.push({
+                    type: 'main',
+                    url: product[imgKey],
+                    label: `Вид ${index + 2}`,
+                    category: 'main'
+                });
+            }
+        });
+
+        // 2. ИЗОБРАЖЕНИЯ НОЖЕК ДЛЯ ВАНН (на верхнем уровне, не в specs)
+        if (product.leg_colors && typeof product.leg_colors === 'object') {
+            Object.entries(product.leg_colors).forEach(([key, leg]) => {
+                if (leg && leg.url) {
+                    images.push({
+                        type: 'leg',
+                        url: leg.url,
+                        label: `Ножки (${leg.color})`,
+                        color: leg.color,
+                        legKey: key,
+                        category: 'legs'
+                    });
+                }
+            });
+        }
+
+        console.log('Final images array:', images);
+        return images;
+    }, [product]);
+
+    // Получаем все цвета ножек для выбора (из верхнего уровня)
+    const legColorOptions = useMemo(() => {
+        if (!product?.leg_colors) return [];
+
+        return Object.entries(product.leg_colors).map(([key, leg]) => ({
+            key,
+            color: leg.color,
+            url: leg.url,
+            label: leg.color
+        }));
+    }, [product]);
 
     // Функция для рекурсивного форматирования любого типа данных
     const formatValue = (value) => {
@@ -73,8 +179,8 @@ export default function ProductPage() {
             'height': 'Высота',
             'depth': 'Глубина',
             'length': 'Длина',
-            'pTrap': 'Выпуск (P)',
-            'sTrap': 'Выпуск (S)',
+            'pTrap': 'Выпуск в пол',
+            'sTrap': 'Выпуск в стену',
             'spoutHeight': 'Высота излива',
             'projection': 'Вылет',
             'centreDistance': 'Межосевое расстояние',
@@ -98,6 +204,7 @@ export default function ProductPage() {
             // Цвета
             'color': 'Цвет',
             'colors': 'Цвета',
+            'leg_colors': 'Цвета ножек',
 
             // Системы
             'flushingSystem': 'Система смыва',
@@ -122,12 +229,6 @@ export default function ProductPage() {
             'mirror': 'Зеркало',
             'cabinet': 'Тумба',
             'basin': 'Раковина',
-            'size_1': 'Размер 1',
-            'size_2': 'Размер 2',
-            'size_3': 'Размер 3',
-            'size_4': 'Размер 4',
-            'size_5': 'Размер 5',
-            'size_6': 'Размер 6',
             'color_1': 'Цвет 1',
             'color_2': 'Цвет 2',
             'color_3': 'Цвет 3',
@@ -198,7 +299,7 @@ export default function ProductPage() {
             'chashogen': ['model', 'size', 'color'],
             'installation': ['model', 'size', 'material', 'type'],
             'raktumba': ['width', 'sinkMaterial', 'furnitureMaterial'],
-            'vanna': ['model', 'type', 'size', 'material'],
+            'vanna': ['type', 'size', 'material'],
             'smestitel': ['model', 'type', 'cartridge', 'spoutHeight'],
             'oyna': ['model', 'sizes'],
         };
@@ -225,6 +326,51 @@ export default function ProductPage() {
         }));
     };
 
+    // Обработчик выбора цвета ножек
+    const handleLegColorSelect = (leg) => {
+        setSelectedLegColor(leg);
+        // Находим индекс изображения ножек
+        const legImageIndex = allImages.findIndex(img =>
+            img.category === 'legs' && img.color === leg.color
+        );
+        if (legImageIndex !== -1) {
+            setActiveImage(legImageIndex);
+            setActiveImageType('leg');
+        }
+    };
+
+    // Обработчик смены изображения
+    const handleImageChange = (index) => {
+        setActiveImage(index);
+        // Определяем тип активного изображения
+        if (allImages[index]?.category === 'legs') {
+            setActiveImageType('leg');
+            // Если это изображение ножек, обновляем выбранный цвет
+            const legImage = allImages[index];
+            if (legImage.color) {
+                const legOption = legColorOptions.find(l => l.color === legImage.color);
+                if (legOption) setSelectedLegColor(legOption);
+            }
+        } else {
+            setActiveImageType('main');
+        }
+    };
+
+    // Функция для получения цвета в hex
+    const getColorHex = (colorName) => {
+        const colorMap = {
+            'Gold': '#FFD700',
+            'White': '#FFFFFF',
+            'Silver': '#C0C0C0',
+            'Coppery': '#B87333',
+            'Black': '#000000',
+            'Chrome': '#E0E0E0',
+            'Matte Black': '#2C2C2C',
+            'Brushed Nickel': '#A9A9A9'
+        };
+        return colorMap[colorName] || colorName.toLowerCase();
+    };
+
     // Рендер значения в зависимости от типа
     const renderValue = (value, type = 'simple') => {
         if (type === 'array') {
@@ -246,7 +392,9 @@ export default function ProductPage() {
                     {Object.entries(value).map(([k, v]) => (
                         <div key={k} className="spec-group-item">
                             <span className="spec-group-label">{formatLabel(k)}:</span>
-                            <span className="spec-group-value">{formatValue(v)}</span>
+                            <span className="spec-group-value">
+                                {typeof v === 'object' ? formatValue(v) : String(v)}
+                            </span>
                         </div>
                     ))}
                 </div>
@@ -272,9 +420,6 @@ export default function ProductPage() {
             </>
         );
     }
-
-    // Создаем массив изображений (пока используем одно изображение)
-    const images = [product.image, product.image, product.image, product.image];
 
     const relatedProducts = products
         .filter(p => p.category === product.category && p.id !== product.id)
@@ -303,22 +448,53 @@ export default function ProductPage() {
                         {/* Галерея */}
                         <div className="product-gallery">
                             <div className="main-image">
-                                <img src={images[activeImage]} alt={product.name} />
+                                <img
+                                    src={allImages[activeImage]?.url || product.image}
+                                    alt={`${product.name} - ${allImages[activeImage]?.label || ''}`}
+                                    onError={(e) => {
+                                        console.error('Main image failed to load:', e.target.src);
+                                        e.target.style.display = 'none';
+                                    }}
+                                    onLoad={() => console.log('Main image loaded:', allImages[activeImage]?.url)}
+                                />
                                 {!product.inStock && (
                                     <span className="product-badge out">Под заказ</span>
                                 )}
+                                {activeImageType === 'leg' && (
+                                    <span className="image-type-badge">
+                                        <GiBathtub /> {allImages[activeImage]?.label}
+                                    </span>
+                                )}
                             </div>
-                            <div className="image-thumbnails">
-                                {images.map((img, index) => (
-                                    <button
-                                        key={index}
-                                        className={`thumb ${activeImage === index ? 'active' : ''}`}
-                                        onClick={() => setActiveImage(index)}
-                                    >
-                                        <img src={img} alt={`${product.name} ${index + 1}`} />
-                                    </button>
-                                ))}
-                            </div>
+
+                            {/* Миниатюры */}
+                            {allImages.length > 1 && (
+                                <div className="image-thumbnails">
+                                    {allImages.map((img, index) => (
+                                        <button
+                                            key={index}
+                                            className={`thumb ${activeImage === index ? 'active' : ''} ${img.category}`}
+                                            onClick={() => handleImageChange(index)}
+                                            title={img.label}
+                                        >
+                                            <img
+                                                src={img.url}
+                                                alt={img.label}
+                                                onError={(e) => {
+                                                    console.error(`Thumbnail ${index} failed to load:`, img.url);
+                                                    e.target.style.display = 'none';
+                                                }}
+                                                onLoad={() => console.log(`Thumbnail ${index} loaded:`, img.url)}
+                                            />
+                                            {img.category === 'legs' && (
+                                                <span className="thumb-badge">
+                                                    <GiBathtub />
+                                                </span>
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* Информация */}
@@ -355,9 +531,32 @@ export default function ProductPage() {
                                 </div>
                             )}
 
+                            {/* Выбор цвета ножек для ванн */}
+                            {legColorOptions.length > 0 && (
+                                <div className="product-options-section">
+                                    <h3 className="options-title">Цвет ножек</h3>
+                                    <div className="leg-colors-grid">
+                                        {legColorOptions.map((leg, index) => (
+                                            <button
+                                                key={index}
+                                                className={`leg-color-btn ${selectedLegColor?.color === leg.color ? 'active' : ''}`}
+                                                onClick={() => handleLegColorSelect(leg)}
+                                            >
+                                                <span
+                                                    className="leg-color-preview"
+                                                    style={{ background: getColorHex(leg.color) }}
+                                                />
+                                                <span className="leg-color-name">{leg.color}</span>
+                                                {leg.url && <FiImage className="leg-color-icon" />}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Дополнительные опции (для выбора) */}
                             {product.specs?.additionalOptions && (
-                                <div className="product-options">
+                                <div className="product-options-section">
                                     <h3 className="options-title">Дополнительные опции</h3>
                                     <div className="options-grid">
                                         {product.specs.additionalOptions.map((option, index) => (
@@ -414,13 +613,36 @@ export default function ProductPage() {
                                                     </div>
                                                 </div>
                                             ))}
+
+                                            {/* Отдельно показываем цвета ножек, если они есть */}
+                                            {legColorOptions.length > 0 && (
+                                                <div className="spec-block">
+                                                    <div className="spec-block-label">
+                                                        <FiCpu className="spec-block-icon" />
+                                                        Цвета ножек
+                                                    </div>
+                                                    <div className="spec-block-value">
+                                                        <div className="leg-colors-list">
+                                                            {legColorOptions.map((leg, idx) => (
+                                                                <span key={idx} className="leg-color-tag">
+                                                                    <span
+                                                                        className="leg-color-dot"
+                                                                        style={{ background: getColorHex(leg.color) }}
+                                                                    />
+                                                                    {leg.color}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
 
                                     {activeTab === 'description' && (
                                         <div className="description-content">
                                             <p className="description-text">
-                                                {product.description || 'Описание отсутствует'}
+                                                {product.description || `Премиальная ванна ${product.specs?.type || ''} из высококачественных материалов. Сочетает в себе элегантный дизайн и функциональность.`}
                                             </p>
                                             <div className="features-grid">
                                                 <div className="feature-card">
