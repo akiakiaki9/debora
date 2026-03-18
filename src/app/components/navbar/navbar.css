@@ -16,12 +16,12 @@
 /* Верхний бар - виден только на десктопе */
 .navbar-top {
     background: var(--navy);
-    padding: 12px 0;
+    padding: clamp(8px, 2vh, 12px) 0;
     border-bottom: 1px solid rgba(197, 165, 114, 0.2);
     transition: all 0.3s ease;
     width: 100%;
     position: relative;
-    z-index: 1001;
+    z-index: 499;
 }
 
 @media (max-width: 992px) {
@@ -35,7 +35,9 @@
     justify-content: space-between;
     align-items: center;
     color: var(--white);
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .contact-info,
@@ -43,14 +45,14 @@
 .premium-badge {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: clamp(4px, 1vw, 8px);
 }
 
 .contact-info .icon,
 .years-badge .icon,
 .premium-badge .icon {
     color: var(--gold);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .phone-link {
@@ -78,8 +80,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
-    padding: 20px 0;
+    z-index: 501;
+    padding: clamp(15px, 3vh, 20px) 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: transparent;
 }
@@ -94,7 +96,7 @@
 .navbar-main.scrolled {
     background: var(--white);
     box-shadow: var(--shadow-md);
-    padding: 12px 0;
+    padding: clamp(10px, 2vh, 12px) 0;
 }
 
 @media (min-width: 993px) {
@@ -103,25 +105,71 @@
     }
 }
 
+/* НА МОБИЛЬНЫХ НАВБАР СИНИЙ */
+@media (max-width: 992px) {
+    .navbar-main {
+        background: var(--navy);
+        padding: clamp(12px, 3vh, 15px) 0;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .navbar-main.scrolled {
+        background: var(--navy);
+        padding: clamp(10px, 2vh, 12px) 0;
+    }
+    
+    /* Текст логотипа белый на мобильных */
+    .logo-text {
+        color: var(--white) !important;
+    }
+    
+    /* Иконки белые на мобильных */
+    .cart-button {
+        color: var(--white) !important;
+    }
+    
+    .mobile-phone-icon-btn {
+        color: var(--white) !important;
+    }
+    
+    .mobile-dealers-icon-btn {
+        color: var(--white) !important;
+    }
+    
+    .burger-button {
+        color: var(--white) !important;
+    }
+    
+    /* Hover эффекты на мобильных */
+    .cart-button:hover,
+    .mobile-phone-icon-btn:hover,
+    .mobile-dealers-icon-btn:hover,
+    .burger-button:hover {
+        color: var(--gold) !important;
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
 .navbar-main-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: clamp(10px, 3vw, 20px);
 }
 
 /* Логотип - адаптивные размеры */
 .logo {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: clamp(8px, 2vw, 15px);
     text-decoration: none;
     z-index: 1001;
 }
 
 .logo-wrapper {
     position: relative;
-    width: 70px;
-    height: 70px;
+    width: clamp(35px, 8vw, 70px);
+    height: clamp(35px, 8vw, 70px);
     flex-shrink: 0;
     transition: all 0.3s ease;
     border-radius: 50%;
@@ -132,52 +180,53 @@
 /* Адаптивные размеры логотипа */
 @media (max-width: 1200px) {
     .logo-wrapper {
-        width: 65px;
-        height: 65px;
+        width: clamp(35px, 7vw, 65px);
+        height: clamp(35px, 7vw, 65px);
     }
 }
 
 @media (max-width: 992px) {
     .logo-wrapper {
-        width: 60px;
-        height: 60px;
+        width: clamp(35px, 8vw, 60px);
+        height: clamp(35px, 8vw, 60px);
+        border-color: var(--gold);
     }
 }
 
 @media (max-width: 768px) {
     .logo-wrapper {
-        width: 55px;
-        height: 55px;
+        width: clamp(30px, 8vw, 55px);
+        height: clamp(30px, 8vw, 55px);
         border-width: 2px;
     }
 }
 
 @media (max-width: 576px) {
     .logo-wrapper {
-        width: 50px;
-        height: 50px;
+        width: clamp(28px, 8vw, 50px);
+        height: clamp(28px, 8vw, 50px);
     }
 }
 
 @media (max-width: 480px) {
     .logo-wrapper {
-        width: 45px;
-        height: 45px;
+        width: clamp(25px, 8vw, 45px);
+        height: clamp(25px, 8vw, 45px);
         border-width: 1.5px;
     }
 }
 
 @media (max-width: 375px) {
     .logo-wrapper {
-        width: 40px;
-        height: 40px;
+        width: clamp(22px, 8vw, 40px);
+        height: clamp(22px, 8vw, 40px);
     }
 }
 
 @media (max-width: 320px) {
     .logo-wrapper {
-        width: 35px;
-        height: 35px;
+        width: clamp(20px, 8vw, 35px);
+        height: clamp(20px, 8vw, 35px);
     }
 }
 
@@ -195,7 +244,7 @@
 }
 
 .logo-text {
-    font-size: 1.3rem;
+    font-size: clamp(0.8rem, 3vw, 1.3rem);
     font-weight: 600;
     color: var(--navy);
     transition: color 0.3s ease;
@@ -205,52 +254,51 @@
 /* Адаптивные размеры текста логотипа */
 @media (max-width: 1200px) {
     .logo-text {
-        font-size: 1.2rem;
+        font-size: clamp(0.8rem, 2.5vw, 1.2rem);
     }
 }
 
 @media (max-width: 992px) {
     .logo-text {
-        font-size: 1.1rem;
+        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
     }
 }
 
 @media (max-width: 768px) {
     .logo-text {
-        font-size: 1rem;
+        font-size: clamp(0.7rem, 2.5vw, 1rem);
     }
 }
 
 @media (max-width: 576px) {
     .logo-text {
-        font-size: 0.95rem;
+        font-size: clamp(0.7rem, 2.5vw, 0.95rem);
     }
 }
 
 @media (max-width: 480px) {
     .logo-text {
-        font-size: 0.9rem;
+        font-size: clamp(0.65rem, 2.5vw, 0.9rem);
     }
 }
 
 @media (max-width: 375px) {
     .logo-text {
-        font-size: 0.85rem;
+        font-size: clamp(0.6rem, 2.5vw, 0.85rem);
     }
 }
 
 @media (max-width: 320px) {
     .logo-text {
-        font-size: 0.8rem;
+        font-size: clamp(0.55rem, 2.5vw, 0.8rem);
     }
 }
 
-/* Остальные стили остаются без изменений */
 /* Навигационное меню */
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: clamp(20px, 4vw, 40px);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -264,7 +312,7 @@
 .nav-item .dropdown-trigger {
     color: var(--navy);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
     font-weight: 600;
     letter-spacing: 0.3px;
     cursor: pointer;
@@ -343,10 +391,10 @@
 
 .dropdown-item {
     display: block;
-    padding: 12px 24px;
+    padding: clamp(8px, 2vh, 12px) clamp(16px, 3vw, 24px);
     color: var(--navy) !important;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
     position: relative;
@@ -368,7 +416,7 @@
 
 .dropdown-item:hover {
     color: var(--gold) !important;
-    padding-left: 32px;
+    padding-left: clamp(20px, 4vw, 32px);
     background: linear-gradient(90deg, var(--cream) 0%, transparent 100%);
 }
 
@@ -384,26 +432,26 @@
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: clamp(10px, 3vw, 20px);
     z-index: 1001;
 }
 
 /* Адаптивные размеры для кнопок */
 @media (max-width: 768px) {
     .nav-actions {
-        gap: 12px;
+        gap: 8px;
     }
 }
 
 @media (max-width: 576px) {
     .nav-actions {
-        gap: 8px;
+        gap: 5px;
     }
 }
 
 @media (max-width: 375px) {
     .nav-actions {
-        gap: 5px;
+        gap: 3px;
     }
 }
 
@@ -422,8 +470,8 @@
 .phones-trigger {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
+    gap: clamp(4px, 1vw, 8px);
+    padding: clamp(6px, 1.5vh, 10px) clamp(10px, 2vw, 16px);
     background: var(--cream);
     border: 1px solid var(--border);
     border-radius: 30px;
@@ -431,6 +479,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
 .phones-trigger:hover {
@@ -442,7 +491,7 @@
 }
 
 .phones-icon {
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
     color: var(--gold);
     transition: color 0.3s ease;
 }
@@ -452,7 +501,7 @@
 }
 
 .phones-text {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
 .phones-arrow {
@@ -493,7 +542,7 @@
 .phone-item {
     display: flex;
     flex-direction: column;
-    padding: 12px 20px;
+    padding: clamp(8px, 2vh, 12px) clamp(12px, 3vw, 20px);
     text-decoration: none;
     transition: all 0.3s ease;
     border-bottom: 1px solid var(--border);
@@ -510,14 +559,14 @@
 
 .phone-name {
     color: var(--navy);
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
     font-weight: 600;
     margin-bottom: 4px;
 }
 
 .phone-number {
     color: var(--gold);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
     font-weight: 500;
 }
 
@@ -526,12 +575,12 @@
     display: none;
     background: transparent;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: clamp(34px, 8vw, 40px);
+    height: clamp(34px, 8vw, 40px);
     align-items: center;
     justify-content: center;
     color: var(--navy);
-    font-size: 1.3rem;
+    font-size: clamp(1rem, 4vw, 1.3rem);
     cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 50%;
@@ -550,25 +599,25 @@
 
 @media (max-width: 768px) {
     .mobile-phone-icon-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
+        width: clamp(32px, 7vw, 38px);
+        height: clamp(32px, 7vw, 38px);
+        font-size: clamp(0.95rem, 3.5vw, 1.2rem);
     }
 }
 
 @media (max-width: 576px) {
     .mobile-phone-icon-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
+        width: clamp(30px, 7vw, 36px);
+        height: clamp(30px, 7vw, 36px);
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
     }
 }
 
 @media (max-width: 375px) {
     .mobile-phone-icon-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
+        width: clamp(28px, 7vw, 34px);
+        height: clamp(28px, 7vw, 34px);
+        font-size: clamp(0.85rem, 3.5vw, 1rem);
     }
 }
 
@@ -585,6 +634,7 @@
     align-items: center;
     justify-content: center;
     z-index: 2000;
+    padding: clamp(10px, 3vw, 15px);
     animation: fadeIn 0.3s ease;
 }
 
@@ -599,7 +649,7 @@
 
 .phones-modal-content {
     background: var(--white);
-    border-radius: 24px;
+    border-radius: clamp(16px, 5vw, 24px);
     width: 90%;
     max-width: 350px;
     max-height: 90vh;
@@ -621,20 +671,20 @@
 }
 
 .phones-modal-header {
-    padding: 25px 25px 15px;
+    padding: clamp(15px, 5vh, 25px) clamp(15px, 5vw, 25px) clamp(10px, 3vh, 15px);
     text-align: center;
     position: relative;
     border-bottom: 1px solid var(--border);
 }
 
 .phones-modal-icon {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 8vw, 2.5rem);
     color: var(--gold);
-    margin-bottom: 10px;
+    margin-bottom: clamp(5px, 2vh, 10px);
 }
 
 .phones-modal-title {
-    font-size: 1.4rem;
+    font-size: clamp(1.2rem, 5vw, 1.4rem);
     color: var(--navy);
     font-family: 'Cormorant Garamond', serif;
     margin: 0;
@@ -642,33 +692,37 @@
 
 .phones-modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
+    top: clamp(8px, 2vh, 15px);
+    right: clamp(8px, 2vw, 15px);
+    background: var(--cream);
     border: none;
     color: var(--gray);
     cursor: pointer;
-    font-size: 1.5rem;
-    padding: 5px;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    padding: clamp(4px, 1vh, 5px);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    border-radius: 50%;
+    width: clamp(30px, 8vw, 40px);
+    height: clamp(30px, 8vw, 40px);
 }
 
 .phones-modal-close:hover {
-    color: var(--gold);
+    color: var(--white);
+    background: var(--gold);
     transform: rotate(90deg);
 }
 
 .phones-modal-body {
-    padding: 20px 25px;
+    padding: clamp(15px, 4vh, 20px) clamp(15px, 5vw, 25px);
 }
 
 .phones-modal-item {
     display: flex;
     flex-direction: column;
-    padding: 15px 0;
+    padding: clamp(10px, 3vh, 15px) 0;
     text-decoration: none;
     border-bottom: 1px solid var(--border);
     transition: all 0.3s ease;
@@ -684,24 +738,24 @@
 
 .phones-modal-name {
     color: var(--navy);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 3vw, 1rem);
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .phones-modal-number {
     color: var(--gold);
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
     font-weight: 500;
 }
 
 .phones-modal-footer {
-    padding: 15px 25px 25px;
+    padding: clamp(10px, 3vh, 15px) clamp(15px, 5vw, 25px) clamp(15px, 4vh, 25px);
     text-align: center;
 }
 
 .phones-modal-btn {
-    padding: 12px 30px;
+    padding: clamp(8px, 2vh, 12px) clamp(15px, 5vw, 30px);
     background: var(--cream);
     border: none;
     border-radius: 40px;
@@ -710,6 +764,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
 }
 
 .phones-modal-btn:hover {
@@ -729,19 +784,19 @@
 }
 
 .search-input {
-    width: 250px;
-    padding: 10px 45px 10px 15px;
+    width: clamp(150px, 20vw, 250px);
+    padding: clamp(6px, 1.5vh, 10px) clamp(35px, 6vw, 45px) clamp(6px, 1.5vh, 10px) clamp(10px, 2vw, 15px);
     border: 2px solid var(--navy);
     border-radius: 30px;
     background: var(--white);
     color: var(--navy);
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 1200px) {
     .search-input {
-        width: 200px;
+        width: clamp(120px, 18vw, 200px);
     }
 }
 
@@ -770,12 +825,13 @@
     border: none;
     color: var(--navy);
     cursor: pointer;
-    padding: 8px 12px;
+    padding: clamp(4px, 1vh, 8px) clamp(6px, 1.5vw, 12px);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
 }
 
 .search-button:hover {
@@ -816,8 +872,8 @@
 .search-result-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 12px 15px;
+    gap: clamp(10px, 3vw, 15px);
+    padding: clamp(8px, 2vh, 12px) clamp(10px, 3vw, 15px);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: 1px solid var(--border);
@@ -833,8 +889,8 @@
 }
 
 .result-image {
-    width: 50px;
-    height: 50px;
+    width: clamp(40px, 10vw, 50px);
+    height: clamp(40px, 10vw, 50px);
     border-radius: 8px;
     overflow: hidden;
     flex-shrink: 0;
@@ -845,8 +901,8 @@
 
 @media (max-width: 480px) {
     .result-image {
-        width: 45px;
-        height: 45px;
+        width: clamp(35px, 10vw, 45px);
+        height: clamp(35px, 10vw, 45px);
     }
 }
 
@@ -868,13 +924,13 @@
     font-weight: 600;
     color: var(--navy);
     margin-bottom: 4px;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
     transition: color 0.3s ease;
 }
 
 @media (max-width: 480px) {
     .result-name {
-        font-size: 0.9rem;
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     }
 }
 
@@ -882,20 +938,13 @@
     color: var(--gold);
 }
 
-.result-price {
-    color: var(--gold);
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-@media (max-width: 480px) {
-    .result-price {
-        font-size: 0.85rem;
-    }
+.result-category {
+    color: var(--gray);
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
 }
 
 .search-results-footer {
-    padding: 15px;
+    padding: clamp(10px, 3vh, 15px);
     text-align: center;
     background: var(--cream);
     border-top: 1px solid var(--border);
@@ -908,8 +957,8 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 0.9rem;
-    padding: 8px 16px;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    padding: clamp(4px, 1vh, 8px) clamp(8px, 2vw, 16px);
     border-radius: 20px;
 }
 
@@ -924,8 +973,8 @@
     position: relative;
     background: transparent;
     border: none;
-    width: 44px;
-    height: 44px;
+    width: clamp(36px, 8vw, 44px);
+    height: clamp(36px, 8vw, 44px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -933,30 +982,30 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 4vw, 1.2rem);
 }
 
 @media (max-width: 768px) {
     .cart-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
+        width: clamp(34px, 7vw, 40px);
+        height: clamp(34px, 7vw, 40px);
+        font-size: clamp(0.95rem, 3.5vw, 1.1rem);
     }
 }
 
 @media (max-width: 576px) {
     .cart-button {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
+        width: clamp(32px, 7vw, 38px);
+        height: clamp(32px, 7vw, 38px);
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
     }
 }
 
 @media (max-width: 375px) {
     .cart-button {
-        width: 36px;
-        height: 36px;
-        font-size: 0.95rem;
+        width: clamp(30px, 7vw, 36px);
+        height: clamp(30px, 7vw, 36px);
+        font-size: clamp(0.85rem, 3.5vw, 0.95rem);
     }
 }
 
@@ -972,9 +1021,9 @@
     right: -5px;
     background: var(--gold);
     color: var(--white);
-    font-size: 0.7rem;
-    width: 20px;
-    height: 20px;
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
+    width: clamp(16px, 4vw, 20px);
+    height: clamp(16px, 4vw, 20px);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -998,19 +1047,20 @@
 
 @media (max-width: 480px) {
     .cart-badge {
-        width: 18px;
-        height: 18px;
-        font-size: 0.65rem;
+        width: clamp(14px, 4vw, 18px);
+        height: clamp(14px, 4vw, 18px);
+        font-size: clamp(0.55rem, 2vw, 0.65rem);
         top: -4px;
         right: -4px;
+        border-width: 1.5px;
     }
 }
 
 @media (max-width: 375px) {
     .cart-badge {
-        width: 16px;
-        height: 16px;
-        font-size: 0.6rem;
+        width: clamp(12px, 4vw, 16px);
+        height: clamp(12px, 4vw, 16px);
+        font-size: clamp(0.5rem, 2vw, 0.6rem);
         border-width: 1.5px;
     }
 }
@@ -1020,39 +1070,39 @@
     display: none;
     background: transparent;
     border: none;
-    width: 44px;
-    height: 44px;
+    width: clamp(36px, 8vw, 44px);
+    height: clamp(36px, 8vw, 44px);
     cursor: pointer;
     padding: 0;
     align-items: center;
     justify-content: center;
     color: var(--navy);
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
 }
 
 @media (max-width: 768px) {
     .burger-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.3rem;
+        width: clamp(34px, 7vw, 40px);
+        height: clamp(34px, 7vw, 40px);
+        font-size: clamp(1.1rem, 4.5vw, 1.3rem);
     }
 }
 
 @media (max-width: 576px) {
     .burger-button {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
+        width: clamp(32px, 7vw, 38px);
+        height: clamp(32px, 7vw, 38px);
+        font-size: clamp(1rem, 4.5vw, 1.2rem);
     }
 }
 
 @media (max-width: 375px) {
     .burger-button {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
+        width: clamp(30px, 7vw, 36px);
+        height: clamp(30px, 7vw, 36px);
+        font-size: clamp(0.95rem, 4.5vw, 1.1rem);
     }
 }
 
@@ -1076,7 +1126,7 @@
     }
 }
 
-/* Мобильное меню */
+/* ========== МОБИЛЬНОЕ МЕНЮ - СИНИЙ ФОН С БЕЛЫМ ТЕКСТОМ ========== */
 @media (max-width: 992px) {
     .nav-menu {
         position: fixed;
@@ -1084,11 +1134,11 @@
         right: -100%;
         width: 100%;
         height: 100vh;
-        background: var(--white);
+        background: var(--navy);
         flex-direction: column;
         justify-content: flex-start;
-        padding: 100px 20px 40px;
-        gap: 15px;
+        padding: clamp(80px, 20vh, 100px) clamp(15px, 5vw, 20px) clamp(30px, 8vh, 40px);
+        gap: clamp(10px, 3vh, 15px);
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1000;
         overflow-y: auto;
@@ -1116,13 +1166,18 @@
 
     .nav-item a,
     .nav-item .dropdown-trigger {
-        color: var(--navy) !important;
-        font-size: 1.1rem;
-        padding: 12px 0;
+        color: var(--white) !important;
+        font-size: clamp(1rem, 4vw, 1.1rem);
+        padding: clamp(10px, 2vh, 12px) 0;
         width: 100%;
         justify-content: space-between;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         font-weight: 500;
+    }
+
+    .nav-item a:hover,
+    .nav-item .dropdown-trigger:hover {
+        color: var(--gold) !important;
     }
 
     .nav-item a::after {
@@ -1134,10 +1189,22 @@
         width: 100%;
     }
 
+    .dropdown-trigger {
+        color: var(--white) !important;
+    }
+
+    .dropdown-trigger:hover {
+        color: var(--gold) !important;
+    }
+
+    .dropdown-arrow {
+        color: var(--gold);
+    }
+
     .dropdown-menu {
         position: static;
         min-width: 100%;
-        background: transparent;
+        background: rgba(255, 255, 255, 0.1);
         box-shadow: none;
         padding: 0;
         margin: 5px 0;
@@ -1149,31 +1216,33 @@
         overflow: hidden;
         transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
+        border-radius: 12px;
     }
 
     .dropdown-menu.show {
         max-height: 500px;
-        padding: 8px 0;
+        padding: 8px;
         pointer-events: all;
     }
 
     .dropdown-item {
-        padding: 10px 15px;
+        padding: clamp(8px, 2vh, 12px) clamp(10px, 3vw, 15px);
         border-radius: 8px;
         margin-bottom: 5px;
-        background: var(--cream);
+        background: rgba(255, 255, 255, 0.15);
         transform: translateX(0);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        font-size: 1rem;
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
         font-weight: 400;
+        color: var(--white) !important;
         border-left: 3px solid transparent;
     }
 
     .dropdown-item:hover {
-        background: var(--gold);
+        background: var(--gold) !important;
         color: var(--white) !important;
         transform: translateX(5px);
-        border-left-color: var(--navy);
+        border-left-color: var(--white);
     }
 
     .dropdown-item::before {
@@ -1194,19 +1263,23 @@
 
     .mobile-search-input {
         width: 100%;
-        padding: 12px 50px 12px 15px;
-        border: 2px solid var(--navy);
+        padding: clamp(8px, 2vh, 12px) clamp(35px, 10vw, 50px) clamp(8px, 2vh, 12px) clamp(10px, 3vw, 15px);
+        border: 2px solid var(--gold);
         border-radius: 30px;
-        background: var(--white);
-        color: var(--navy);
-        font-size: 0.95rem;
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--white);
+        font-size: clamp(0.85rem, 3vw, 0.95rem);
         transition: all 0.3s ease;
+    }
+
+    .mobile-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
     }
 
     .mobile-search-input:focus {
         outline: none;
         border-color: var(--gold);
-        box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
+        background: rgba(255, 255, 255, 0.25);
     }
 
     .mobile-search-button {
@@ -1216,78 +1289,77 @@
         transform: translateY(-50%);
         background: none;
         border: none;
-        color: var(--navy);
+        color: var(--gold);
         cursor: pointer;
-        padding: 8px 12px;
-        font-size: 1.2rem;
+        padding: clamp(4px, 1vh, 8px) clamp(6px, 1.5vw, 12px);
+        font-size: clamp(1rem, 4vw, 1.2rem);
         transition: all 0.3s ease;
         border-radius: 50%;
     }
 
     .mobile-search-button:hover {
-        color: var(--gold);
-        background: rgba(197, 165, 114, 0.1);
-    }
-
-    /* Скрываем корзину при открытом меню */
-    .cart-button.mobile-hidden {
-        display: none;
+        color: var(--white);
+        background: var(--gold);
     }
 }
 
 /* Оффсет */
 .navbar-offset {
-    height: 74px;
+    height: clamp(55px, 15vh, 74px);
 }
 
 @media (min-width: 993px) {
     .navbar-offset {
-        height: 114px;
+        height: clamp(100px, 20vh, 114px);
     }
 }
 
 @media (max-width: 768px) {
     .navbar-offset {
-        height: 65px;
+        height: clamp(50px, 12vh, 65px);
     }
 }
 
 @media (max-width: 576px) {
     .navbar-offset {
-        height: 60px;
+        height: clamp(45px, 12vh, 60px);
     }
 }
 
 @media (max-width: 375px) {
     .navbar-offset {
-        height: 55px;
+        height: clamp(40px, 12vh, 55px);
     }
 }
 
 /* Кастомный скролл */
 .search-results::-webkit-scrollbar,
 .nav-menu::-webkit-scrollbar,
-.phones-modal-content::-webkit-scrollbar {
-    width: 6px;
+.phones-modal-content::-webkit-scrollbar,
+.dealers-modal-content::-webkit-scrollbar {
+    width: clamp(4px, 1vw, 6px);
 }
 
 @media (max-width: 576px) {
     .search-results::-webkit-scrollbar,
     .nav-menu::-webkit-scrollbar,
-    .phones-modal-content::-webkit-scrollbar {
+    .phones-modal-content::-webkit-scrollbar,
+    .dealers-modal-content::-webkit-scrollbar {
         width: 4px;
     }
 }
 
 .search-results::-webkit-scrollbar-track,
 .nav-menu::-webkit-scrollbar-track,
-.phones-modal-content::-webkit-scrollbar-track {
+.phones-modal-content::-webkit-scrollbar-track,
+.dealers-modal-content::-webkit-scrollbar-track {
     background: var(--cream);
 }
 
 .search-results::-webkit-scrollbar-thumb,
 .nav-menu::-webkit-scrollbar-thumb,
-.phones-modal-content::-webkit-scrollbar-thumb {
+.phones-modal-content::-webkit-scrollbar-thumb,
+.dealers-modal-content::-webkit-scrollbar-thumb {
     background: var(--gold);
     border-radius: 3px;
     transition: background 0.3s ease;
@@ -1295,655 +1367,22 @@
 
 .search-results::-webkit-scrollbar-thumb:hover,
 .nav-menu::-webkit-scrollbar-thumb:hover,
-.phones-modal-content::-webkit-scrollbar-thumb:hover {
+.phones-modal-content::-webkit-scrollbar-thumb:hover,
+.dealers-modal-content::-webkit-scrollbar-thumb:hover {
     background: var(--navy);
-}
-
-/* Дилеры в навбаре */
-.dealers-nav-item {
-    display: flex;
-    align-items: center;
-}
-
-.dealers-trigger {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    border: none;
-    color: var(--navy);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 8px 0;
-    transition: color 0.3s ease;
-}
-
-.dealers-trigger:hover {
-    color: var(--gold);
-}
-
-.dealers-icon {
-    font-size: 1.1rem;
-    color: var(--gold);
-    transition: color 0.3s ease;
-}
-
-.dealers-trigger:hover .dealers-icon {
-    color: var(--navy);
-}
-
-/* Иконка дилеров для мобильных */
-.mobile-dealers-icon-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    font-size: 1.3rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-}
-
-.mobile-dealers-icon-btn:hover {
-    color: var(--gold);
-    background: rgba(197, 165, 114, 0.1);
-}
-
-@media (max-width: 992px) {
-    .mobile-dealers-icon-btn {
-        display: flex;
-    }
-}
-
-@media (max-width: 768px) {
-    .mobile-dealers-icon-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .mobile-dealers-icon-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 375px) {
-    .mobile-dealers-icon-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
-    }
-}
-
-/* Модальное окно дилеров */
-.dealers-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    animation: fadeIn 0.3s ease;
-}
-
-.dealers-modal-content {
-    background: var(--white);
-    border-radius: 24px;
-    width: 90%;
-    max-width: 400px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: var(--shadow-xl);
-    animation: slideUp 0.3s ease;
-}
-
-.dealers-modal-header {
-    padding: 25px 25px 15px;
-    text-align: center;
-    position: relative;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-    border-radius: 24px 24px 0 0;
-}
-
-.dealers-modal-icon {
-    font-size: 2.5rem;
-    color: var(--gold);
-    margin-bottom: 10px;
-}
-
-.dealers-modal-title {
-    font-size: 1.5rem;
-    color: var(--white);
-    font-family: 'Cormorant Garamond', serif;
-    margin: 0;
-}
-
-.dealers-modal-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--white);
-    cursor: pointer;
-    font-size: 1.5rem;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.dealers-modal-close:hover {
-    background: var(--gold);
-    transform: rotate(90deg);
-}
-
-.dealers-modal-body {
-    padding: 25px;
-    background: var(--cream);
-}
-
-.dealer-item {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 15px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.dealer-item:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--gold);
-}
-
-.dealer-region {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--gold);
-}
-
-.dealer-region-icon {
-    color: var(--gold);
-    font-size: 1.2rem;
-}
-
-.dealer-region-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--navy);
-    font-family: 'Cormorant Garamond', serif;
-}
-
-.dealer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.dealer-name {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--gray);
-    font-size: 1rem;
-}
-
-.dealer-name-icon {
-    color: var(--gold);
-    font-size: 1rem;
-}
-
-.dealer-phone {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--navy);
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: 10px 15px;
-    background: var(--cream);
-    border-radius: 40px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-}
-
-.dealer-phone:hover {
-    background: var(--gold);
-    color: var(--white);
-    transform: translateX(5px);
-}
-
-.dealer-phone-icon {
-    font-size: 1rem;
-    color: var(--gold);
-    transition: color 0.3s ease;
-}
-
-.dealer-phone:hover .dealer-phone-icon {
-    color: var(--white);
-}
-
-.dealers-modal-footer {
-    padding: 15px 25px 25px;
-    text-align: center;
-    background: var(--cream);
-    border-top: 1px solid var(--border);
-}
-
-.dealers-modal-btn {
-    padding: 12px 30px;
-    background: var(--navy);
-    border: none;
-    border-radius: 40px;
-    color: var(--white);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.dealers-modal-btn:hover {
-    background: var(--gold);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-gold);
-}
-
-/* Мобильное меню - добавляем пункт дилеров */
-@media (max-width: 992px) {
-    .dealers-nav-item {
-        width: 100%;
-    }
-    
-    .dealers-trigger {
-        width: 100%;
-        justify-content: space-between;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--border);
-        font-size: 1.1rem;
-    }
-    
-    .mobile-dealers-icon-btn {
-        display: flex;
-    }
-}
-
-/* Адаптивность для модалки дилеров */
-@media (max-width: 576px) {
-    .dealers-modal-content {
-        width: 95%;
-    }
-    
-    .dealers-modal-header {
-        padding: 20px 20px 15px;
-    }
-    
-    .dealers-modal-icon {
-        font-size: 2rem;
-    }
-    
-    .dealers-modal-title {
-        font-size: 1.3rem;
-    }
-    
-    .dealers-modal-body {
-        padding: 20px;
-    }
-    
-    .dealer-item {
-        padding: 15px;
-    }
-    
-    .dealer-region-name {
-        font-size: 1.1rem;
-    }
-    
-    .dealer-phone {
-        font-size: 1.1rem;
-        padding: 8px 12px;
-    }
-}
-
-@media (max-width: 375px) {
-    .dealer-phone {
-        font-size: 1rem;
-    }
-}
-
-/* Иконка дилеров для мобильных - ВСЕГДА ВИДНА */
-.mobile-dealers-icon-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    font-size: 1.3rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    position: relative;
-}
-
-.mobile-dealers-icon-btn:hover {
-    color: var(--gold);
-    background: rgba(197, 165, 114, 0.1);
-}
-
-.mobile-dealers-icon-btn::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 8px;
-    height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    border: 2px solid var(--white);
-}
-
-@media (max-width: 992px) {
-    .mobile-dealers-icon-btn {
-        display: flex;
-    }
-}
-
-@media (max-width: 768px) {
-    .mobile-dealers-icon-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .mobile-dealers-icon-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 375px) {
-    .mobile-dealers-icon-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
-    }
-}
-
-/* Модальное окно дилеров */
-.dealers-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    animation: fadeIn 0.3s ease;
-}
-
-.dealers-modal-content {
-    background: var(--white);
-    border-radius: 24px;
-    width: 90%;
-    max-width: 400px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: var(--shadow-xl);
-    animation: slideUp 0.3s ease;
-}
-
-.dealers-modal-header {
-    padding: 25px 25px 15px;
-    text-align: center;
-    position: relative;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--navy) 0%, #1a2f4f 100%);
-    border-radius: 24px 24px 0 0;
-}
-
-.dealers-modal-icon {
-    font-size: 2.5rem;
-    color: var(--gold);
-    margin-bottom: 10px;
-}
-
-.dealers-modal-title {
-    font-size: 1.5rem;
-    color: var(--white);
-    font-family: 'Cormorant Garamond', serif;
-    margin: 0;
-}
-
-.dealers-modal-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--white);
-    cursor: pointer;
-    font-size: 1.5rem;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.dealers-modal-close:hover {
-    background: var(--gold);
-    transform: rotate(90deg);
-}
-
-.dealers-modal-body {
-    padding: 25px;
-    background: var(--cream);
-}
-
-.dealer-item {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 15px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.dealer-item:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--gold);
-}
-
-.dealer-region {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--gold);
-}
-
-.dealer-region-icon {
-    color: var(--gold);
-    font-size: 1.2rem;
-}
-
-.dealer-region-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--navy);
-    font-family: 'Cormorant Garamond', serif;
-}
-
-.dealer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.dealer-name {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--gray);
-    font-size: 1rem;
-}
-
-.dealer-name-icon {
-    color: var(--gold);
-    font-size: 1rem;
-}
-
-.dealer-phone {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--navy);
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: 10px 15px;
-    background: var(--cream);
-    border-radius: 40px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-}
-
-.dealer-phone:hover {
-    background: var(--gold);
-    color: var(--white);
-    transform: translateX(5px);
-}
-
-.dealer-phone-icon {
-    font-size: 1rem;
-    color: var(--gold);
-    transition: color 0.3s ease;
-}
-
-.dealer-phone:hover .dealer-phone-icon {
-    color: var(--white);
-}
-
-.dealers-modal-footer {
-    padding: 15px 25px 25px;
-    text-align: center;
-    background: var(--cream);
-    border-top: 1px solid var(--border);
-}
-
-.dealers-modal-btn {
-    padding: 12px 30px;
-    background: var(--navy);
-    border: none;
-    border-radius: 40px;
-    color: var(--white);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.dealers-modal-btn:hover {
-    background: var(--gold);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-gold);
-}
-
-/* Адаптивность для модалки дилеров */
-@media (max-width: 768px) {
-    .dealers-modal-header {
-        padding: 20px 20px 15px;
-    }
-    
-    .dealers-modal-icon {
-        font-size: 2rem;
-    }
-    
-    .dealers-modal-title {
-        font-size: 1.3rem;
-    }
-    
-    .dealers-modal-body {
-        padding: 20px;
-    }
-    
-    .dealer-item {
-        padding: 15px;
-    }
-    
-    .dealer-region-name {
-        font-size: 1.1rem;
-    }
-    
-    .dealer-phone {
-        font-size: 1.1rem;
-        padding: 8px 12px;
-    }
-}
-
-@media (max-width: 576px) {
-    .dealers-modal-content {
-        width: 95%;
-    }
-    
-    .dealer-phone {
-        font-size: 1rem;
-    }
 }
 
 /* Кнопка дилеров для ПК */
 .dealers-pc-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
+    gap: clamp(4px, 1vw, 8px);
+    padding: clamp(6px, 1.5vh, 8px) clamp(10px, 2vw, 16px);
     background: var(--cream);
     border: 1px solid var(--border);
     border-radius: 30px;
     color: var(--navy);
-    font-size: 0.95rem;
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1959,7 +1398,7 @@
 }
 
 .dealers-pc-icon {
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
     color: var(--gold);
     transition: color 0.3s ease;
 }
@@ -1969,7 +1408,7 @@
 }
 
 .dealers-pc-text {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
 @media (max-width: 992px) {
@@ -1983,12 +1422,12 @@
     display: none;
     background: transparent;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: clamp(34px, 8vw, 40px);
+    height: clamp(34px, 8vw, 40px);
     align-items: center;
     justify-content: center;
     color: var(--navy);
-    font-size: 1.3rem;
+    font-size: clamp(1rem, 4vw, 1.3rem);
     cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 50%;
@@ -2008,29 +1447,29 @@
 
 @media (max-width: 768px) {
     .mobile-dealers-icon-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
+        width: clamp(32px, 7vw, 38px);
+        height: clamp(32px, 7vw, 38px);
+        font-size: clamp(0.95rem, 3.5vw, 1.2rem);
     }
 }
 
 @media (max-width: 576px) {
     .mobile-dealers-icon-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
+        width: clamp(30px, 7vw, 36px);
+        height: clamp(30px, 7vw, 36px);
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
     }
 }
 
 @media (max-width: 375px) {
     .mobile-dealers-icon-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
+        width: clamp(28px, 7vw, 34px);
+        height: clamp(28px, 7vw, 34px);
+        font-size: clamp(0.85rem, 3.5vw, 1rem);
     }
 }
 
-/* Остальные стили для модалки дилеров */
+/* ========== МОДАЛЬНОЕ ОКНО ДИЛЕРОВ - ПОЛНОСТЬЮ АДАПТИВНОЕ ========== */
 .dealers-modal-overlay {
     position: fixed;
     top: 0;
@@ -2043,14 +1482,15 @@
     align-items: center;
     justify-content: center;
     z-index: 2000;
+    padding: clamp(10px, 3vw, 15px);
     animation: fadeIn 0.3s ease;
 }
 
 .dealers-modal-content {
     background: var(--white);
-    border-radius: 24px;
-    width: 90%;
-    max-width: 400px;
+    border-radius: clamp(16px, 5vw, 24px);
+    width: 100%;
+    max-width: clamp(300px, 90%, 400px);
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
@@ -2059,22 +1499,22 @@
 }
 
 .dealers-modal-header {
-    padding: 25px 25px 15px;
+    padding: clamp(20px, 6vh, 25px) clamp(20px, 5vw, 25px) clamp(10px, 3vh, 15px);
     text-align: center;
     position: relative;
     border-bottom: 1px solid var(--border);
     background: linear-gradient(135deg, var(--navy) 0%, #1a2f4f 100%);
-    border-radius: 24px 24px 0 0;
+    border-radius: clamp(16px, 5vw, 24px) clamp(16px, 5vw, 24px) 0 0;
 }
 
 .dealers-modal-icon {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 8vw, 2.5rem);
     color: var(--gold);
-    margin-bottom: 10px;
+    margin-bottom: clamp(5px, 2vh, 10px);
 }
 
 .dealers-modal-title {
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 6vw, 1.5rem);
     color: var(--white);
     font-family: 'Cormorant Garamond', serif;
     margin: 0;
@@ -2082,21 +1522,21 @@
 
 .dealers-modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: clamp(8px, 2vh, 15px);
+    right: clamp(8px, 2vw, 15px);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--white);
     cursor: pointer;
-    font-size: 1.5rem;
-    padding: 5px;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    padding: clamp(4px, 1vh, 5px);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: clamp(30px, 8vw, 40px);
+    height: clamp(30px, 8vw, 40px);
 }
 
 .dealers-modal-close:hover {
@@ -2105,15 +1545,17 @@
 }
 
 .dealers-modal-body {
-    padding: 25px;
+    padding: clamp(15px, 4vh, 25px) clamp(15px, 4vw, 25px);
     background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 2vh, 15px);
 }
 
 .dealer-item {
     background: var(--white);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 15px;
+    border-radius: clamp(12px, 3vw, 16px);
+    padding: clamp(12px, 3vh, 20px);
     border: 1px solid var(--border);
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
@@ -2128,56 +1570,68 @@
 .dealer-region {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    gap: clamp(6px, 2vw, 8px);
+    margin-bottom: clamp(10px, 2.5vh, 15px);
+    padding-bottom: clamp(6px, 1.5vh, 10px);
     border-bottom: 2px solid var(--gold);
 }
 
 .dealer-region-icon {
     color: var(--gold);
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    flex-shrink: 0;
 }
 
 .dealer-region-name {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
     font-weight: 600;
     color: var(--navy);
     font-family: 'Cormorant Garamond', serif;
+    line-height: 1.2;
+    word-break: break-word;
 }
 
 .dealer-info {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: clamp(8px, 2vh, 12px);
 }
 
 .dealer-name {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: clamp(6px, 2vw, 8px);
     color: var(--gray);
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    flex-wrap: wrap;
 }
 
 .dealer-name-icon {
     color: var(--gold);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    flex-shrink: 0;
+}
+
+.dealer-name span {
+    word-break: break-word;
 }
 
 .dealer-phone {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: clamp(6px, 2vw, 8px);
     color: var(--navy);
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
     font-weight: 600;
-    padding: 10px 15px;
+    padding: clamp(8px, 2vh, 10px) clamp(10px, 3vw, 15px);
     background: var(--cream);
     border-radius: 40px;
     border: 1px solid var(--border);
     transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
 .dealer-phone:hover {
@@ -2187,24 +1641,30 @@
 }
 
 .dealer-phone-icon {
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
     color: var(--gold);
     transition: color 0.3s ease;
+    flex-shrink: 0;
 }
 
 .dealer-phone:hover .dealer-phone-icon {
     color: var(--white);
 }
 
+.dealer-phone span {
+    word-break: break-word;
+    text-align: center;
+}
+
 .dealers-modal-footer {
-    padding: 15px 25px 25px;
+    padding: clamp(10px, 3vh, 15px) clamp(15px, 4vw, 25px) clamp(15px, 4vh, 25px);
     text-align: center;
     background: var(--cream);
     border-top: 1px solid var(--border);
 }
 
 .dealers-modal-btn {
-    padding: 12px 30px;
+    padding: clamp(8px, 2vh, 12px) clamp(15px, 5vw, 30px);
     background: var(--navy);
     border: none;
     border-radius: 40px;
@@ -2213,6 +1673,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
 }
 
 .dealers-modal-btn:hover {
@@ -2221,10 +1682,19 @@
     box-shadow: var(--shadow-gold);
 }
 
-/* Адаптивность для модалки */
+/* ========== АДАПТИВНОСТЬ ДЛЯ МОДАЛКИ ДИЛЕРОВ ========== */
+
+/* Планшеты */
+@media (max-width: 992px) {
+    .dealers-modal-content {
+        max-width: 450px;
+    }
+}
+
+/* Мобильные */
 @media (max-width: 768px) {
     .dealers-modal-header {
-        padding: 20px 20px 15px;
+        padding: 20px 20px 10px;
     }
     
     .dealers-modal-icon {
@@ -2236,11 +1706,11 @@
     }
     
     .dealers-modal-body {
-        padding: 20px;
+        padding: 15px;
     }
     
     .dealer-item {
-        padding: 15px;
+        padding: 12px;
     }
     
     .dealer-region-name {
@@ -2248,6 +1718,222 @@
     }
     
     .dealer-phone {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+}
+
+/* Малые мобильные */
+@media (max-width: 576px) {
+    .dealers-modal-content {
+        max-width: 95%;
+    }
+    
+    .dealers-modal-header {
+        padding: 15px 15px 8px;
+    }
+    
+    .dealers-modal-icon {
+        font-size: 1.8rem;
+    }
+    
+    .dealers-modal-title {
+        font-size: 1.2rem;
+    }
+    
+    .dealers-modal-body {
+        padding: 12px;
+        gap: 8px;
+    }
+    
+    .dealer-item {
+        padding: 10px;
+    }
+    
+    .dealer-region {
+        gap: 5px;
+        margin-bottom: 8px;
+        padding-bottom: 5px;
+    }
+    
+    .dealer-region-icon {
+        font-size: 0.95rem;
+    }
+    
+    .dealer-region-name {
+        font-size: 1rem;
+    }
+    
+    .dealer-info {
+        gap: 6px;
+    }
+    
+    .dealer-name {
+        font-size: 0.8rem;
+        gap: 5px;
+    }
+    
+    .dealer-phone {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+    
+    .dealer-phone-icon {
+        font-size: 0.85rem;
+    }
+    
+    .dealers-modal-footer {
+        padding: 10px 15px 15px;
+    }
+    
+    .dealers-modal-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Очень маленькие телефоны */
+@media (max-width: 375px) {
+    .dealers-modal-content {
+        max-width: 98%;
+    }
+    
+    .dealers-modal-header {
+        padding: 12px 12px 6px;
+    }
+    
+    .dealers-modal-icon {
+        font-size: 1.5rem;
+    }
+    
+    .dealers-modal-title {
         font-size: 1.1rem;
+    }
+    
+    .dealers-modal-close {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1rem;
+    }
+    
+    .dealers-modal-body {
+        padding: 10px;
+    }
+    
+    .dealer-item {
+        padding: 8px;
+    }
+    
+    .dealer-region-name {
+        font-size: 0.95rem;
+    }
+    
+    .dealer-name {
+        font-size: 0.75rem;
+    }
+    
+    .dealer-phone {
+        font-size: 0.85rem;
+        padding: 5px 8px;
+    }
+    
+    .dealers-modal-btn {
+        font-size: 0.8rem;
+        padding: 7px 12px;
+    }
+}
+
+/* Landscape ориентация */
+@media (max-height: 600px) and (orientation: landscape) {
+    .dealers-modal-content {
+        max-height: 95vh;
+    }
+    
+    .dealers-modal-body {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .dealers-modal-header {
+        padding: 10px 15px 5px;
+    }
+    
+    .dealers-modal-icon {
+        font-size: 1.5rem;
+        margin-bottom: 3px;
+    }
+    
+    .dealers-modal-title {
+        font-size: 1.1rem;
+    }
+    
+    .dealer-item {
+        padding: 8px;
+    }
+    
+    .dealer-region {
+        margin-bottom: 5px;
+        padding-bottom: 3px;
+    }
+}
+
+/* Специально для скролла в мобильном меню */
+@media (max-width: 992px) {
+    .nav-menu::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-menu::-webkit-scrollbar-thumb {
+        background: var(--gold);
+    }
+    
+    .nav-menu::-webkit-scrollbar-thumb:hover {
+        background: var(--white);
+    }
+}
+
+/* Улучшения для тач-устройств */
+@media (hover: none) and (pointer: coarse) {
+    .dealers-pc-btn:hover,
+    .mobile-dealers-icon-btn:hover,
+    .dealers-modal-close:hover,
+    .dealer-phone:hover,
+    .dealers-modal-btn:hover {
+        transform: none;
+    }
+    
+    .dealer-phone:active {
+        background: var(--gold);
+        color: var(--white);
+        transform: scale(0.98);
+    }
+    
+    .dealers-modal-btn:active {
+        background: var(--gold);
+        transform: scale(0.98);
+    }
+    
+    .dealers-modal-close:active {
+        background: var(--gold);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .dealers-modal-content,
+    .dealers-modal-overlay,
+    .dealer-item,
+    .dealer-phone,
+    .dealers-modal-btn,
+    .dealers-modal-close {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .dealer-item:hover,
+    .dealer-phone:hover,
+    .dealers-modal-btn:hover,
+    .dealers-modal-close:hover {
+        transform: none !important;
     }
 }

@@ -6,7 +6,6 @@ import {
     FiGrid,
     FiList,
     FiFilter,
-    FiHeart,
     FiShoppingCart,
     FiX,
     FiBox,

@@ -1,4 +1,3 @@
-// product.jsx
 'use client'
 import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -19,6 +18,7 @@ import {
 } from 'react-icons/fi';
 import { GiBathtub } from "react-icons/gi";
 import './product.css';
+import Footer from '@/app/components/footer/Footer';
 
 export default function ProductPage() {
     const params = useParams();
@@ -42,42 +42,6 @@ export default function ProductPage() {
             setActiveImage(0);
         }
     }, [params]);
-
-    // ОТЛАДКА: выводим информацию о товаре в консоль
-    useEffect(() => {
-        if (product) {
-            console.log('=== PRODUCT DEBUG ===');
-            console.log('Product ID:', product.id);
-            console.log('Product name:', product.name);
-            console.log('Category:', product.category);
-            console.log('Has leg_colors:', !!product.leg_colors);
-            console.log('leg_colors data:', product.leg_colors);
-
-            // Проверяем все URL изображений
-            const urls = [];
-            if (product.image) urls.push({ type: 'main', url: product.image });
-            if (product.image_1) urls.push({ type: 'main', url: product.image_1 });
-            if (product.image_2) urls.push({ type: 'main', url: product.image_2 });
-            if (product.image_3) urls.push({ type: 'main', url: product.image_3 });
-            if (product.image_4) urls.push({ type: 'main', url: product.image_4 });
-
-            if (product.leg_colors) {
-                Object.entries(product.leg_colors).forEach(([key, leg]) => {
-                    urls.push({ type: 'leg', color: leg.color, url: leg.url });
-                });
-            }
-
-            console.log('All image URLs:', urls);
-
-            // Проверяем, существуют ли изображения
-            urls.forEach((item, index) => {
-                const img = new Image();
-                img.onload = () => console.log(`✅ Image ${index} (${item.type}) loaded:`, item.url);
-                img.onerror = () => console.log(`❌ Image ${index} (${item.type}) FAILED:`, item.url);
-                img.src = item.url;
-            });
-        }
-    }, [product]);
 
     // Собираем все изображения товара
     const allImages = useMemo(() => {
@@ -124,7 +88,6 @@ export default function ProductPage() {
             });
         }
 
-        console.log('Final images array:', images);
         return images;
     }, [product]);
 
@@ -452,10 +415,8 @@ export default function ProductPage() {
                                     src={allImages[activeImage]?.url || product.image}
                                     alt={`${product.name} - ${allImages[activeImage]?.label || ''}`}
                                     onError={(e) => {
-                                        console.error('Main image failed to load:', e.target.src);
                                         e.target.style.display = 'none';
                                     }}
-                                    onLoad={() => console.log('Main image loaded:', allImages[activeImage]?.url)}
                                 />
                                 {!product.inStock && (
                                     <span className="product-badge out">Под заказ</span>
@@ -481,10 +442,8 @@ export default function ProductPage() {
                                                 src={img.url}
                                                 alt={img.label}
                                                 onError={(e) => {
-                                                    console.error(`Thumbnail ${index} failed to load:`, img.url);
                                                     e.target.style.display = 'none';
                                                 }}
-                                                onLoad={() => console.log(`Thumbnail ${index} loaded:`, img.url)}
                                             />
                                             {img.category === 'legs' && (
                                                 <span className="thumb-badge">
@@ -752,6 +711,7 @@ export default function ProductPage() {
                     )}
                 </div>
             </main>
+            <Footer />
         </>
     );
 };

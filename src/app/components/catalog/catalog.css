@@ -453,62 +453,181 @@
     }
 }
 
+/* ========== МОБИЛЬНЫЕ УСТРОЙСТВА - ТОЛЬКО УМЕНЬШЕНИЕ РАЗМЕРОВ ========== */
 @media (max-width: 576px) {
     .container {
-        padding: 0 20px;
+        padding: 0 12px;
+    }
+
+    .catalog-preview {
+        padding: 30px 0;
     }
 
     .section-header {
-        flex-direction: column;
-        align-items: flex-start;
+        margin-bottom: 20px;
     }
 
-    .banner-content h3 {
-        font-size: 1.5rem;
+    .section-subtitle {
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
     }
 
-    .banner-content p {
-        font-size: 1rem;
-    }
-
-    .banner-stats {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-    }
-
-    .stat-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        text-align: left;
-        width: 100%;
-        min-width: auto;
-    }
-
-    .stat-number {
+    .section-title {
         font-size: 1.5rem;
     }
 
     .categories-grid-premium {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+
+    .category-card {
+        border-radius: 12px;
     }
 
     .category-card-image {
-        height: 200px;
+        height: 140px;
+    }
+
+    .category-card-content {
+        padding: 10px 10px 12px;
     }
 
     .category-card-title {
-        font-size: 1.2rem;
+        font-size: 0.95rem;
+        margin-bottom: 3px;
+    }
+
+    .category-card-count {
+        font-size: 0.7rem;
+        margin-bottom: 8px;
+    }
+
+    .category-card-link {
+        font-size: 0.8rem;
+        gap: 4px;
+    }
+
+    .category-card-icon {
+        font-size: 2rem;
+    }
+
+    .category-card-icon svg {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .catalog-button-wrapper {
+        margin: 20px 0 25px;
     }
 
     .catalog-main-btn {
         width: 100%;
-        justify-content: center;
-        padding: 15px 20px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        gap: 8px;
+        border-radius: 40px;
+    }
+
+    .catalog-main-btn .btn-icon {
         font-size: 1rem;
+    }
+
+    .premium-banner {
+        padding: 20px 15px;
+        gap: 20px;
+        border-radius: 16px;
+        margin-top: 10px;
+    }
+
+    .banner-content {
+        min-width: auto;
+    }
+
+    .banner-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .banner-content p {
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .banner-btn {
+        padding: 8px 20px;
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+
+    .banner-stats {
+        gap: 10px;
+        width: 100%;
+    }
+
+    .stat-item {
+        min-width: auto;
+        flex: 1;
+    }
+
+    .stat-number {
+        font-size: 1.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+}
+
+/* Очень маленькие телефоны */
+@media (max-width: 375px) {
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .category-card-image {
+        height: 120px;
+    }
+
+    .category-card-content {
+        padding: 8px 8px 10px;
+    }
+
+    .category-card-title {
+        font-size: 0.9rem;
+    }
+
+    .category-card-count {
+        font-size: 0.65rem;
+        margin-bottom: 6px;
+    }
+
+    .category-card-link {
+        font-size: 0.75rem;
+    }
+
+    .banner-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .banner-content p {
+        font-size: 0.75rem;
+    }
+
+    .banner-btn {
+        padding: 6px 16px;
+        font-size: 0.75rem;
+    }
+
+    .stat-number {
+        font-size: 1rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
     }
 }
 
@@ -521,32 +640,5 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
-    }
-}
-
-/* Улучшение для тач-устройств */
-@media (hover: none) {
-    .category-card:hover {
-        transform: none;
-    }
-
-    .category-card:hover .category-card-image img {
-        transform: none;
-    }
-
-    .category-card:hover .category-card-overlay {
-        opacity: 0;
-    }
-
-    .category-card:hover .category-card-icon {
-        transform: translateY(20px);
-    }
-
-    .catalog-main-btn:hover {
-        transform: none;
-    }
-
-    .catalog-main-btn:hover::before {
-        left: -100%;
     }
 }

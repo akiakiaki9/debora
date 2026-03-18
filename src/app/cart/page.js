@@ -241,7 +241,7 @@ export default function CartPage() {
                                         <FiPhone className="benefit-icon" />
                                         <div className="benefit-text">
                                             <strong>Позвоните нам</strong>
-                                            <span>+998 99 878-39-49</span>
+                                            <span>+998 94 147-11-16</span>
                                         </div>
                                     </div>
                                 </div>
@@ -333,4 +333,4 @@ export default function CartPage() {
             <Footer />
         </>
     );
-}
+};

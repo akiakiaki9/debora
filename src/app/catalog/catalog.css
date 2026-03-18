@@ -4,6 +4,7 @@
     min-height: 100vh;
     padding: 40px 0 80px;
     background: var(--cream);
+    z-index: 5001;
 }
 
 .container {

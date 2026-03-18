@@ -1,4 +1,3 @@
-// category.jsx
 'use client'
 import React, { useState, useMemo, useCallback, useEffect, memo } from 'react';
 import Link from 'next/link';
@@ -33,32 +32,32 @@ const specTranslations = {
     model: 'Модель',
     production: 'Производство',
     quality: 'Качество',
-    
+
     // Для унитазов
     pTrap: 'Выпуск в пол',
     sTrap: 'Выпуск в стену',
     flushingSystem: 'Система смыва',
     coating: 'Покрытие',
     body: 'Тип корпуса',
-    
+
     // Для ванн
     type: 'Тип',
     additionalOptions: 'Дополнительно',
     leg_colors: 'Цвета ножек',
-    
+
     // Для раковин с тумбой
     sinkMaterial: 'Материал раковины',
     furnitureMaterial: 'Материал тумбы',
     width: 'Ширина',
     color: 'Цвет',
-    
+
     // Для зеркал
     sizes: 'Размеры',
     mirror: 'Зеркало',
     cabinet: 'Тумба',
     basin: 'Раковина',
     colors: 'Цвета',
-    
+
     // Для смесителей
     cartridge: 'Картридж',
     spoutHeight: 'Высота излива',
@@ -66,11 +65,11 @@ const specTranslations = {
     functions: 'Функции',
     centreDistance: 'Межосевое расстояние',
     showerHoseLength: 'Длина шланга',
-    
+
     // Для инсталляции
     tank: 'Бачок',
     set: 'Комплектация',
-    
+
     // Общее
     color_1: 'Цвет 1',
     color_2: 'Цвет 2',
@@ -131,7 +130,7 @@ const formatSpecValue = (key, value) => {
     if (Array.isArray(value)) {
         return value.join(', ');
     }
-    
+
     // Если это объект с размерами (mirror, cabinet, basin)
     if (key === 'sizes' && value && typeof value === 'object') {
         return Object.entries(value)
@@ -145,48 +144,48 @@ const formatSpecValue = (key, value) => {
             })
             .join(' • ');
     }
-    
+
     // Если это объект с цветами
     if (key === 'colors' && value && typeof value === 'object') {
         return Object.values(value)
             .filter(v => typeof v === 'string')
             .join(', ');
     }
-    
+
     // Если это объект с цветами ножек
     if (key === 'leg_colors' && value && typeof value === 'object') {
         return Object.values(value)
             .map(item => item.color)
             .join(', ');
     }
-    
+
     // Если это объект с color_1, color_2 и т.д.
     if (key.startsWith('color_') && value) {
         return value;
     }
-    
+
     // Обычные значения
     if (typeof value === 'object' && value !== null) {
         return JSON.stringify(value);
     }
-    
+
     return String(value);
 };
 
 // Компонент для отображения характеристик
 const ProductSpecs = memo(({ specs, viewMode }) => {
     if (!specs) return null;
-    
+
     // Для списка показываем подробно
     if (viewMode === 'list') {
         // Специальная обработка для разных типов товаров
         const renderSpecs = () => {
             const elements = [];
-            
+
             Object.entries(specs).forEach(([key, value]) => {
                 // Пропускаем служебные поля
                 if (key === 'id' || key === 'category') return;
-                
+
                 // Обработка sizes (для зеркал с тумбой)
                 if (key === 'sizes' && value && typeof value === 'object') {
                     Object.entries(value).forEach(([sizeKey, sizeValue]) => {
@@ -261,21 +260,21 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
                     );
                 }
             });
-            
+
             return elements;
         };
-        
+
         return (
             <div className="product-specs-list">
                 {renderSpecs()}
             </div>
         );
     }
-    
+
     // Для сетки показываем в виде компактных пилюль
     const getGridSpecs = () => {
         const pills = [];
-        
+
         // Приоритетные характеристики для разных категорий
         if (specs.sizes) {
             // Для зеркал с тумбой показываем размеры
@@ -303,7 +302,7 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
             // Тип
             pills.push(specs.type);
         }
-        
+
         // Добавляем еще пару характеристик
         Object.entries(specs).forEach(([key, value]) => {
             if (pills.length >= 3) return;
@@ -313,10 +312,10 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
                 pills.push(`${specTranslations[key] || key}: ${value}`);
             }
         });
-        
+
         return pills.slice(0, 3);
     };
-    
+
     if (viewMode === 'grid') {
         const gridSpecs = getGridSpecs();
         return (
@@ -329,7 +328,7 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
             </div>
         );
     }
-    
+
     return null;
 });
 
@@ -341,7 +340,7 @@ const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave
     const [imageError, setImageError] = useState(false);
     const [currentImage, setCurrentImage] = useState(product.image);
     const [isTransitioning, setIsTransitioning] = useState(false);
-    
+
     // Плавная смена изображения при наведении
     useEffect(() => {
         if (isHovered && product.image_1) {
@@ -411,7 +410,7 @@ const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave
                             )}
                         </>
                     )}
-                    
+
                     {/* Бейджи */}
                     {product.oldPrice && (
                         <span className="product-badge sale">SALE</span>
@@ -419,14 +418,14 @@ const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave
                     {!product.inStock && (
                         <span className="product-badge out">Под заказ</span>
                     )}
-                    
+
                     {/* Индикатор количества фото */}
                     {imageCount > 1 && (
                         <span className="photo-indicator">
                             {Array.from({ length: imageCount }).map((_, idx) => (
-                                <span 
-                                    key={idx} 
-                                    className={`photo-dot ${idx === 0 && !isHovered ? 'active' : ''} ${idx === 1 && isHovered ? 'active' : ''}`} 
+                                <span
+                                    key={idx}
+                                    className={`photo-dot ${idx === 0 && !isHovered ? 'active' : ''} ${idx === 1 && isHovered ? 'active' : ''}`}
                                 />
                             ))}
                         </span>
@@ -435,7 +434,7 @@ const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave
 
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-                    
+
                     {/* Характеристики */}
                     <ProductSpecs specs={product.specs} viewMode="grid" />
                 </div>
@@ -491,7 +490,7 @@ const ListProductCard = memo(({ product, onAddToCart }) => {
                     {!product.inStock && (
                         <span className="product-badge out">Под заказ</span>
                     )}
-                    
+
                     {/* Индикатор количества фото для списка */}
                     {Object.keys(product).filter(key => key.startsWith('image_')).length > 0 && (
                         <span className="photo-indicator list">
@@ -502,7 +501,7 @@ const ListProductCard = memo(({ product, onAddToCart }) => {
 
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-                    
+
                     {/* Подробные характеристики для списка */}
                     <ProductSpecs specs={product.specs} viewMode="list" />
                 </div>
@@ -531,7 +530,7 @@ export default function CategoryPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [filters, setFilters] = useState({});
     const { addToCart } = useCart();
-    
+
     // Состояние для hover эффекта
     const [hoveredProductId, setHoveredProductId] = useState(null);
 
@@ -756,7 +755,7 @@ export default function CategoryPage() {
         <>
             <Navbar />
             <PdfFloatingButton />
-            
+
             <main className="category-page">
                 {/* Баннер категории */}
                 <div
