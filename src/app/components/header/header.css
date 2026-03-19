@@ -582,8 +582,8 @@
 
     .overlay {
         background: linear-gradient(135deg,
-                rgba(26, 47, 79, 0.95) 0%,
-                rgba(26, 47, 79, 0.85) 100%);
+                rgba(26, 47, 79, 0.678) 0%,
+                rgba(26, 47, 79, 0.396) 100%);
     }
 
     .benefits-grid {
