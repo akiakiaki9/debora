@@ -1,8 +1,6 @@
-// app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./styles/globals.css";
 import { CartProvider } from "./context/CartContext";
-import PageTransition from "@/app/components/PageTransition";
 import Script from 'next/script';
 
 const geistSans = Geist({
@@ -138,11 +136,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CartProvider>
-          <PageTransition>
-            {children}
-          </PageTransition>
+          {children}
         </CartProvider>
       </body>
     </html>
   );
-}
+};
