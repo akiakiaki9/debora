@@ -1,777 +1,474 @@
-/* Плавающая кнопка PDF */
-.pdf-floating-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(135deg, #c5a572 0%, #b8860b 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 50px;
-    padding: 15px 30px;
-    display: flex;
+:root {
+    --gold: #c5a572;
+    --gold-dark: #b8860b;
+    --gold-light: #e5c28e;
+    --navy: #1a2a3a;
+    --navy-dark: #0f1a24;
+    --white: #ffffff;
+    --cream: #f8f5f0;
+    --border: #e5e5e5;
+    --shadow-gold: 0 4px 20px rgba(197, 165, 114, 0.4);
+    --shadow-gold-hover: 0 8px 30px rgba(197, 165, 114, 0.6);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== ОСНОВНАЯ КНОПКА PDF ========== */
+.pdf-button {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #c5a572 0%, #e5b73b 50%, #b8860b 100%);
+    background-size: 200% 200%;
+    color: var(--white);
+    border: none;
+    border-radius: 60px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(197, 165, 114, 0.4);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 500;
-    animation: slideInRight 0.5s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 25px rgba(197, 165, 114, 0.5);
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    position: relative;
+    width: fit-content;
+    white-space: nowrap;
 }
 
-@keyframes slideInRight {
-    from {
-        transform: translateX(100px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+/* Блестящий эффект */
+.pdf-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 70%);
+    animation: shine 3s infinite;
+    transform: rotate(45deg);
+    pointer-events: none;
 }
 
-.pdf-floating-btn:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(197, 165, 114, 0.6);
-}
-
-.pdf-floating-btn:active {
-    transform: translateY(0) scale(0.95);
-}
-
-.pdf-floating-icon {
-    font-size: 1.4rem;
-}
-
-.pdf-floating-text {
-    margin-right: 5px;
-}
-
-.pdf-floating-count {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 10px;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-/* Модальное окно PDF */
-.pdf-modal-overlay {
-    position: fixed;
+/* Эффект пульсации */
+.pdf-button::after {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    z-index: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 0.3s ease;
+    right: 0;
+    bottom: 0;
+    border-radius: 60px;
+    box-shadow: 0 0 20px 5px rgba(229, 183, 59, 0.6);
+    opacity: 0;
+    animation: pulse 2s infinite;
+    pointer-events: none;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.pdf-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(197, 165, 114, 0.7);
+    background: linear-gradient(135deg, #e5b73b 0%, #f5d76e 50%, #c5a572 100%);
+    animation: gradientShift 3s ease infinite;
 }
 
-.pdf-modal-container {
-    width: 90%;
-    max-width: 1200px;
-    max-height: 90vh;
-    background: #ffffff;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
+.pdf-button:active {
+    transform: translateY(0) scale(0.98);
 }
 
-@keyframes scaleIn {
-    from {
-        transform: scale(0.9);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+/* Блик */
+.pdf-button .btn-glow {
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
-.pdf-modal-header {
-    padding: 20px 30px;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #1a2a3a;
+.pdf-button:hover .btn-glow {
+    opacity: 0.2;
 }
 
-.pdf-modal-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.pdf-modal-title-icon {
-    font-size: 2rem;
-    color: #c5a572;
-}
-
-.pdf-modal-title h2 {
-    color: #ffffff;
-    font-size: 1.5rem;
-    margin: 0;
-}
-
-.pdf-modal-close {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.pdf-modal-close:hover {
-    background: #c5a572;
-    transform: rotate(90deg);
-}
-
-.pdf-modal-search {
-    padding: 20px 30px;
-    border-bottom: 1px solid #e5e5e5;
-    background: #f8f5f0;
-}
-
-.pdf-modal-search-input {
-    width: 100%;
-    padding: 12px 20px;
-    border: 1px solid #e5e5e5;
-    border-radius: 40px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.pdf-modal-search-input:focus {
-    outline: none;
-    border-color: #c5a572;
-    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.1);
-}
-
-.pdf-modal-grid {
-    padding: 30px;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    max-height: 50vh;
-    background: #f8f5f0;
-}
-
-.pdf-modal-grid::-webkit-scrollbar {
-    width: 6px;
-}
-
-.pdf-modal-grid::-webkit-scrollbar-track {
-    background: #f8f5f0;
-}
-
-.pdf-modal-grid::-webkit-scrollbar-thumb {
-    background: #c5a572;
-    border-radius: 3px;
-}
-
-.pdf-modal-empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px;
-    color: #666666;
-    font-size: 1.1rem;
-}
-
-/* PDF карточка в модальном окне */
-.pdf-modal-card {
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    height: 100%;
-    min-height: 360px;
-}
-
-.pdf-modal-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    border-color: #c5a572;
-}
-
-.pdf-modal-card-image {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    background: #f8f5f0;
-    flex-shrink: 0;
-}
-
-.pdf-modal-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.pdf-modal-card:hover .pdf-modal-card-image img {
-    transform: scale(1.05);
-}
-
-.pdf-modal-card-overlay {
+/* Сияние */
+.pdf-button .btn-shine {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
+    transform: translateX(-100%);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
 }
 
-.pdf-modal-card-overlay.active {
+/* Искры */
+.pdf-button .btn-sparkle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+    opacity: 0.5;
+    animation: sparkle 4s infinite;
+    pointer-events: none;
+}
+
+.pdf-button-icon {
+    font-size: 1.4rem;
+    animation: bounce 2s infinite;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+    position: relative;
+    z-index: 2;
+}
+
+.pdf-button-text {
+    position: relative;
+    z-index: 2;
+    font-weight: 700;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-button-text::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.pdf-button:hover .pdf-button-text::after {
+    width: 100%;
+}
+
+.pdf-button-count {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    position: relative;
+    z-index: 2;
+}
+
+.pdf-button:hover .pdf-button-count {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.1);
+}
+
+/* ========== АНИМАЦИИ ========== */
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    20%,
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    20% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ========== РАЗМЕРЫ КНОПКИ ========== */
+.pdf-button.small {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    gap: 8px;
+}
+
+.pdf-button.small .pdf-button-icon {
+    font-size: 1.2rem;
+}
+
+.pdf-button.small .pdf-button-count {
+    padding: 2px 8px;
+    font-size: 0.8rem;
+}
+
+.pdf-button.large {
+    padding: 18px 36px;
+    font-size: 1.2rem;
+    gap: 15px;
+}
+
+.pdf-button.large .pdf-button-icon {
+    font-size: 1.8rem;
+}
+
+.pdf-button.large .pdf-button-count {
+    padding: 6px 16px;
+    font-size: 1rem;
+}
+
+/* ========== ВАРИАНТЫ КНОПКИ ========== */
+.pdf-button.outline {
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    box-shadow: none;
+}
+
+.pdf-button.outline::before,
+.pdf-button.outline::after,
+.pdf-button.outline .btn-shine,
+.pdf-button.outline .btn-sparkle {
+    display: none;
+}
+
+.pdf-button.outline:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-gold);
+}
+
+.pdf-button.minimal {
+    background: rgba(197, 165, 114, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(197, 165, 114, 0.3);
+    color: var(--gold);
+    box-shadow: none;
+}
+
+.pdf-button.minimal::before,
+.pdf-button.minimal::after,
+.pdf-button.minimal .btn-shine,
+.pdf-button.minimal .btn-sparkle {
+    display: none;
+}
+
+.pdf-button.minimal:hover {
+    background: var(--gold);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-gold);
+}
+
+.pdf-button.minimal .btn-glow {
+    background: radial-gradient(circle at 30% 30%, rgba(197, 165, 114, 0.2) 0%, transparent 70%);
+}
+
+.pdf-button.minimal:hover .btn-glow {
     opacity: 1;
 }
 
-.pdf-modal-view-btn,
-.pdf-modal-download-btn {
-    padding: 12px 24px;
-    background: #c5a572;
-    color: #ffffff;
-    border: none;
-    border-radius: 30px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
+/* ========== ПОЛНОШИРИННАЯ КНОПКА ========== */
+.pdf-button.full-width {
+    width: 100%;
 }
 
-.pdf-modal-download-btn {
-    background: #1a2a3a;
-}
-
-.pdf-modal-view-btn:hover,
-.pdf-modal-download-btn:hover {
-    transform: scale(1.05);
-}
-
-.pdf-modal-view-btn:hover {
-    background: #9c7c4b;
-}
-
-.pdf-modal-download-btn:hover {
-    background: #2a3a4a;
-}
-
-.pdf-modal-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 40px;
-    height: 40px;
-    background: #c5a572;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.pdf-modal-card-content {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.pdf-modal-card-title {
-    font-size: 1.1rem;
-    color: #1a2a3a;
-    margin-bottom: 10px;
-    font-weight: 600;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 3em;
-}
-
-.pdf-modal-card-meta {
-    display: flex;
-    gap: 10px;
-    color: #666666;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.pdf-modal-card-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: auto;
-}
-
-.pdf-modal-card-actions .pdf-modal-view-btn,
-.pdf-modal-card-actions .pdf-modal-download-btn {
-    flex: 1;
-    padding: 10px;
-    font-size: 0.9rem;
-    justify-content: center;
-}
-
-.pdf-modal-footer {
-    padding: 20px 30px;
-    border-top: 1px solid #e5e5e5;
-    text-align: right;
-    background: #f8f5f0;
-}
-
-.pdf-modal-close-btn {
-    padding: 10px 30px;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 30px;
-    color: #1a2a3a;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.pdf-modal-close-btn:hover {
-    background: #c5a572;
-    color: #ffffff;
-    border-color: #c5a572;
-}
-
-/* ========== АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ========== */
-
-/* Планшеты */
-@media (max-width: 992px) {
-    .pdf-modal-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px;
-        padding: 25px;
-    }
-    
-    .pdf-modal-card {
-        min-height: 340px;
-    }
-    
-    .pdf-modal-card-image {
-        height: 180px;
-    }
-    
-    .pdf-modal-card-content {
-        padding: 18px;
-    }
-}
-
-/* Маленькие планшеты и большие телефоны */
+/* ========== АДАПТИВНОСТЬ ========== */
 @media (max-width: 768px) {
-    /* Кнопка */
-    .pdf-floating-btn {
-        bottom: 20px;
-        right: 20px;
-        padding: 14px 22px;
+    .pdf-button {
+        padding: 12px 24px;
         font-size: 0.95rem;
-    }
-    
-    .pdf-floating-text {
-        display: none;
-    }
-    
-    .pdf-floating-btn {
-        border-radius: 50px;
-        padding: 14px 18px;
-    }
-    
-    /* Модальное окно */
-    .pdf-modal-container {
-        width: 95%;
-        max-height: 95vh;
-        border-radius: 20px;
-    }
-    
-    .pdf-modal-header {
-        padding: 18px 25px;
-    }
-    
-    .pdf-modal-title h2 {
-        font-size: 1.3rem;
-    }
-    
-    .pdf-modal-title-icon {
-        font-size: 1.6rem;
-    }
-    
-    .pdf-modal-search,
-    .pdf-modal-footer {
-        padding: 18px 25px;
-    }
-    
-    .pdf-modal-grid {
-        padding: 25px;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-        max-height: 55vh;
-    }
-    
-    /* Карточки */
-    .pdf-modal-card {
-        min-height: 320px;
-    }
-    
-    .pdf-modal-card-image {
-        height: 160px;
-    }
-    
-    .pdf-modal-card-title {
-        font-size: 1rem;
-        min-height: 2.8em;
-    }
-    
-    .pdf-modal-card-meta {
-        font-size: 0.85rem;
-        margin-bottom: 16px;
-    }
-    
-    .pdf-modal-card-content {
-        padding: 16px;
-    }
-    
-    .pdf-modal-card-actions {
         gap: 10px;
     }
-    
-    .pdf-modal-view-btn,
-    .pdf-modal-download-btn {
-        padding: 10px 18px;
-        font-size: 0.9rem;
-    }
-    
-    .pdf-modal-badge {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        top: 10px;
-        right: 10px;
-    }
-}
 
-/* Телефоны */
-@media (max-width: 576px) {
-    /* Кнопка */
-    .pdf-floating-btn {
-        bottom: 20px;
-        right: 20px;
-        padding: 12px 18px;
-        font-size: 0.95rem;
-    }
-    
-    .pdf-floating-icon {
+    .pdf-button-icon {
         font-size: 1.3rem;
     }
-    
-    .pdf-floating-count {
-        padding: 3px 8px;
+
+    .pdf-button-count {
+        padding: 3px 10px;
         font-size: 0.85rem;
     }
-    
-    /* Модальное окно на весь экран */
-    .pdf-modal-container {
-        width: 100%;
-        height: 100%;
-        max-height: 100vh;
-        border-radius: 0;
-    }
-    
-    .pdf-modal-header {
-        padding: 15px 20px;
-    }
-    
-    .pdf-modal-title h2 {
-        font-size: 1.2rem;
-    }
-    
-    .pdf-modal-title-icon {
-        font-size: 1.4rem;
-    }
-    
-    .pdf-modal-close {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
-    }
-    
-    .pdf-modal-search {
-        padding: 12px 20px;
-    }
-    
-    .pdf-modal-search-input {
-        padding: 12px 16px;
-        font-size: 0.95rem;
-    }
-    
-    .pdf-modal-grid {
-        padding: 15px;
-        grid-template-columns: 1fr;
-        gap: 15px;
-        max-height: none;
-        height: calc(100vh - 170px);
-    }
-    
-    /* Карточки */
-    .pdf-modal-card {
-        min-height: 280px;
-        flex-direction: column;
-        padding: 0;
-    }
-    
-    .pdf-modal-card-image {
-        width: 100%;
-        height: 160px;
-    }
-    
-    .pdf-modal-card-content {
-        padding: 12px;
-    }
-    
-    .pdf-modal-card-title {
-        font-size: 1rem;
-        min-height: auto;
-        margin-bottom: 6px;
-        line-height: 1.3;
-    }
-    
-    .pdf-modal-card-meta {
-        font-size: 0.85rem;
-        margin-bottom: 10px;
-        gap: 8px;
-    }
-    
-    .pdf-modal-card-actions {
-        flex-direction: row;
-        gap: 8px;
-        margin-top: 5px;
-    }
-    
-    .pdf-modal-card-actions .pdf-modal-view-btn,
-    .pdf-modal-card-actions .pdf-modal-download-btn {
-        padding: 8px 6px;
-        font-size: 0.85rem;
-        border-radius: 25px;
-    }
-    
-    .pdf-modal-view-btn svg,
-    .pdf-modal-download-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-    
-    .pdf-modal-badge {
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
-        top: 8px;
-        right: 8px;
-    }
-    
-    /* Оверлей на мобилке */
-    .pdf-modal-card-overlay {
-        opacity: 1;
-        background: rgba(0, 0, 0, 0.4);
-        display: flex;
-        gap: 10px;
-    }
-    
-    .pdf-modal-card-overlay .pdf-modal-view-btn,
-    .pdf-modal-card-overlay .pdf-modal-download-btn {
+
+    .pdf-button.small {
         padding: 8px 16px;
         font-size: 0.85rem;
+        gap: 6px;
     }
-    
-    .pdf-modal-footer {
-        padding: 12px 20px;
+
+    .pdf-button.small .pdf-button-icon {
+        font-size: 1.1rem;
     }
-    
-    .pdf-modal-close-btn {
-        padding: 12px 20px;
-        font-size: 1rem;
-        width: 100%;
-        border-radius: 30px;
+
+    .pdf-button.large {
+        padding: 14px 30px;
+        font-size: 1.1rem;
+        gap: 12px;
+    }
+
+    .pdf-button.large .pdf-button-icon {
+        font-size: 1.5rem;
     }
 }
 
-/* Очень маленькие телефоны */
-@media (max-width: 375px) {
-    .pdf-modal-card {
-        min-height: 260px;
-    }
-    
-    .pdf-modal-card-image {
-        height: 150px;
-    }
-    
-    .pdf-modal-card-content {
-        padding: 10px;
-    }
-    
-    .pdf-modal-card-title {
-        font-size: 0.95rem;
-        margin-bottom: 4px;
-    }
-    
-    .pdf-modal-card-meta {
-        font-size: 0.8rem;
-        margin-bottom: 8px;
-    }
-    
-    .pdf-modal-card-actions .pdf-modal-view-btn,
-    .pdf-modal-card-actions .pdf-modal-download-btn {
-        padding: 7px 5px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Альбомная ориентация на телефонах */
-@media (max-width: 896px) and (orientation: landscape) {
-    .pdf-modal-container {
-        width: 95%;
-        height: 95vh;
-    }
-    
-    .pdf-modal-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        max-height: 60vh;
-        padding: 20px;
-        gap: 15px;
-    }
-    
-    .pdf-modal-card {
-        min-height: 260px;
-    }
-    
-    .pdf-modal-card-image {
-        height: 140px;
-    }
-    
-    .pdf-modal-card-content {
-        padding: 15px;
-    }
-    
-    .pdf-modal-card-actions {
-        flex-direction: row;
+@media (max-width: 576px) {
+    .pdf-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
         gap: 8px;
     }
-    
-    .pdf-modal-card-actions .pdf-modal-view-btn,
-    .pdf-modal-card-actions .pdf-modal-download-btn {
-        padding: 8px;
-        font-size: 0.8rem;
+
+    .pdf-button-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Текст остается на мобильных */
+    .pdf-button-text {
+        display: inline-block;
+        /* Текст виден */
+    }
+
+    .pdf-button {
+        padding: 10px 15px;
+    }
+
+    .pdf-button-count {
+        margin-left: 4px;
+    }
+
+    .pdf-button.small {
+        padding: 6px 12px;
+    }
+
+    .pdf-button.small .pdf-button-icon {
+        font-size: 1rem;
+    }
+
+    /* Для small кнопки текст тоже виден */
+    .pdf-button.small .pdf-button-text {
+        display: inline-block;
+    }
+
+    .pdf-button.large {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    .pdf-button.large .pdf-button-icon {
+        font-size: 1.3rem;
+    }
+
+    .pdf-button.large .pdf-button-text {
+        display: inline-block;
     }
 }
 
-/* Улучшение для тач-устройств */
-@media (hover: none) {
-    .pdf-modal-card-overlay {
-        opacity: 1;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-    }
-    
-    .pdf-modal-card:active {
-        transform: scale(0.98);
-    }
-    
-    .pdf-floating-btn:active {
-        transform: scale(0.95);
-    }
-    
-    .pdf-modal-view-btn,
-    .pdf-modal-download-btn {
-        -webkit-tap-highlight-color: transparent;
-        padding: 14px 22px;
-    }
-    
-    .pdf-modal-view-btn:active,
-    .pdf-modal-download-btn:active {
-        transform: scale(0.95);
-    }
-    
-    .pdf-modal-view-btn:active {
-        background: #9c7c4b;
-    }
-    
-    .pdf-modal-download-btn:active {
-        background: #2a3a4a;
-    }
-}
-
-/* Поддержка темной темы */
+/* ========== ТЕМНАЯ ТЕМА ========== */
 @media (prefers-color-scheme: dark) {
-    .pdf-modal-container {
-        background: #1a1a1a;
+    .pdf-button.minimal {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: var(--gold-light);
     }
-    
-    .pdf-modal-card {
-        background: #2a2a2a;
-        border-color: #3a3a3a;
+
+    .pdf-button.outline {
+        border-color: var(--gold-light);
+        color: var(--gold-light);
     }
-    
-    .pdf-modal-card-title {
-        color: #ffffff;
+}
+
+/* ========== УМЕНЬШЕНИЕ ДВИЖЕНИЯ ========== */
+@media (prefers-reduced-motion: reduce) {
+
+    .pdf-button,
+    .pdf-button::before,
+    .pdf-button::after,
+    .pdf-button .btn-shine,
+    .pdf-button .btn-sparkle,
+    .pdf-button .btn-glow,
+    .pdf-button-icon,
+    .pdf-button-count {
+        animation: none !important;
+        transition: none !important;
     }
-    
-    .pdf-modal-search-input {
-        background: #2a2a2a;
-        color: #ffffff;
-        border-color: #3a3a3a;
-    }
-    
-    .pdf-modal-search-input::placeholder {
-        color: #999999;
-    }
-    
-    .pdf-modal-card-meta {
-        color: #999999;
-    }
-    
-    .pdf-modal-empty {
-        color: #999999;
+
+    .pdf-button:hover {
+        transform: translateY(-2px);
     }
 }

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import Navbar from '@/app/components/navbar/Navbar';
 import { products, categories } from '@/app/utils/data';
 import Link from 'next/link';
+import { useCart } from '@/app/context/CartContext';
 import {
     FiShoppingCart,
     FiTruck,
@@ -14,7 +15,9 @@ import {
     FiBox,
     FiCpu,
     FiPackage,
-    FiImage
+    FiImage,
+    FiInfo,
+    FiCheck
 } from 'react-icons/fi';
 import { GiBathtub } from "react-icons/gi";
 import './product.css';
@@ -23,13 +26,15 @@ import Footer from '@/app/components/footer/Footer';
 export default function ProductPage() {
     const params = useParams();
     const router = useRouter();
+    const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
-    const [quantity, setQuantity] = useState(1);
     const [activeImage, setActiveImage] = useState(0);
     const [activeTab, setActiveTab] = useState('specs');
     const [selectedOptions, setSelectedOptions] = useState({});
     const [selectedLegColor, setSelectedLegColor] = useState(null);
     const [activeImageType, setActiveImageType] = useState('main');
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     // Получаем id из params
     useEffect(() => {
@@ -367,6 +372,32 @@ export default function ProductPage() {
         return <span className="spec-value-text">{formatValue(value)}</span>;
     };
 
+    // Обработчик добавления в корзину с анимацией
+    const handleAddToCart = () => {
+        if (!product.inStock) return;
+
+        // Добавляем товар в корзину через контекст
+        addToCart(product);
+
+        // Показываем уведомление
+        setNotificationMessage('Товар добавлен в корзину');
+        setShowNotification(true);
+
+        // Добавляем класс анимации к кнопке
+        const btn = document.querySelector('.add-to-cart');
+        if (btn) {
+            btn.classList.add('clicked');
+            setTimeout(() => {
+                btn.classList.remove('clicked');
+            }, 300);
+        }
+
+        // Скрываем уведомление через 2 секунды
+        setTimeout(() => {
+            setShowNotification(false);
+        }, 2000);
+    };
+
     if (!product) {
         return (
             <>
@@ -392,6 +423,12 @@ export default function ProductPage() {
         <>
             <Navbar />
             <main className="product-main">
+                {/* Уведомление о добавлении в корзину */}
+                <div className={`cart-notification ${showNotification ? 'show' : ''}`}>
+                    <FiCheck className="notification-icon" />
+                    <span className="notification-message">{notificationMessage}</span>
+                </div>
+
                 <div className="container">
                     {/* Хлебные крошки */}
                     <div className="breadcrumb">
@@ -532,6 +569,18 @@ export default function ProductPage() {
                                 </div>
                             )}
 
+                            {/* Информация о покупке */}
+                            <div className="purchase-info">
+                                <div className="purchase-info-item">
+                                    <FiInfo className="purchase-info-icon" />
+                                    <span>Товар продается поштучно</span>
+                                </div>
+                                <div className="purchase-info-item">
+                                    <FiCheckCircle className="purchase-info-icon" />
+                                    <span>Минимальный заказ: 1 шт.</span>
+                                </div>
+                            </div>
+
                             {/* Табы с подробной информацией */}
                             <div className="product-tabs">
                                 <div className="tabs-header">
@@ -653,24 +702,11 @@ export default function ProductPage() {
                                 </div>
                             </div>
 
-                            {/* Действия с товаром */}
+                            {/* Кнопка добавления в корзину */}
                             <div className="product-actions">
-                                <div className="quantity">
-                                    <button
-                                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                        className="qty-btn"
-                                        disabled={!product.inStock}
-                                    >-</button>
-                                    <span className="qty-value">{quantity}</span>
-                                    <button
-                                        onClick={() => setQuantity(quantity + 1)}
-                                        className="qty-btn"
-                                        disabled={!product.inStock}
-                                    >+</button>
-                                </div>
-
                                 <button
                                     className="btn btn-primary add-to-cart"
+                                    onClick={handleAddToCart}
                                     disabled={!product.inStock}
                                 >
                                     <FiShoppingCart />
@@ -714,4 +750,4 @@ export default function ProductPage() {
             <Footer />
         </>
     );
-};
+}

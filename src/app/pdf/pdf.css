@@ -1,0 +1,1025 @@
+/* pdf.css - Полная версия с анимациями и премиум эффектами */
+
+:root {
+    --gold: #c5a572;
+    --gold-dark: #b8860b;
+    --gold-light: #e5c28e;
+    --navy: #1a2a3a;
+    --navy-dark: #0f1a24;
+    --white: #ffffff;
+    --cream: #f8f5f0;
+    --cream-dark: #f0e9e0;
+    --border: #e5e5e5;
+    --text: #333333;
+    --gray: #666666;
+    --gray-light: #999999;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --shadow-gold: 0 4px 20px rgba(197, 165, 114, 0.3);
+    --gradient-gold: linear-gradient(135deg, #c5a572 0%, #e5b73b 50%, #b8860b 100%);
+    --gradient-navy: linear-gradient(135deg, #1a2a3a 0%, #0f1a24 100%);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pdf-page {
+    min-height: 100vh;
+    background: var(--cream);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 4vw, 40px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ========== HERO СЕКЦИЯ С АНИМАЦИЕЙ ========== */
+.pdf-hero {
+    background: var(--gradient-navy);
+    padding: clamp(60px, 12vh, 100px) 0 clamp(40px, 8vh, 60px);
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+    margin-bottom: clamp(20px, 4vh, 40px);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.pdf-hero.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pdf-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: min(600px, 80vw);
+    height: min(600px, 80vw);
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.1;
+    border-radius: 50%;
+    animation: rotate 30s linear infinite;
+}
+
+.pdf-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    left: -10%;
+    width: min(600px, 80vw);
+    height: min(600px, 80vw);
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.1;
+    border-radius: 50%;
+    animation: rotate 40s linear infinite reverse;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-icon {
+    font-size: clamp(3rem, 10vw, 5rem);
+    color: var(--gold);
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(197, 165, 114, 0.3));
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.hero-title {
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+    color: var(--white);
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        text-shadow: 0 2px 30px rgba(197, 165, 114, 0.5);
+    }
+}
+
+.hero-description {
+    font-size: clamp(0.95rem, 3vw, 1.2rem);
+    opacity: 0.9;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    min-width: 100px;
+    animation: fadeInScale 0.5s ease backwards;
+    animation-delay: calc(var(--i) * 0.1s);
+}
+
+.stat-item:nth-child(1) { --i: 1; }
+.stat-item:nth-child(2) { --i: 2; }
+.stat-item:nth-child(3) { --i: 3; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.stat-number {
+    display: block;
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-weight: 700;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+    margin-bottom: 5px;
+    animation: countUp 2s ease-out;
+}
+
+.stat-label {
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.decoration-circle {
+    position: absolute;
+    width: clamp(150px, 30vw, 300px);
+    height: clamp(150px, 30vw, 300px);
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.05;
+}
+
+.decoration-circle:nth-child(1) {
+    top: -100px;
+    right: -100px;
+    animation: pulseRotate 20s ease-in-out infinite;
+}
+
+.decoration-circle:nth-child(2) {
+    bottom: -100px;
+    left: -100px;
+    animation: pulseRotate 15s ease-in-out infinite reverse;
+}
+
+.decoration-circle:nth-child(3) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    animation: pulseScale 10s ease-in-out infinite;
+}
+
+@keyframes pulseRotate {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+}
+
+@keyframes pulseScale {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.05;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.08;
+    }
+}
+
+/* ========== ХЛЕБНЫЕ КРОШКИ ========== */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 20px 0;
+    color: var(--gray);
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+}
+
+.breadcrumbs a {
+    color: var(--gray);
+    text-decoration: none;
+    transition: var(--transition);
+    padding: 4px 8px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.breadcrumbs a:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+}
+
+.breadcrumb-icon {
+    color: var(--gold);
+    font-size: 0.8rem;
+}
+
+.breadcrumbs span:last-child {
+    color: var(--navy);
+    font-weight: 600;
+}
+
+/* ========== ПОИСК И ФИЛЬТРЫ ========== */
+.pdf-controls {
+    margin-bottom: 30px;
+}
+
+.search-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 1.2rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px 15px 50px;
+    border: 2px solid var(--border);
+    border-radius: 50px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background: var(--white);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(197, 165, 114, 0.1);
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.category-filter {
+    padding: 10px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.category-filter::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--gold);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    opacity: 0;
+    z-index: 0;
+}
+
+.category-filter:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.category-filter.active {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    animation: pulse 1s ease;
+}
+
+.category-filter.active::before {
+    display: none;
+}
+
+/* ========== РЕЗУЛЬТАТЫ ========== */
+.results-info {
+    margin-bottom: 30px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--gray);
+    font-size: 1rem;
+    text-align: center;
+    animation: slideInDown 0.5s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.results-info strong {
+    color: var(--gold);
+    font-size: 1.1rem;
+}
+
+/* ========== СЕТКА PDF С АНИМАЦИЕЙ ========== */
+.pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.pdf-grid-item {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== КАРТОЧКА PDF С ПРЕМИУМ ЭФФЕКТАМИ ========== */
+.pdf-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    height: 100%;
+    min-height: 380px;
+    position: relative;
+    animation: cardGlow 3s infinite;
+}
+
+@keyframes cardGlow {
+    0%, 100% {
+        box-shadow: var(--shadow-md);
+    }
+    25% {
+        box-shadow: 0 8px 25px -5px rgba(197, 165, 114, 0.2);
+    }
+    50% {
+        box-shadow: 0 15px 35px -5px rgba(197, 165, 114, 0.3);
+    }
+    75% {
+        box-shadow: 0 8px 25px -5px rgba(197, 165, 114, 0.2);
+    }
+}
+
+.pdf-card.hovered {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--gold);
+    box-shadow: 0 25px 40px -10px rgba(197, 165, 114, 0.5);
+    animation: none;
+}
+
+.pdf-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg) translateX(-100%) translateY(-100%);
+    transition: transform 0.8s ease;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.pdf-card.hovered::before {
+    transform: rotate(45deg) translateX(100%) translateY(100%);
+}
+
+.pdf-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pdf-card.hovered::after {
+    opacity: 1;
+}
+
+.pdf-card-image {
+    position: relative;
+    width: 100%;
+    padding-top: 60%;
+    overflow: hidden;
+    background: var(--gradient-navy);
+    flex-shrink: 0;
+}
+
+.pdf-card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.pdf-card.hovered .pdf-card-image img {
+    transform: scale(1.1);
+}
+
+.pdf-image-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-navy);
+    color: var(--white);
+    font-size: 2rem;
+}
+
+.pdf-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 42, 58, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.pdf-card-overlay.active {
+    opacity: 1;
+}
+
+.pdf-view-btn,
+.pdf-download-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 40px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-view-btn {
+    background: var(--gold);
+    color: var(--white);
+}
+
+.pdf-download-btn {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--white);
+}
+
+.pdf-view-btn:hover {
+    background: var(--gold-dark);
+    transform: scale(1.05);
+}
+
+.pdf-download-btn:hover {
+    background: var(--white);
+    color: var(--navy);
+    transform: scale(1.05);
+}
+
+.pdf-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--white);
+    z-index: 6;
+    animation: rotate 10s linear infinite;
+}
+
+.pdf-card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+}
+
+.pdf-card-title {
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 8px;
+    font-weight: 600;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3em;
+    font-family: 'Playfair Display', serif;
+}
+
+.pdf-card-categories {
+    margin-bottom: 8px;
+}
+
+.categories-label {
+    font-size: 0.8rem;
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+    padding: 4px 10px;
+    border-radius: 30px;
+    display: inline-block;
+}
+
+.pdf-card-meta {
+    display: flex;
+    gap: 8px;
+    color: var(--gray);
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.pdf-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.pdf-card-actions .pdf-view-btn,
+.pdf-card-actions .pdf-download-btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 0.85rem;
+    justify-content: center;
+}
+
+/* ========== НЕТ РЕЗУЛЬТАТОВ ========== */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 50px;
+    animation: fadeIn 0.5s ease;
+}
+
+.no-results-icon {
+    font-size: 4rem;
+    color: var(--gray-light);
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.no-results h3 {
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.no-results p {
+    color: var(--gray);
+    margin-bottom: 25px;
+}
+
+.reset-btn {
+    padding: 12px 30px;
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.reset-btn:hover {
+    background: var(--gold-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+/* ========== ИНФОРМАЦИОННЫЙ БЛОК ========== */
+.pdf-info {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 50px 40px;
+    margin: 40px 0 50px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    animation: fadeInUp 0.5s ease;
+}
+
+.pdf-info h2 {
+    font-size: 2rem;
+    color: var(--navy);
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+}
+
+.pdf-info p {
+    color: var(--text);
+    line-height: 1.8;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+}
+
+.info-features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--navy);
+    min-width: 120px;
+    transition: var(--transition);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: var(--gold);
+    background: var(--cream);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    animation: pulse 2s infinite;
+}
+
+.feature:hover .feature-icon {
+    background: var(--gold);
+    color: var(--white);
+    transform: rotate(360deg);
+}
+
+.feature span {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* ========== ПОПУЛЯРНЫЕ КАТЕГОРИИ ========== */
+.popular-categories {
+    margin: 50px 0;
+    text-align: center;
+}
+
+.popular-categories h3 {
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 25px;
+    font-family: 'Playfair Display', serif;
+}
+
+.popular-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.popular-category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    width: 100%;
+}
+
+.popular-category:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.popular-icon {
+    font-size: 1.5rem;
+    color: var(--gold);
+    background: var(--cream);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.popular-category:hover .popular-icon {
+    background: var(--gold);
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+.popular-category span {
+    font-size: 0.95rem;
+    color: var(--navy);
+    font-weight: 500;
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 992px) {
+    .pdf-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdf-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .pdf-card {
+        min-height: 340px;
+    }
+    
+    .pdf-card-overlay {
+        opacity: 1;
+        background: rgba(26, 42, 58, 0.7);
+    }
+    
+    .pdf-card-actions {
+        display: none;
+    }
+    
+    .pdf-view-btn,
+    .pdf-download-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .info-features {
+        gap: 20px;
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .pdf-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        margin: 0 auto 40px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-stats {
+        gap: 20px;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    .category-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        justify-content: flex-start;
+    }
+    
+    .category-filter {
+        flex: 0 0 auto;
+    }
+    
+    .pdf-info {
+        padding: 30px 20px;
+    }
+    
+    .pdf-info h2 {
+        font-size: 1.6rem;
+    }
+    
+    .info-features {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .feature {
+        flex-direction: row;
+        justify-content: flex-start;
+        text-align: left;
+    }
+    
+    .popular-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 375px) {
+    .popular-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========== TOUCH УСТРОЙСТВА ========== */
+@media (hover: none) and (pointer: coarse) {
+    .pdf-card-overlay {
+        opacity: 1;
+        background: rgba(26, 42, 58, 0.8);
+    }
+    
+    .pdf-card:hover {
+        transform: none;
+    }
+    
+    .category-filter:hover {
+        border-color: var(--border);
+        color: var(--text);
+    }
+    
+    .feature:hover {
+        transform: none;
+    }
+}
+
+/* ========== ОПТИМИЗАЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

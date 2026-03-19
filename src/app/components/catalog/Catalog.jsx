@@ -12,6 +12,7 @@ import { FaShower, FaSink, FaWater } from 'react-icons/fa';
 import { PiToilet } from "react-icons/pi";
 import { MdKitchen, MdChair, MdShower } from 'react-icons/md';
 import { products, categories } from '@/app/utils/data';
+import PdfButton from '@/app/components/pdf/Pdf';
 import './catalog.css';
 
 // Маппинг иконок для категорий
@@ -78,11 +79,14 @@ const CatalogPreview = () => {
     return (
         <section className="catalog-preview">
             <div className="container">
-                {/* Заголовок секции */}
+                {/* Заголовок секции с кнопкой PDF */}
                 <div className="section-header">
                     <div>
                         <span className="section-subtitle">Категории</span>
                         <h2 className="section-title">Выберите категорию</h2>
+                    </div>
+                    <div className="section-actions">
+                        <PdfButton />
                     </div>
                 </div>
 

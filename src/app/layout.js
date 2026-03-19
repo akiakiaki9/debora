@@ -1,6 +1,9 @@
+// app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./styles/globals.css";
 import { CartProvider } from "./context/CartContext";
+import PageTransition from "@/app/components/PageTransition";
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -109,8 +112,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <head>
-        {/* Структурированные данные для поисковых систем */}
-        <script
+        <Script
+          id="ld-json"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -135,9 +138,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CartProvider>
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </CartProvider>
       </body>
     </html>
   );
-};
+}

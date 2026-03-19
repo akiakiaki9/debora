@@ -2,6 +2,7 @@
 
 .contacts-page {
     background: var(--cream);
+    margin-top: 100px;
 }
 
 .container {
@@ -498,6 +499,9 @@
 @media (max-width: 768px) {
     .locations-section {
         padding: 40px 0;
+    }
+    .contacts-page {
+        margin-top: 0;
     }
 }
 

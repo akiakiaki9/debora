@@ -12,56 +12,47 @@ const Header = () => {
 
     const slides = [
         {
-            id: 1,
+            id: 3,
             title: 'Премиальные унитазы',
             subtitle: 'Лучшие технологии',
             description: 'Унитазы с системой микролифт, антибактериальным покрытием и бесшумным смывом. Подвесные и напольные модели премиум-класса.',
-            image: 'https://ultrainterio.com/wp-content/uploads/2022/01/apartment-5346462_640.jpg',
+            image: '/images/header/4.png',
             category: 'unitaz',
             badge: 'Топ продаж'
         },
         {
-            id: 2,
+            id: 1,
             title: 'Лучшие ванны',
             subtitle: 'Чугун и акрил',
             description: 'Эксклюзивные ванны из Италии. Гидромассаж, эмалевое покрытие ручной работы, эргономичные формы для максимального комфорта.',
-            image: 'https://usovi.ru/wp-content/uploads/2023/09/vanna_roca_belice_175x85_233550000_interier.jpg',
+            image: '/images/header/1.png',
             category: 'vanna',
             badge: 'Премиум'
-        },
-        {
-            id: 3,
-            title: 'Дизайнерские раковины',
-            subtitle: 'Керамика и камень',
-            description: 'Раковины из природного камня и высококачественной керамики. Настольные, встраиваемые и подвесные модели для любого интерьера.',
-            image: 'https://vitra.uz/cdn/shop/files/vitra-geo-7425b003-0012-03_1127x_f2f77ab3-1f94-4ea9-b49e-ae48c94ec419.jpg?v=1744611678&width=480',
-            category: 'rakovina',
-            badge: 'Хит сезона'
         },
         {
             id: 4,
             title: 'Смесители Grohe',
             subtitle: 'Германское качество',
             description: 'Профессиональные смесители с керамическим картриджем. Термостаты, сенсорное управление, защита от известковых отложений.',
-            image: 'https://images.uzum.uz/d3lq2q3q345l7k05m8ng/original.jpg',
+            image: '/images/header/3.png',
             category: 'smestitel',
             badge: 'Акция'
         },
         {
-            id: 5,
+            id: 2,
             title: 'Зеркала с подсветкой',
             subtitle: 'LED технологии',
             description: 'Зеркала с мягкой LED подсветкой, антизапотевающим покрытием и сенсорным управлением. Создайте идеальный интерьер ванной.',
-            image: 'https://static.insales-cdn.com/files/1/326/26378566/original/17-fresh-inspiring-bathroom-mirror-ideas-to-shake-up-your-morning-1-1676713043161.jpg',
+            image: '/images/header/2.png',
             category: 'oyna',
             badge: 'Новинка'
         },
         {
-            id: 6,
+            id: 5,
             title: 'Мебель для ванной',
             subtitle: 'Влагостойкие материалы',
             description: 'Тумбы, пеналы и шкафы из влагостойких материалов. LED подсветка, бесшумные доводчики, вместительные системы хранения.',
-            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNfBAMdEhMibzbnfyiWEnoSAOjoMmVR5keng&s',
+            image: '/images/header/5.png',
             category: 'raktumba',
             badge: 'Премиум'
         }

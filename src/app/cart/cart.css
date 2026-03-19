@@ -4,6 +4,7 @@
     min-height: 60vh;
     padding: 40px 0 80px;
     background: var(--cream);
+    margin-top: 100px;
 }
 
 .container {
@@ -778,6 +779,7 @@
 @media (max-width: 768px) {
     .cart-page {
         padding: 20px 0 40px;
+        margin-top: 0;
     }
 
     .cart-header {
@@ -1056,4 +1058,68 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* Дополнительные стили для отображения количества без кнопок */
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cream);
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+}
+
+.quantity-label {
+    color: var(--gray);
+    font-size: clamp(0.85rem, 2vw, 0.9rem);
+}
+
+.cart-item-quantity .quantity-value {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    min-width: auto;
+}
+
+/* Обновленные стили для cart-item-actions */
+.cart-item-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 576px) {
+    .cart-item-quantity {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .cart-item-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .cart-item-status {
+        width: 100%;
+    }
+    
+    .status-in,
+    .status-out {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Обновляем старые стили quantity-control */
+.quantity-control {
+    display: none; /* Скрываем старый блок с кнопками */
 }

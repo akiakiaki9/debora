@@ -1,33 +1,37 @@
-/* Обновленный navbar.css */
+/* navbar.css - исправленная версия с белым фоном для ПК */
 
 :root {
     --navy: #1a2b3c;
+    --navy-light: #2a3b4c;
+    --navy-dark: #0f1a24;
     --gold: #c5a572;
+    --gold-dark: #b3945a;
+    --gold-light: #e5c28e;
     --white: #ffffff;
     --cream: #f8f5f0;
+    --cream-dark: #f0e9e0;
     --gray: #6c757d;
+    --gray-light: #e9ecef;
     --border: #e9ecef;
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.08);
     --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
     --shadow-gold: 0 0 15px rgba(197, 165, 114, 0.3);
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
 }
 
-/* Верхний бар - виден только на десктопе */
+/* ========== ВЕРХНИЙ БАР ========== */
 .navbar-top {
-    background: var(--navy);
-    padding: clamp(8px, 2vh, 12px) 0;
-    border-bottom: 1px solid rgba(197, 165, 114, 0.2);
-    transition: all 0.3s ease;
+    background: var(--gold);
+    padding: clamp(6px, 1.5vh, 12px) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition-base);
     width: 100%;
     position: relative;
     z-index: 499;
-}
-
-@media (max-width: 992px) {
-    .navbar-top {
-        display: none;
-    }
 }
 
 .navbar-top-inner {
@@ -35,9 +39,9 @@
     justify-content: space-between;
     align-items: center;
     color: var(--white);
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
     flex-wrap: wrap;
-    gap: 10px;
+    gap: clamp(5px, 2vw, 10px);
 }
 
 .contact-info,
@@ -51,42 +55,70 @@
 .contact-info .icon,
 .years-badge .icon,
 .premium-badge .icon {
-    color: var(--gold);
-    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: var(--white);
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    opacity: 0.9;
+    transition: var(--transition-fast);
+}
+
+.contact-info:hover .icon,
+.years-badge:hover .icon,
+.premium-badge:hover .icon {
+    transform: scale(1.1);
+    opacity: 1;
 }
 
 .phone-link {
     color: var(--white);
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.phone-link:hover {
-    color: var(--gold);
-}
-
-.years-badge span {
-    color: var(--gold);
+    transition: var(--transition-fast);
     font-weight: 500;
 }
 
-.premium-badge span {
-    opacity: 0.9;
+.phone-link:hover {
+    color: var(--white);
+    opacity: 0.8;
+    transform: translateX(2px);
 }
 
-/* Основной навбар - фиксированный */
+.years-badge span,
+.premium-badge span {
+    color: var(--white);
+    font-weight: 500;
+}
+
+/* Разделители */
+.contact-info::after,
+.years-badge::after {
+    content: '|';
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: clamp(5px, 2vw, 10px);
+    font-weight: 300;
+}
+
+.premium-badge::after {
+    display: none;
+}
+
+.navbar-top:hover {
+    background: var(--gold-dark);
+    box-shadow: var(--shadow-gold);
+}
+
+/* ========== ОСНОВНОЙ НАВБАР ========== */
 .navbar-main {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 501;
-    padding: clamp(15px, 3vh, 20px) 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: transparent;
+    z-index: 500;
+    padding: clamp(10px, 2.5vh, 20px) 0;
+    transition: var(--transition-base);
+    background: var(--white); /* Белый фон по умолчанию */
+    box-shadow: var(--shadow-sm); /* Легкая тень для отделения */
 }
 
-/* Отступ сверху только на десктопе */
+/* Отступ сверху на десктопе */
 @media (min-width: 993px) {
     .navbar-main {
         top: 54px;
@@ -96,57 +128,12 @@
 .navbar-main.scrolled {
     background: var(--white);
     box-shadow: var(--shadow-md);
-    padding: clamp(10px, 2vh, 12px) 0;
+    padding: clamp(8px, 2vh, 12px) 0;
 }
 
 @media (min-width: 993px) {
     .navbar-main.scrolled {
         top: 0;
-    }
-}
-
-/* НА МОБИЛЬНЫХ НАВБАР СИНИЙ */
-@media (max-width: 992px) {
-    .navbar-main {
-        background: var(--navy);
-        padding: clamp(12px, 3vh, 15px) 0;
-        box-shadow: var(--shadow-md);
-    }
-    
-    .navbar-main.scrolled {
-        background: var(--navy);
-        padding: clamp(10px, 2vh, 12px) 0;
-    }
-    
-    /* Текст логотипа белый на мобильных */
-    .logo-text {
-        color: var(--white) !important;
-    }
-    
-    /* Иконки белые на мобильных */
-    .cart-button {
-        color: var(--white) !important;
-    }
-    
-    .mobile-phone-icon-btn {
-        color: var(--white) !important;
-    }
-    
-    .mobile-dealers-icon-btn {
-        color: var(--white) !important;
-    }
-    
-    .burger-button {
-        color: var(--white) !important;
-    }
-    
-    /* Hover эффекты на мобильных */
-    .cart-button:hover,
-    .mobile-phone-icon-btn:hover,
-    .mobile-dealers-icon-btn:hover,
-    .burger-button:hover {
-        color: var(--gold) !important;
-        background: rgba(255, 255, 255, 0.1);
     }
 }
 
@@ -157,84 +144,31 @@
     gap: clamp(10px, 3vw, 20px);
 }
 
-/* Логотип - адаптивные размеры */
+/* ========== ЛОГОТИП ========== */
 .logo {
     display: flex;
     align-items: center;
-    gap: clamp(8px, 2vw, 15px);
+    gap: clamp(6px, 2vw, 15px);
     text-decoration: none;
     z-index: 1001;
 }
 
 .logo-wrapper {
     position: relative;
-    width: clamp(35px, 8vw, 70px);
-    height: clamp(35px, 8vw, 70px);
+    width: clamp(30px, 7vw, 70px);
+    height: clamp(30px, 7vw, 70px);
     flex-shrink: 0;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid var(--gold);
-}
-
-/* Адаптивные размеры логотипа */
-@media (max-width: 1200px) {
-    .logo-wrapper {
-        width: clamp(35px, 7vw, 65px);
-        height: clamp(35px, 7vw, 65px);
-    }
-}
-
-@media (max-width: 992px) {
-    .logo-wrapper {
-        width: clamp(35px, 8vw, 60px);
-        height: clamp(35px, 8vw, 60px);
-        border-color: var(--gold);
-    }
-}
-
-@media (max-width: 768px) {
-    .logo-wrapper {
-        width: clamp(30px, 8vw, 55px);
-        height: clamp(30px, 8vw, 55px);
-        border-width: 2px;
-    }
-}
-
-@media (max-width: 576px) {
-    .logo-wrapper {
-        width: clamp(28px, 8vw, 50px);
-        height: clamp(28px, 8vw, 50px);
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-wrapper {
-        width: clamp(25px, 8vw, 45px);
-        height: clamp(25px, 8vw, 45px);
-        border-width: 1.5px;
-    }
-}
-
-@media (max-width: 375px) {
-    .logo-wrapper {
-        width: clamp(22px, 8vw, 40px);
-        height: clamp(22px, 8vw, 40px);
-    }
-}
-
-@media (max-width: 320px) {
-    .logo-wrapper {
-        width: clamp(20px, 8vw, 35px);
-        height: clamp(20px, 8vw, 35px);
-    }
 }
 
 .logo-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform var(--transition-base);
 }
 
 .logo:hover .logo-image {
@@ -244,61 +178,18 @@
 }
 
 .logo-text {
-    font-size: clamp(0.8rem, 3vw, 1.3rem);
+    font-size: clamp(0.7rem, 2.5vw, 1.3rem);
     font-weight: 600;
-    color: var(--navy);
-    transition: color 0.3s ease;
+    color: var(--navy); /* Темный текст на белом фоне */
+    transition: color var(--transition-fast);
     white-space: nowrap;
 }
 
-/* Адаптивные размеры текста логотипа */
-@media (max-width: 1200px) {
-    .logo-text {
-        font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-    }
-}
-
-@media (max-width: 992px) {
-    .logo-text {
-        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
-    }
-}
-
-@media (max-width: 768px) {
-    .logo-text {
-        font-size: clamp(0.7rem, 2.5vw, 1rem);
-    }
-}
-
-@media (max-width: 576px) {
-    .logo-text {
-        font-size: clamp(0.7rem, 2.5vw, 0.95rem);
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-text {
-        font-size: clamp(0.65rem, 2.5vw, 0.9rem);
-    }
-}
-
-@media (max-width: 375px) {
-    .logo-text {
-        font-size: clamp(0.6rem, 2.5vw, 0.85rem);
-    }
-}
-
-@media (max-width: 320px) {
-    .logo-text {
-        font-size: clamp(0.55rem, 2.5vw, 0.8rem);
-    }
-}
-
-/* Навигационное меню */
+/* ========== НАВИГАЦИОННОЕ МЕНЮ ========== */
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: clamp(20px, 4vw, 40px);
+    gap: clamp(15px, 3vw, 40px);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -310,17 +201,17 @@
 
 .nav-item a,
 .nav-item .dropdown-trigger {
-    color: var(--navy);
+    color: var(--navy); /* Темный текст на белом фоне */
     text-decoration: none;
-    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-size: clamp(0.8rem, 1.8vw, 1rem);
     font-weight: 600;
-    letter-spacing: 0.3px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 8px 0;
+    transition: var(--transition-fast);
+    padding: 6px 0;
     display: flex;
     align-items: center;
     gap: 4px;
+    white-space: nowrap;
 }
 
 .nav-item a:hover,
@@ -336,14 +227,23 @@
     width: 0;
     height: 2px;
     background: var(--gold);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width var(--transition-base);
 }
 
 .nav-item a:hover::after {
     width: 100%;
 }
 
-/* Дропдаун с плавными анимациями */
+/* Активный пункт меню */
+.nav-item a.active {
+    color: var(--gold);
+}
+
+.nav-item a.active::after {
+    width: 100%;
+}
+
+/* ========== ДРОПДАУН ========== */
 .dropdown {
     position: relative;
 }
@@ -352,12 +252,12 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    cursor: pointer;
 }
 
 .dropdown-arrow {
-    font-size: 1rem;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+    transition: transform var(--transition-fast);
+    color: var(--navy);
 }
 
 .dropdown.active .dropdown-arrow {
@@ -372,11 +272,11 @@
     background: var(--white);
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
-    padding: 12px 0;
+    padding: 10px 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(15px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-base);
     z-index: 1000;
     border: 1px solid var(--border);
     pointer-events: none;
@@ -391,95 +291,82 @@
 
 .dropdown-item {
     display: block;
-    padding: clamp(8px, 2vh, 12px) clamp(16px, 3vw, 24px);
+    padding: clamp(6px, 1.5vh, 10px) clamp(12px, 2.5vw, 20px);
     color: var(--navy) !important;
     text-decoration: none;
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    transition: var(--transition-fast);
     white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-}
-
-.dropdown-item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0;
-    background: var(--gold);
-    opacity: 0.1;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
 }
 
 .dropdown-item:hover {
     color: var(--gold) !important;
-    padding-left: clamp(20px, 4vw, 32px);
-    background: linear-gradient(90deg, var(--cream) 0%, transparent 100%);
+    background: var(--cream);
+    padding-left: clamp(16px, 3vw, 24px);
 }
 
-.dropdown-item:hover::before {
-    width: 100%;
-}
-
-.dropdown-item::after {
-    display: none;
-}
-
-/* Действия */
+/* ========== ДЕЙСТВИЯ ========== */
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: clamp(10px, 3vw, 20px);
+    gap: clamp(8px, 2vw, 20px);
     z-index: 1001;
 }
 
-/* Адаптивные размеры для кнопок */
-@media (max-width: 768px) {
-    .nav-actions {
-        gap: 8px;
-    }
+/* Кнопка дилеров для ПК */
+.dealers-pc-btn {
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 1vw, 8px);
+    padding: clamp(5px, 1.2vh, 8px) clamp(8px, 1.8vw, 16px);
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    color: var(--navy);
+    font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-base);
+    white-space: nowrap;
 }
 
-@media (max-width: 576px) {
-    .nav-actions {
-        gap: 5px;
-    }
+.dealers-pc-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
 }
 
-@media (max-width: 375px) {
-    .nav-actions {
-        gap: 3px;
-    }
+.dealers-pc-icon {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--gold);
+    transition: color var(--transition-fast);
 }
 
-/* Телефоны в навбаре - десктоп */
+.dealers-pc-btn:hover .dealers-pc-icon {
+    color: var(--white);
+}
+
+/* Телефоны десктоп */
 .phones-wrapper.desktop-only {
     position: relative;
-    margin-right: 10px;
-}
-
-@media (max-width: 992px) {
-    .phones-wrapper.desktop-only {
-        display: none;
-    }
 }
 
 .phones-trigger {
     display: flex;
     align-items: center;
     gap: clamp(4px, 1vw, 8px);
-    padding: clamp(6px, 1.5vh, 10px) clamp(10px, 2vw, 16px);
+    padding: clamp(5px, 1.2vh, 8px) clamp(8px, 1.8vw, 16px);
     background: var(--cream);
     border: 1px solid var(--border);
     border-radius: 30px;
     color: var(--navy);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     font-weight: 500;
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+    white-space: nowrap;
 }
 
 .phones-trigger:hover {
@@ -491,22 +378,19 @@
 }
 
 .phones-icon {
-    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
     color: var(--gold);
-    transition: color 0.3s ease;
+    transition: color var(--transition-fast);
 }
 
 .phones-trigger:hover .phones-icon {
     color: var(--white);
 }
 
-.phones-text {
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
-}
-
 .phones-arrow {
     font-size: 0.8rem;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-fast);
+    color: var(--navy);
 }
 
 .phones-arrow.active {
@@ -517,19 +401,19 @@
     position: absolute;
     top: 100%;
     right: 0;
-    min-width: 240px;
+    min-width: 200px;
     background: var(--white);
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
-    padding: 12px 0;
+    padding: 10px 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(15px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-base);
     z-index: 1000;
     border: 1px solid var(--border);
     pointer-events: none;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .phones-dropdown.show {
@@ -542,9 +426,9 @@
 .phone-item {
     display: flex;
     flex-direction: column;
-    padding: clamp(8px, 2vh, 12px) clamp(12px, 3vw, 20px);
+    padding: clamp(6px, 1.5vh, 10px) clamp(10px, 2vw, 16px);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     border-bottom: 1px solid var(--border);
 }
 
@@ -554,75 +438,628 @@
 
 .phone-item:hover {
     background: var(--cream);
-    transform: translateX(5px);
+    transform: translateX(3px);
 }
 
 .phone-name {
     color: var(--navy);
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .phone-number {
     color: var(--gold);
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
     font-weight: 500;
 }
 
-/* Иконка телефона для мобильных */
-.mobile-phone-icon-btn {
+/* Мобильные иконки */
+.mobile-phone-icon-btn,
+.mobile-dealers-icon-btn {
     display: none;
     background: transparent;
     border: none;
-    width: clamp(34px, 8vw, 40px);
-    height: clamp(34px, 8vw, 40px);
+    width: clamp(34px, 8vw, 44px);
+    height: clamp(34px, 8vw, 44px);
     align-items: center;
     justify-content: center;
     color: var(--navy);
     font-size: clamp(1rem, 4vw, 1.3rem);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     border-radius: 50%;
+    position: relative;
 }
 
-.mobile-phone-icon-btn:hover {
+/* ========== ПОИСК ========== */
+.search-wrapper {
+    position: relative;
+}
+
+.search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: clamp(120px, 18vw, 250px);
+    padding: clamp(5px, 1.2vh, 8px) clamp(30px, 5vw, 40px) clamp(5px, 1.2vh, 8px) clamp(8px, 1.5vw, 12px);
+    border: 2px solid var(--border);
+    border-radius: 30px;
+    background: var(--cream);
+    color: var(--navy);
+    font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+    transition: var(--transition-base);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
+}
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+    border-radius: 50%;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
+.search-button:hover {
     color: var(--gold);
+    transform: translateY(-50%) scale(1.1);
     background: rgba(197, 165, 114, 0.1);
 }
 
+/* Результаты поиска */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    margin-top: 8px;
+    overflow: hidden;
+    z-index: 1000;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: clamp(6px, 1.5vh, 10px) clamp(8px, 2vw, 12px);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border-bottom: 1px solid var(--border);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: var(--cream);
+    transform: translateX(3px);
+}
+
+.result-image {
+    width: clamp(35px, 8vw, 45px);
+    height: clamp(35px, 8vw, 45px);
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--cream);
+    border: 1px solid var(--border);
+}
+
+.result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.result-name {
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+}
+
+.result-category {
+    color: var(--gray);
+    font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+}
+
+.search-results-footer {
+    padding: 8px;
+    text-align: center;
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+}
+
+.view-all-button {
+    background: none;
+    border: none;
+    color: var(--navy);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.view-all-button:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.15);
+}
+
+/* ========== КОРЗИНА ========== */
+.cart-button {
+    position: relative;
+    background: transparent;
+    border: none;
+    width: clamp(34px, 8vw, 44px);
+    height: clamp(34px, 8vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    cursor: pointer;
+    transition: var(--transition-base);
+    border-radius: 50%;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+}
+
+.cart-button:hover {
+    color: var(--gold);
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(197, 165, 114, 0.1);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: var(--gold);
+    color: var(--white);
+    font-size: clamp(0.55rem, 1.8vw, 0.7rem);
+    width: clamp(14px, 3.5vw, 20px);
+    height: clamp(14px, 3.5vw, 20px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border: 2px solid var(--white);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ========== БУРГЕР МЕНЮ ========== */
+.burger-button {
+    display: none;
+    background: transparent;
+    border: none;
+    width: clamp(34px, 8vw, 44px);
+    height: clamp(34px, 8vw, 44px);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    transition: var(--transition-base);
+    border-radius: 50%;
+}
+
+.burger-button:hover {
+    color: var(--gold);
+    background: rgba(197, 165, 114, 0.1);
+    transform: rotate(90deg);
+}
+
+.burger-button.active {
+    color: var(--gold);
+}
+
+.burger-button.active:hover {
+    transform: rotate(180deg);
+}
+
+/* ========== УБИРАЕМ ЛИШНИЙ ОФФСЕТ ========== */
+.navbar-offset {
+    display: none;
+}
+
+@media (min-width: 993px) {
+    .navbar-main {
+        top: 54px;
+    }
+}
+
+/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
 @media (max-width: 992px) {
-    .mobile-phone-icon-btn {
+    /* Верхний бар */
+    .navbar-top {
+        background: var(--gold);
+    }
+    
+    .navbar-top-inner {
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+    
+    .contact-info::after,
+    .years-badge::after {
+        display: none;
+    }
+    
+    /* Основной навбар - на мобильных синий фон */
+    .navbar-main {
+        background: var(--navy) !important; /* Принудительно синий на мобильных */
+        position: sticky;
+        top: 0;
+        padding: clamp(10px, 2.5vh, 15px) 0;
+        box-shadow: var(--shadow-md);
+        z-index: 900;
+    }
+    
+    .navbar-main.scrolled {
+        background: var(--navy) !important;
+    }
+    
+    .logo-text {
+        color: var(--white) !important;
+    }
+    
+    /* Мобильные иконки - белые на синем фоне */
+    .mobile-phone-icon-btn,
+    .mobile-dealers-icon-btn {
         display: flex;
+        color: var(--white) !important;
+        width: clamp(40px, 10vw, 48px) !important;
+        height: clamp(40px, 10vw, 48px) !important;
+        font-size: clamp(1.2rem, 5vw, 1.4rem) !important;
+    }
+    
+    .cart-button {
+        color: var(--white) !important;
+        width: clamp(40px, 10vw, 48px) !important;
+        height: clamp(40px, 10vw, 48px) !important;
+        font-size: clamp(1.2rem, 5vw, 1.4rem) !important;
+    }
+    
+    .burger-button {
+        display: flex;
+        color: var(--white) !important;
+        width: clamp(40px, 10vw, 48px) !important;
+        height: clamp(40px, 10vw, 48px) !important;
+        font-size: clamp(1.2rem, 5vw, 1.4rem) !important;
+    }
+    
+    /* Скрываем десктопные элементы */
+    .dealers-pc-btn,
+    .phones-wrapper.desktop-only,
+    .search-wrapper {
+        display: none;
+    }
+    
+    /* Мобильное меню - с 4 пунктами */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: var(--navy);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: calc(clamp(70px, 18vh, 90px) + 54px) clamp(15px, 5vw, 20px) clamp(20px, 5vh, 30px);
+        gap: clamp(8px, 2vh, 12px);
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 899;
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-item {
+        width: 100%;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active .nav-item {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* Анимация для 4 пунктов меню */
+    .nav-menu.active .nav-item:nth-child(1) { transition-delay: 0.1s; }
+    .nav-menu.active .nav-item:nth-child(2) { transition-delay: 0.15s; }
+    .nav-menu.active .nav-item:nth-child(3) { transition-delay: 0.2s; }
+    .nav-menu.active .nav-item:nth-child(4) { transition-delay: 0.25s; }
+    
+    .nav-item a,
+    .nav-item .dropdown-trigger {
+        color: var(--white) !important;
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        padding: clamp(10px, 2.5vh, 15px) 0;
+        width: 100%;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-item a:hover,
+    .nav-item .dropdown-trigger:hover {
+        color: var(--gold) !important;
+    }
+    
+    .nav-item a::after {
+        display: none;
+    }
+    
+    /* Дропдаун на мобильных */
+    .dropdown {
+        width: 100%;
+    }
+    
+    .dropdown-arrow {
+        color: var(--gold);
+    }
+    
+    .dropdown-menu {
+        position: static;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        border: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        pointer-events: none;
+        border-radius: 8px;
+    }
+    
+    .dropdown-menu.show {
+        max-height: 400px;
+        padding: 8px;
+        pointer-events: all;
+        margin-top: 5px;
+    }
+    
+    .dropdown-item {
+        padding: clamp(8px, 2vh, 12px) clamp(12px, 3vw, 16px);
+        color: var(--white) !important;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        border-left: 3px solid transparent;
+    }
+    
+    .dropdown-item:hover {
+        background: var(--gold) !important;
+        color: var(--white) !important;
+        border-left-color: var(--white);
+        transform: translateX(3px);
+    }
+    
+    /* Анимации для иконок */
+    .mobile-phone-icon-btn,
+    .mobile-dealers-icon-btn,
+    .cart-button {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .mobile-dealers-icon-btn {
+        animation-delay: 0.5s;
+    }
+    
+    .cart-button {
+        animation-delay: 0.2s;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+    }
+    
+    .mobile-phone-icon-btn:hover,
+    .mobile-dealers-icon-btn:hover,
+    .cart-button:hover,
+    .burger-button:hover {
+        color: var(--gold) !important;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .mobile-phone-icon-btn:active,
+    .mobile-dealers-icon-btn:active,
+    .cart-button:active,
+    .burger-button:active {
+        transform: scale(0.95);
+    }
+    
+    /* Улучшаем cart-badge на мобильных */
+    .cart-badge {
+        width: clamp(16px, 4vw, 22px) !important;
+        height: clamp(16px, 4vw, 22px) !important;
+        font-size: clamp(0.6rem, 2vw, 0.7rem) !important;
+        top: -2px;
+        right: -2px;
+        border-width: 2px;
+    }
+    /* Модальные окна поверх всего */
+    .phones-modal-overlay,
+    .dealers-modal-overlay {
+        z-index: 10000; /* Оставляем высокий для модалок */
     }
 }
 
-@media (max-width: 768px) {
-    .mobile-phone-icon-btn {
-        width: clamp(32px, 7vw, 38px);
-        height: clamp(32px, 7vw, 38px);
-        font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+/* Планшеты */
+@media (min-width: 768px) and (max-width: 992px) {
+    .nav-menu {
+        padding-top: calc(clamp(80px, 20vh, 100px) + 54px);
+    }
+    
+    .nav-item a,
+    .nav-item .dropdown-trigger {
+        font-size: 1.1rem;
     }
 }
 
+/* Маленькие планшеты */
+@media (max-width: 767px) {
+    .nav-menu {
+        padding-top: calc(clamp(70px, 18vh, 90px) + 54px);
+    }
+    
+    .logo-text {
+        font-size: 0.9rem;
+    }
+    
+    .nav-item a,
+    .nav-item .dropdown-trigger {
+        font-size: 1rem;
+    }
+}
+
+/* Большие мобильные */
 @media (max-width: 576px) {
-    .mobile-phone-icon-btn {
-        width: clamp(30px, 7vw, 36px);
-        height: clamp(30px, 7vw, 36px);
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    .nav-actions {
+        gap: 5px;
+    }
+    
+    .mobile-phone-icon-btn,
+    .mobile-dealers-icon-btn,
+    .cart-button,
+    .burger-button {
+        width: clamp(38px, 9vw, 44px) !important;
+        height: clamp(38px, 9vw, 44px) !important;
+        font-size: clamp(1.1rem, 4.5vw, 1.3rem) !important;
+    }
+    
+    .logo-wrapper {
+        width: clamp(28px, 7vw, 50px);
+        height: clamp(28px, 7vw, 50px);
+    }
+    
+    .logo-text {
+        font-size: 0.85rem;
+    }
+    
+    .nav-menu {
+        padding-top: calc(clamp(65px, 16vh, 85px) + 54px);
+    }
+    
+    .nav-item a,
+    .nav-item .dropdown-trigger {
+        font-size: 0.95rem;
+        padding: clamp(8px, 2vh, 12px) 0;
+    }
+    
+    .cart-badge {
+        width: clamp(14px, 3.5vw, 18px) !important;
+        height: clamp(14px, 3.5vw, 18px) !important;
+        font-size: clamp(0.5rem, 1.8vw, 0.65rem) !important;
     }
 }
 
+/* Маленькие мобильные */
 @media (max-width: 375px) {
-    .mobile-phone-icon-btn {
-        width: clamp(28px, 7vw, 34px);
-        height: clamp(28px, 7vw, 34px);
-        font-size: clamp(0.85rem, 3.5vw, 1rem);
+    .nav-actions {
+        gap: 3px;
+    }
+    
+    .mobile-phone-icon-btn,
+    .mobile-dealers-icon-btn,
+    .cart-button,
+    .burger-button {
+        width: clamp(34px, 8vw, 40px) !important;
+        height: clamp(34px, 8vw, 40px) !important;
+        font-size: clamp(1rem, 4vw, 1.2rem) !important;
+    }
+    
+    .logo-wrapper {
+        width: clamp(25px, 6vw, 45px);
+        height: clamp(25px, 6vw, 45px);
+        border-width: 1.5px;
+    }
+    
+    .logo-text {
+        font-size: 0.75rem;
+    }
+    
+    .nav-menu {
+        padding-top: calc(clamp(60px, 15vh, 80px) + 54px);
+    }
+    
+    .nav-item a,
+    .nav-item .dropdown-trigger {
+        font-size: 0.9rem;
     }
 }
 
-/* Модальное окно с телефонами */
-.phones-modal-overlay {
+/* Очень маленькие мобильные */
+@media (max-width: 320px) {
+    .mobile-phone-icon-btn,
+    .mobile-dealers-icon-btn,
+    .cart-button,
+    .burger-button {
+        width: clamp(30px, 7vw, 36px) !important;
+        height: clamp(30px, 7vw, 36px) !important;
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem) !important;
+    }
+    
+    .logo-wrapper {
+        width: clamp(22px, 5vw, 40px);
+        height: clamp(22px, 5vw, 40px);
+    }
+    
+    .logo-text {
+        font-size: 0.7rem;
+    }
+    
+    .nav-menu {
+        padding-top: calc(clamp(55px, 14vh, 75px) + 54px);
+    }
+    
+    .nav-item a,
+    .nav-item .dropdown-trigger {
+        font-size: 0.85rem;
+    }
+}
+
+/* ========== МОДАЛЬНЫЕ ОКНА ========== */
+.phones-modal-overlay,
+.dealers-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -634,24 +1071,21 @@
     align-items: center;
     justify-content: center;
     z-index: 2000;
-    padding: clamp(10px, 3vw, 15px);
+    padding: 15px;
     animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.phones-modal-content {
+.phones-modal-content,
+.dealers-modal-content {
     background: var(--white);
     border-radius: clamp(16px, 5vw, 24px);
     width: 90%;
-    max-width: 350px;
+    max-width: 400px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
@@ -670,66 +1104,79 @@
     }
 }
 
-.phones-modal-header {
-    padding: clamp(15px, 5vh, 25px) clamp(15px, 5vw, 25px) clamp(10px, 3vh, 15px);
+.phones-modal-header,
+.dealers-modal-header {
+    padding: clamp(15px, 4vh, 25px) clamp(15px, 4vw, 25px) clamp(10px, 2vh, 15px);
     text-align: center;
     position: relative;
     border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    border-radius: clamp(16px, 5vw, 24px) clamp(16px, 5vw, 24px) 0 0;
 }
 
-.phones-modal-icon {
+.phones-modal-icon,
+.dealers-modal-icon {
     font-size: clamp(2rem, 8vw, 2.5rem);
     color: var(--gold);
-    margin-bottom: clamp(5px, 2vh, 10px);
+    margin-bottom: 5px;
+    animation: modalIconFloat 3s ease-in-out infinite;
 }
 
-.phones-modal-title {
-    font-size: clamp(1.2rem, 5vw, 1.4rem);
-    color: var(--navy);
+@keyframes modalIconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.phones-modal-title,
+.dealers-modal-title {
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    color: var(--white);
     font-family: 'Cormorant Garamond', serif;
     margin: 0;
 }
 
-.phones-modal-close {
+.phones-modal-close,
+.dealers-modal-close {
     position: absolute;
-    top: clamp(8px, 2vh, 15px);
-    right: clamp(8px, 2vw, 15px);
-    background: var(--cream);
-    border: none;
-    color: var(--gray);
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
     cursor: pointer;
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    padding: clamp(4px, 1vh, 5px);
+    font-size: 1.3rem;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     border-radius: 50%;
-    width: clamp(30px, 8vw, 40px);
-    height: clamp(30px, 8vw, 40px);
+    width: 36px;
+    height: 36px;
 }
 
-.phones-modal-close:hover {
-    color: var(--white);
+.phones-modal-close:hover,
+.dealers-modal-close:hover {
     background: var(--gold);
     transform: rotate(90deg);
 }
 
-.phones-modal-body {
-    padding: clamp(15px, 4vh, 20px) clamp(15px, 5vw, 25px);
+.phones-modal-body,
+.dealers-modal-body {
+    padding: clamp(15px, 4vh, 25px);
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .phones-modal-item {
     display: flex;
     flex-direction: column;
-    padding: clamp(10px, 3vh, 15px) 0;
+    padding: 10px 0;
     text-decoration: none;
     border-bottom: 1px solid var(--border);
-    transition: all 0.3s ease;
-}
-
-.phones-modal-item:last-child {
-    border-bottom: none;
+    transition: var(--transition-fast);
 }
 
 .phones-modal-item:hover {
@@ -738,738 +1185,158 @@
 
 .phones-modal-name {
     color: var(--navy);
-    font-size: clamp(0.9rem, 3vw, 1rem);
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 3px;
 }
 
 .phones-modal-number {
     color: var(--gold);
-    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+    font-size: 1.1rem;
     font-weight: 500;
 }
 
-.phones-modal-footer {
-    padding: clamp(10px, 3vh, 15px) clamp(15px, 5vw, 25px) clamp(15px, 4vh, 25px);
-    text-align: center;
-}
-
-.phones-modal-btn {
-    padding: clamp(8px, 2vh, 12px) clamp(15px, 5vw, 30px);
-    background: var(--cream);
-    border: none;
-    border-radius: 40px;
-    color: var(--navy);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    font-size: clamp(0.85rem, 3vw, 0.95rem);
-}
-
-.phones-modal-btn:hover {
-    background: var(--gold);
-    color: var(--white);
-}
-
-/* Поиск */
-.search-wrapper {
-    position: relative;
-}
-
-.search-form {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-input {
-    width: clamp(150px, 20vw, 250px);
-    padding: clamp(6px, 1.5vh, 10px) clamp(35px, 6vw, 45px) clamp(6px, 1.5vh, 10px) clamp(10px, 2vw, 15px);
-    border: 2px solid var(--navy);
-    border-radius: 30px;
-    background: var(--white);
-    color: var(--navy);
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (max-width: 1200px) {
-    .search-input {
-        width: clamp(120px, 18vw, 200px);
-    }
-}
-
-@media (max-width: 992px) {
-    .search-wrapper {
-        display: none;
-    }
-}
-
-.search-input::placeholder {
-    color: var(--gray);
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
-}
-
-.search-button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--navy);
-    cursor: pointer;
-    padding: clamp(4px, 1vh, 8px) clamp(6px, 1.5vw, 12px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 50%;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-}
-
-.search-button:hover {
-    color: var(--gold);
-    transform: translateY(-50%) scale(1.1);
-    background: rgba(197, 165, 114, 0.1);
-}
-
-/* Результаты поиска */
-.search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--white);
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
-    margin-top: 12px;
-    overflow: hidden;
-    z-index: 1000;
-    max-height: 400px;
-    overflow-y: auto;
-    border: 1px solid var(--border);
-    animation: fadeInDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.search-result-item {
-    display: flex;
-    align-items: center;
-    gap: clamp(10px, 3vw, 15px);
-    padding: clamp(8px, 2vh, 12px) clamp(10px, 3vw, 15px);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-bottom: 1px solid var(--border);
-}
-
-.search-result-item:last-child {
-    border-bottom: none;
-}
-
-.search-result-item:hover {
-    background: var(--cream);
-    transform: translateX(5px);
-}
-
-.result-image {
-    width: clamp(40px, 10vw, 50px);
-    height: clamp(40px, 10vw, 50px);
-    border-radius: 8px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background: var(--cream);
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease;
-}
-
-@media (max-width: 480px) {
-    .result-image {
-        width: clamp(35px, 10vw, 45px);
-        height: clamp(35px, 10vw, 45px);
-    }
-}
-
-.search-result-item:hover .result-image {
-    transform: scale(1.05);
-}
-
-.result-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.result-info {
-    flex: 1;
-}
-
-.result-name {
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 4px;
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-    transition: color 0.3s ease;
-}
-
-@media (max-width: 480px) {
-    .result-name {
-        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-    }
-}
-
-.search-result-item:hover .result-name {
-    color: var(--gold);
-}
-
-.result-category {
-    color: var(--gray);
-    font-size: clamp(0.7rem, 2vw, 0.8rem);
-}
-
-.search-results-footer {
-    padding: clamp(10px, 3vh, 15px);
+.phones-modal-footer,
+.dealers-modal-footer {
+    padding: 15px;
     text-align: center;
     background: var(--cream);
     border-top: 1px solid var(--border);
 }
 
-.view-all-button {
-    background: none;
-    border: none;
-    color: var(--navy);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-    padding: clamp(4px, 1vh, 8px) clamp(8px, 2vw, 16px);
-    border-radius: 20px;
-}
-
-.view-all-button:hover {
-    color: var(--gold);
-    background: rgba(197, 165, 114, 0.15);
-    transform: scale(1.05);
-}
-
-/* Корзина */
-.cart-button {
-    position: relative;
-    background: transparent;
-    border: none;
-    width: clamp(36px, 8vw, 44px);
-    height: clamp(36px, 8vw, 44px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 50%;
-    font-size: clamp(1rem, 4vw, 1.2rem);
-}
-
-@media (max-width: 768px) {
-    .cart-button {
-        width: clamp(34px, 7vw, 40px);
-        height: clamp(34px, 7vw, 40px);
-        font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-    }
-}
-
-@media (max-width: 576px) {
-    .cart-button {
-        width: clamp(32px, 7vw, 38px);
-        height: clamp(32px, 7vw, 38px);
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
-    }
-}
-
-@media (max-width: 375px) {
-    .cart-button {
-        width: clamp(30px, 7vw, 36px);
-        height: clamp(30px, 7vw, 36px);
-        font-size: clamp(0.85rem, 3.5vw, 0.95rem);
-    }
-}
-
-.cart-button:hover {
-    color: var(--gold);
-    transform: scale(1.1) rotate(5deg);
-    background: rgba(197, 165, 114, 0.1);
-}
-
-.cart-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: var(--gold);
-    color: var(--white);
-    font-size: clamp(0.6rem, 2vw, 0.7rem);
-    width: clamp(16px, 4vw, 20px);
-    height: clamp(16px, 4vw, 20px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    border: 2px solid var(--white);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@media (max-width: 480px) {
-    .cart-badge {
-        width: clamp(14px, 4vw, 18px);
-        height: clamp(14px, 4vw, 18px);
-        font-size: clamp(0.55rem, 2vw, 0.65rem);
-        top: -4px;
-        right: -4px;
-        border-width: 1.5px;
-    }
-}
-
-@media (max-width: 375px) {
-    .cart-badge {
-        width: clamp(12px, 4vw, 16px);
-        height: clamp(12px, 4vw, 16px);
-        font-size: clamp(0.5rem, 2vw, 0.6rem);
-        border-width: 1.5px;
-    }
-}
-
-/* Бургер меню */
-.burger-button {
-    display: none;
-    background: transparent;
-    border: none;
-    width: clamp(36px, 8vw, 44px);
-    height: clamp(36px, 8vw, 44px);
-    cursor: pointer;
-    padding: 0;
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    font-size: clamp(1.2rem, 5vw, 1.5rem);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 50%;
-}
-
-@media (max-width: 768px) {
-    .burger-button {
-        width: clamp(34px, 7vw, 40px);
-        height: clamp(34px, 7vw, 40px);
-        font-size: clamp(1.1rem, 4.5vw, 1.3rem);
-    }
-}
-
-@media (max-width: 576px) {
-    .burger-button {
-        width: clamp(32px, 7vw, 38px);
-        height: clamp(32px, 7vw, 38px);
-        font-size: clamp(1rem, 4.5vw, 1.2rem);
-    }
-}
-
-@media (max-width: 375px) {
-    .burger-button {
-        width: clamp(30px, 7vw, 36px);
-        height: clamp(30px, 7vw, 36px);
-        font-size: clamp(0.95rem, 4.5vw, 1.1rem);
-    }
-}
-
-.burger-button:hover {
-    color: var(--gold);
-    background: rgba(197, 165, 114, 0.1);
-    transform: rotate(90deg);
-}
-
-.burger-button.active {
-    color: var(--gold);
-}
-
-.burger-button.active:hover {
-    transform: rotate(180deg);
-}
-
-@media (max-width: 992px) {
-    .burger-button {
-        display: flex;
-    }
-}
-
-/* ========== МОБИЛЬНОЕ МЕНЮ - СИНИЙ ФОН С БЕЛЫМ ТЕКСТОМ ========== */
-@media (max-width: 992px) {
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 100%;
-        height: 100vh;
-        background: var(--navy);
-        flex-direction: column;
-        justify-content: flex-start;
-        padding: clamp(80px, 20vh, 100px) clamp(15px, 5vw, 20px) clamp(30px, 8vh, 40px);
-        gap: clamp(10px, 3vh, 15px);
-        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1000;
-        overflow-y: auto;
-    }
-
-    .nav-menu.active {
-        right: 0;
-    }
-
-    .nav-item {
-        width: 100%;
-        animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateX(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    .nav-item a,
-    .nav-item .dropdown-trigger {
-        color: var(--white) !important;
-        font-size: clamp(1rem, 4vw, 1.1rem);
-        padding: clamp(10px, 2vh, 12px) 0;
-        width: 100%;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        font-weight: 500;
-    }
-
-    .nav-item a:hover,
-    .nav-item .dropdown-trigger:hover {
-        color: var(--gold) !important;
-    }
-
-    .nav-item a::after {
-        display: none;
-    }
-
-    /* Дропдаун на мобилке */
-    .dropdown {
-        width: 100%;
-    }
-
-    .dropdown-trigger {
-        color: var(--white) !important;
-    }
-
-    .dropdown-trigger:hover {
-        color: var(--gold) !important;
-    }
-
-    .dropdown-arrow {
-        color: var(--gold);
-    }
-
-    .dropdown-menu {
-        position: static;
-        min-width: 100%;
-        background: rgba(255, 255, 255, 0.1);
-        box-shadow: none;
-        padding: 0;
-        margin: 5px 0;
-        border: none;
-        transform: none;
-        opacity: 1;
-        visibility: visible;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-        border-radius: 12px;
-    }
-
-    .dropdown-menu.show {
-        max-height: 500px;
-        padding: 8px;
-        pointer-events: all;
-    }
-
-    .dropdown-item {
-        padding: clamp(8px, 2vh, 12px) clamp(10px, 3vw, 15px);
-        border-radius: 8px;
-        margin-bottom: 5px;
-        background: rgba(255, 255, 255, 0.15);
-        transform: translateX(0);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
-        font-weight: 400;
-        color: var(--white) !important;
-        border-left: 3px solid transparent;
-    }
-
-    .dropdown-item:hover {
-        background: var(--gold) !important;
-        color: var(--white) !important;
-        transform: translateX(5px);
-        border-left-color: var(--white);
-    }
-
-    .dropdown-item::before {
-        display: none;
-    }
-
-    /* Мобильный поиск */
-    .mobile-search {
-        display: block;
-        width: 100%;
-        padding: 20px 0 0;
-    }
-
-    .mobile-search-form {
-        position: relative;
-        width: 100%;
-    }
-
-    .mobile-search-input {
-        width: 100%;
-        padding: clamp(8px, 2vh, 12px) clamp(35px, 10vw, 50px) clamp(8px, 2vh, 12px) clamp(10px, 3vw, 15px);
-        border: 2px solid var(--gold);
-        border-radius: 30px;
-        background: rgba(255, 255, 255, 0.15);
-        color: var(--white);
-        font-size: clamp(0.85rem, 3vw, 0.95rem);
-        transition: all 0.3s ease;
-    }
-
-    .mobile-search-input::placeholder {
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .mobile-search-input:focus {
-        outline: none;
-        border-color: var(--gold);
-        background: rgba(255, 255, 255, 0.25);
-    }
-
-    .mobile-search-button {
-        position: absolute;
-        right: 5px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: var(--gold);
-        cursor: pointer;
-        padding: clamp(4px, 1vh, 8px) clamp(6px, 1.5vw, 12px);
-        font-size: clamp(1rem, 4vw, 1.2rem);
-        transition: all 0.3s ease;
-        border-radius: 50%;
-    }
-
-    .mobile-search-button:hover {
-        color: var(--white);
-        background: var(--gold);
-    }
-}
-
-/* Оффсет */
-.navbar-offset {
-    height: clamp(55px, 15vh, 74px);
-}
-
-@media (min-width: 993px) {
-    .navbar-offset {
-        height: clamp(100px, 20vh, 114px);
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar-offset {
-        height: clamp(50px, 12vh, 65px);
-    }
-}
-
-@media (max-width: 576px) {
-    .navbar-offset {
-        height: clamp(45px, 12vh, 60px);
-    }
-}
-
-@media (max-width: 375px) {
-    .navbar-offset {
-        height: clamp(40px, 12vh, 55px);
-    }
-}
-
-/* Кастомный скролл */
-.search-results::-webkit-scrollbar,
-.nav-menu::-webkit-scrollbar,
-.phones-modal-content::-webkit-scrollbar,
-.dealers-modal-content::-webkit-scrollbar {
-    width: clamp(4px, 1vw, 6px);
-}
-
-@media (max-width: 576px) {
-    .search-results::-webkit-scrollbar,
-    .nav-menu::-webkit-scrollbar,
-    .phones-modal-content::-webkit-scrollbar,
-    .dealers-modal-content::-webkit-scrollbar {
-        width: 4px;
-    }
-}
-
-.search-results::-webkit-scrollbar-track,
-.nav-menu::-webkit-scrollbar-track,
-.phones-modal-content::-webkit-scrollbar-track,
-.dealers-modal-content::-webkit-scrollbar-track {
-    background: var(--cream);
-}
-
-.search-results::-webkit-scrollbar-thumb,
-.nav-menu::-webkit-scrollbar-thumb,
-.phones-modal-content::-webkit-scrollbar-thumb,
-.dealers-modal-content::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 3px;
-    transition: background 0.3s ease;
-}
-
-.search-results::-webkit-scrollbar-thumb:hover,
-.nav-menu::-webkit-scrollbar-thumb:hover,
-.phones-modal-content::-webkit-scrollbar-thumb:hover,
-.dealers-modal-content::-webkit-scrollbar-thumb:hover {
+.phones-modal-btn,
+.dealers-modal-btn {
+    padding: 10px 20px;
     background: var(--navy);
-}
-
-/* Кнопка дилеров для ПК */
-.dealers-pc-btn {
-    display: flex;
-    align-items: center;
-    gap: clamp(4px, 1vw, 8px);
-    padding: clamp(6px, 1.5vh, 8px) clamp(10px, 2vw, 16px);
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    color: var(--navy);
-    font-size: clamp(0.8rem, 2vw, 0.95rem);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-right: 5px;
-}
-
-.dealers-pc-btn:hover {
-    background: var(--gold);
+    border: none;
+    border-radius: 40px;
     color: var(--white);
-    border-color: var(--gold);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-base);
+    width: 100%;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.phones-modal-btn::after,
+.dealers-modal-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+
+.phones-modal-btn:hover::after,
+.dealers-modal-btn:hover::after {
+    width: 200%;
+    height: 200%;
+}
+
+.phones-modal-btn:hover,
+.dealers-modal-btn:hover {
+    background: var(--gold);
     transform: translateY(-2px);
     box-shadow: var(--shadow-gold);
 }
 
-.dealers-pc-icon {
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-    color: var(--gold);
-    transition: color 0.3s ease;
+/* ========== КАСТОМНЫЙ СКРОЛЛ ========== */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 
-.dealers-pc-btn:hover .dealers-pc-icon {
-    color: var(--white);
+::-webkit-scrollbar-track {
+    background: var(--cream);
 }
 
-.dealers-pc-text {
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 3px;
 }
 
-@media (max-width: 992px) {
-    .dealers-pc-btn {
-        display: none;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--navy);
+}
+
+/* ========== TOUCH УСТРОЙСТВА ========== */
+@media (hover: none) and (pointer: coarse) {
+    .dealers-pc-btn:hover,
+    .mobile-dealers-icon-btn:hover,
+    .cart-button:hover,
+    .burger-button:hover {
+        transform: none;
+    }
+    
+    .dealers-pc-btn:active,
+    .mobile-dealers-icon-btn:active,
+    .cart-button:active,
+    .burger-button:active {
+        transform: scale(0.95);
+    }
+    
+    .dealer-phone:active {
+        background: var(--gold);
+        color: var(--white);
+        transform: scale(0.98);
+    }
+    
+    .dealers-modal-btn:active {
+        background: var(--gold);
+        transform: scale(0.98);
+    }
+    
+    .dealers-modal-close:active {
+        background: var(--gold);
     }
 }
 
-/* Иконка дилеров для мобильных */
-.mobile-dealers-icon-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    width: clamp(34px, 8vw, 40px);
-    height: clamp(34px, 8vw, 40px);
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    font-size: clamp(1rem, 4vw, 1.3rem);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    position: relative;
-}
-
-.mobile-dealers-icon-btn:hover {
-    color: var(--gold);
-    background: rgba(197, 165, 114, 0.1);
-}
-
-@media (max-width: 992px) {
-    .mobile-dealers-icon-btn {
-        display: flex;
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .nav-menu,
+    .nav-menu.active,
+    .nav-item,
+    .mobile-phone-icon-btn,
+    .mobile-dealers-icon-btn,
+    .cart-button,
+    .burger-button,
+    .dealer-item,
+    .dealers-modal-content,
+    .dealers-modal-overlay,
+    .dealer-phone,
+    .dealers-modal-btn,
+    .dealers-modal-close,
+    .phones-modal-icon,
+    .dealers-modal-icon {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .dealer-item:hover,
+    .dealer-phone:hover,
+    .dealers-modal-btn:hover,
+    .dealers-modal-close:hover {
+        transform: none !important;
     }
 }
 
-@media (max-width: 768px) {
-    .mobile-dealers-icon-btn {
-        width: clamp(32px, 7vw, 38px);
-        height: clamp(32px, 7vw, 38px);
-        font-size: clamp(0.95rem, 3.5vw, 1.2rem);
-    }
-}
-
-@media (max-width: 576px) {
-    .mobile-dealers-icon-btn {
-        width: clamp(30px, 7vw, 36px);
-        height: clamp(30px, 7vw, 36px);
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-    }
-}
-
-@media (max-width: 375px) {
-    .mobile-dealers-icon-btn {
-        width: clamp(28px, 7vw, 34px);
-        height: clamp(28px, 7vw, 34px);
-        font-size: clamp(0.85rem, 3.5vw, 1rem);
-    }
-}
-
-/* ========== МОДАЛЬНОЕ ОКНО ДИЛЕРОВ - ПОЛНОСТЬЮ АДАПТИВНОЕ ========== */
+/* ========== МОДАЛЬНОЕ ОКНО ДИЛЕРОВ ========== */
 .dealers-modal-overlay {
     position: fixed;
     top: 0;
@@ -1482,15 +1349,20 @@
     align-items: center;
     justify-content: center;
     z-index: 2000;
-    padding: clamp(10px, 3vw, 15px);
+    padding: 15px;
     animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .dealers-modal-content {
     background: var(--white);
     border-radius: clamp(16px, 5vw, 24px);
-    width: 100%;
-    max-width: clamp(300px, 90%, 400px);
+    width: 90%;
+    max-width: 400px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
@@ -1498,23 +1370,40 @@
     animation: slideUp 0.3s ease;
 }
 
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .dealers-modal-header {
-    padding: clamp(20px, 6vh, 25px) clamp(20px, 5vw, 25px) clamp(10px, 3vh, 15px);
+    padding: clamp(15px, 4vh, 25px) clamp(15px, 4vw, 25px) clamp(10px, 2vh, 15px);
     text-align: center;
     position: relative;
     border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--navy) 0%, #1a2f4f 100%);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
     border-radius: clamp(16px, 5vw, 24px) clamp(16px, 5vw, 24px) 0 0;
 }
 
 .dealers-modal-icon {
     font-size: clamp(2rem, 8vw, 2.5rem);
     color: var(--gold);
-    margin-bottom: clamp(5px, 2vh, 10px);
+    margin-bottom: 5px;
+    animation: modalIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes modalIconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 .dealers-modal-title {
-    font-size: clamp(1.2rem, 6vw, 1.5rem);
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
     color: var(--white);
     font-family: 'Cormorant Garamond', serif;
     margin: 0;
@@ -1522,21 +1411,21 @@
 
 .dealers-modal-close {
     position: absolute;
-    top: clamp(8px, 2vh, 15px);
-    right: clamp(8px, 2vw, 15px);
+    top: 10px;
+    right: 10px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--white);
     cursor: pointer;
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    padding: clamp(4px, 1vh, 5px);
+    font-size: 1.3rem;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     border-radius: 50%;
-    width: clamp(30px, 8vw, 40px);
-    height: clamp(30px, 8vw, 40px);
+    width: 36px;
+    height: 36px;
 }
 
 .dealers-modal-close:hover {
@@ -1545,11 +1434,11 @@
 }
 
 .dealers-modal-body {
-    padding: clamp(15px, 4vh, 25px) clamp(15px, 4vw, 25px);
+    padding: clamp(15px, 4vh, 25px);
     background: var(--cream);
     display: flex;
     flex-direction: column;
-    gap: clamp(10px, 2vh, 15px);
+    gap: 10px;
 }
 
 .dealer-item {
@@ -1559,6 +1448,23 @@
     border: 1px solid var(--border);
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.dealer-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(197, 165, 114, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.dealer-item:hover::before {
+    left: 100%;
 }
 
 .dealer-item:hover {
@@ -1651,29 +1557,44 @@
     color: var(--white);
 }
 
-.dealer-phone span {
-    word-break: break-word;
-    text-align: center;
-}
-
 .dealers-modal-footer {
-    padding: clamp(10px, 3vh, 15px) clamp(15px, 4vw, 25px) clamp(15px, 4vh, 25px);
+    padding: 15px;
     text-align: center;
     background: var(--cream);
     border-top: 1px solid var(--border);
 }
 
 .dealers-modal-btn {
-    padding: clamp(8px, 2vh, 12px) clamp(15px, 5vw, 30px);
+    padding: 10px 20px;
     background: var(--navy);
     border: none;
     border-radius: 40px;
     color: var(--white);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     width: 100%;
-    font-size: clamp(0.85rem, 3vw, 0.95rem);
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.dealers-modal-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+
+.dealers-modal-btn:hover::after {
+    width: 200%;
+    height: 200%;
 }
 
 .dealers-modal-btn:hover {
@@ -1682,16 +1603,7 @@
     box-shadow: var(--shadow-gold);
 }
 
-/* ========== АДАПТИВНОСТЬ ДЛЯ МОДАЛКИ ДИЛЕРОВ ========== */
-
-/* Планшеты */
-@media (max-width: 992px) {
-    .dealers-modal-content {
-        max-width: 450px;
-    }
-}
-
-/* Мобильные */
+/* Адаптивность для модального окна дилеров */
 @media (max-width: 768px) {
     .dealers-modal-header {
         padding: 20px 20px 10px;
@@ -1723,7 +1635,6 @@
     }
 }
 
-/* Малые мобильные */
 @media (max-width: 576px) {
     .dealers-modal-content {
         max-width: 95%;
@@ -1792,7 +1703,6 @@
     }
 }
 
-/* Очень маленькие телефоны */
 @media (max-width: 375px) {
     .dealers-modal-content {
         max-width: 98%;
@@ -1840,100 +1750,5 @@
     .dealers-modal-btn {
         font-size: 0.8rem;
         padding: 7px 12px;
-    }
-}
-
-/* Landscape ориентация */
-@media (max-height: 600px) and (orientation: landscape) {
-    .dealers-modal-content {
-        max-height: 95vh;
-    }
-    
-    .dealers-modal-body {
-        max-height: 60vh;
-        overflow-y: auto;
-    }
-    
-    .dealers-modal-header {
-        padding: 10px 15px 5px;
-    }
-    
-    .dealers-modal-icon {
-        font-size: 1.5rem;
-        margin-bottom: 3px;
-    }
-    
-    .dealers-modal-title {
-        font-size: 1.1rem;
-    }
-    
-    .dealer-item {
-        padding: 8px;
-    }
-    
-    .dealer-region {
-        margin-bottom: 5px;
-        padding-bottom: 3px;
-    }
-}
-
-/* Специально для скролла в мобильном меню */
-@media (max-width: 992px) {
-    .nav-menu::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .nav-menu::-webkit-scrollbar-thumb {
-        background: var(--gold);
-    }
-    
-    .nav-menu::-webkit-scrollbar-thumb:hover {
-        background: var(--white);
-    }
-}
-
-/* Улучшения для тач-устройств */
-@media (hover: none) and (pointer: coarse) {
-    .dealers-pc-btn:hover,
-    .mobile-dealers-icon-btn:hover,
-    .dealers-modal-close:hover,
-    .dealer-phone:hover,
-    .dealers-modal-btn:hover {
-        transform: none;
-    }
-    
-    .dealer-phone:active {
-        background: var(--gold);
-        color: var(--white);
-        transform: scale(0.98);
-    }
-    
-    .dealers-modal-btn:active {
-        background: var(--gold);
-        transform: scale(0.98);
-    }
-    
-    .dealers-modal-close:active {
-        background: var(--gold);
-    }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    .dealers-modal-content,
-    .dealers-modal-overlay,
-    .dealer-item,
-    .dealer-phone,
-    .dealers-modal-btn,
-    .dealers-modal-close {
-        animation: none !important;
-        transition: none !important;
-    }
-    
-    .dealer-item:hover,
-    .dealer-phone:hover,
-    .dealers-modal-btn:hover,
-    .dealers-modal-close:hover {
-        transform: none !important;
     }
 }

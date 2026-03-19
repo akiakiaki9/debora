@@ -69,9 +69,7 @@ const Navbar = () => {
             id: 4,
             region: "Qo'qon shahri",
             phone: '+998911556555',
-            phone: '+998903058887',
             formattedPhone: '+998 91 155-65-55',
-            formattedPhone: '+998 90 305-88-87',
             name: 'Abdulhamid',
             icon: <FiUser />
         },
@@ -220,7 +218,7 @@ const Navbar = () => {
 
     return (
         <>
-            {/* Верхний бар - скрыт на мобильных устройствах */}
+            {/* Верхний бар - всегда в потоке документа */}
             <div className="navbar-top">
                 <div className="container">
                     <div className="navbar-top-inner">
@@ -293,6 +291,11 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link href="/contacts" onClick={closeMenu}>
                                     Контакты
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href="/pdf" onClick={closeMenu}>
+                                    PDF Каталоги
                                 </Link>
                             </li>
                         </ul>

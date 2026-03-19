@@ -21,56 +21,41 @@ import { useCart } from '@/app/context/CartContext';
 import Navbar from '@/app/components/navbar/Navbar';
 import Footer from '@/app/components/footer/Footer';
 import { products, categories } from '@/app/utils/data';
+import PdfButton from '@/app/components/pdf/Pdf';
 import './category.css';
-import PdfFloatingButton from '@/app/components/pdf/Pdf';
 
 // Словарь для перевода характеристик на русский
 const specTranslations = {
-    // Основные
     size: 'Размер',
     material: 'Материал',
     model: 'Модель',
     production: 'Производство',
     quality: 'Качество',
-
-    // Для унитазов
     pTrap: 'Выпуск в пол',
     sTrap: 'Выпуск в стену',
     flushingSystem: 'Система смыва',
     coating: 'Покрытие',
     body: 'Тип корпуса',
-
-    // Для ванн
     type: 'Тип',
     additionalOptions: 'Дополнительно',
     leg_colors: 'Цвета ножек',
-
-    // Для раковин с тумбой
     sinkMaterial: 'Материал раковины',
     furnitureMaterial: 'Материал тумбы',
     width: 'Ширина',
     color: 'Цвет',
-
-    // Для зеркал
     sizes: 'Размеры',
     mirror: 'Зеркало',
     cabinet: 'Тумба',
     basin: 'Раковина',
     colors: 'Цвета',
-
-    // Для смесителей
     cartridge: 'Картридж',
     spoutHeight: 'Высота излива',
     projection: 'Вылет',
     functions: 'Функции',
     centreDistance: 'Межосевое расстояние',
     showerHoseLength: 'Длина шланга',
-
-    // Для инсталляции
     tank: 'Бачок',
     set: 'Комплектация',
-
-    // Общее
     color_1: 'Цвет 1',
     color_2: 'Цвет 2',
     color_3: 'Цвет 3',
@@ -126,12 +111,10 @@ const categoryBanners = {
 
 // Функция для форматирования значения характеристики
 const formatSpecValue = (key, value) => {
-    // Если это массив
     if (Array.isArray(value)) {
         return value.join(', ');
     }
 
-    // Если это объект с размерами (mirror, cabinet, basin)
     if (key === 'sizes' && value && typeof value === 'object') {
         return Object.entries(value)
             .map(([sizeKey, sizeValue]) => {
@@ -145,26 +128,22 @@ const formatSpecValue = (key, value) => {
             .join(' • ');
     }
 
-    // Если это объект с цветами
     if (key === 'colors' && value && typeof value === 'object') {
         return Object.values(value)
             .filter(v => typeof v === 'string')
             .join(', ');
     }
 
-    // Если это объект с цветами ножек
     if (key === 'leg_colors' && value && typeof value === 'object') {
         return Object.values(value)
             .map(item => item.color)
             .join(', ');
     }
 
-    // Если это объект с color_1, color_2 и т.д.
     if (key.startsWith('color_') && value) {
         return value;
     }
 
-    // Обычные значения
     if (typeof value === 'object' && value !== null) {
         return JSON.stringify(value);
     }
@@ -176,17 +155,13 @@ const formatSpecValue = (key, value) => {
 const ProductSpecs = memo(({ specs, viewMode }) => {
     if (!specs) return null;
 
-    // Для списка показываем подробно
     if (viewMode === 'list') {
-        // Специальная обработка для разных типов товаров
         const renderSpecs = () => {
             const elements = [];
 
             Object.entries(specs).forEach(([key, value]) => {
-                // Пропускаем служебные поля
                 if (key === 'id' || key === 'category') return;
 
-                // Обработка sizes (для зеркал с тумбой)
                 if (key === 'sizes' && value && typeof value === 'object') {
                     Object.entries(value).forEach(([sizeKey, sizeValue]) => {
                         const translations = {
@@ -202,7 +177,6 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
                         );
                     });
                 }
-                // Обработка colors (для зеркал с тумбой)
                 else if (key === 'colors' && value && typeof value === 'object') {
                     const colors = Object.values(value).filter(v => typeof v === 'string');
                     if (colors.length > 0) {
@@ -218,7 +192,6 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
                         );
                     }
                 }
-                // Обработка leg_colors (для ванн)
                 else if (key === 'leg_colors' && value && typeof value === 'object') {
                     const legColors = Object.values(value).map(item => item.color);
                     if (legColors.length > 0) {
@@ -234,7 +207,6 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
                         );
                     }
                 }
-                // Обработка additionalOptions (для ванн)
                 else if (key === 'additionalOptions' && Array.isArray(value)) {
                     elements.push(
                         <div key={key} className="spec-item">
@@ -245,12 +217,9 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
                         </div>
                     );
                 }
-                // Обработка color_1, color_2 и т.д.
                 else if (key.startsWith('color_') && value) {
-                    // Пропускаем, так как обработали выше в colors
                     return;
                 }
-                // Обычные характеристики
                 else if (value && typeof value !== 'object') {
                     elements.push(
                         <div key={key} className="spec-item">
@@ -271,39 +240,29 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
         );
     }
 
-    // Для сетки показываем в виде компактных пилюль
     const getGridSpecs = () => {
         const pills = [];
 
-        // Приоритетные характеристики для разных категорий
         if (specs.sizes) {
-            // Для зеркал с тумбой показываем размеры
             const sizes = specs.sizes;
             if (sizes.cabinet) pills.push(`Тумба: ${sizes.cabinet}`);
             if (sizes.mirror) pills.push(`Зеркало: ${sizes.mirror}`);
         } else if (specs.colors) {
-            // Для товаров с цветами
             const colors = Object.values(specs.colors).filter(v => typeof v === 'string');
             if (colors.length > 0) pills.push(`${colors.length} цвета`);
         } else if (specs.leg_colors) {
-            // Для ванн с цветными ножками
             const legColors = Object.values(specs.leg_colors).length;
             pills.push(`${legColors} цвета ножек`);
         } else if (specs.size) {
-            // Основной размер
             pills.push(specs.size);
         } else if (specs.material) {
-            // Материал
             pills.push(specs.material);
         } else if (specs.model) {
-            // Модель
             pills.push(`Модель: ${specs.model}`);
         } else if (specs.type) {
-            // Тип
             pills.push(specs.type);
         }
 
-        // Добавляем еще пару характеристик
         Object.entries(specs).forEach(([key, value]) => {
             if (pills.length >= 3) return;
             if (['sizes', 'colors', 'size', 'material', 'model', 'leg_colors', 'type'].includes(key)) return;
@@ -334,36 +293,37 @@ const ProductSpecs = memo(({ specs, viewMode }) => {
 
 ProductSpecs.displayName = 'ProductSpecs';
 
-// Мемоизированная карточка товара для сетки с плавной сменой фото
-const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave, isHovered }) => {
+// Улучшенный компонент изображения с обработкой вертикальных фото
+const ProductImage = memo(({ product, isHovered, onMouseEnter, onMouseLeave }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
     const [currentImage, setCurrentImage] = useState(product.image);
-    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [imageOrientation, setImageOrientation] = useState('landscape');
 
-    // Плавная смена изображения при наведении
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => {
+            if (img.height > img.width * 1.2) {
+                setImageOrientation('portrait');
+            } else if (img.width > img.height * 1.2) {
+                setImageOrientation('landscape');
+            } else {
+                setImageOrientation('square');
+            }
+        };
+        img.src = currentImage;
+    }, [currentImage]);
+
     useEffect(() => {
         if (isHovered && product.image_1) {
-            setIsTransitioning(true);
-            // Небольшая задержка для плавности
-            setTimeout(() => {
-                setCurrentImage(product.image_1);
-                setTimeout(() => setIsTransitioning(false), 50);
-            }, 50);
+            setCurrentImage(product.image_1);
         } else {
-            if (currentImage !== product.image) {
-                setIsTransitioning(true);
-                setTimeout(() => {
-                    setCurrentImage(product.image);
-                    setTimeout(() => setIsTransitioning(false), 50);
-                }, 50);
-            }
+            setCurrentImage(product.image);
         }
     }, [isHovered, product.image, product.image_1]);
 
-    // Подсчет количества изображений
     const imageCount = useMemo(() => {
-        let count = 1; // основное фото
+        let count = 1;
         if (product.image_1) count++;
         if (product.image_2) count++;
         if (product.image_3) count++;
@@ -371,71 +331,77 @@ const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave
         return count;
     }, [product]);
 
+    const handleImageError = () => {
+        setImageError(true);
+        setCurrentImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR202VPZfMD9kdS4yqx2x8aeg6DYlFypnBNBA&s');
+    };
+
+    return (
+        <div
+            className={`product-image-container ${imageOrientation}`}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        >
+            {!imageLoaded && !imageError && (
+                <div className="image-skeleton" />
+            )}
+            {imageError ? (
+                <div className="image-error">
+                    <FiGrid size={32} />
+                </div>
+            ) : (
+                <img
+                    src={currentImage}
+                    alt={product.name}
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={() => setImageLoaded(true)}
+                    onError={handleImageError}
+                    className={`product-img ${imageLoaded ? 'loaded' : 'loading'} ${imageOrientation}`}
+                />
+            )}
+
+            {product.oldPrice && (
+                <span className="product-badge sale">SALE</span>
+            )}
+            {!product.inStock && (
+                <span className="product-badge out">Под заказ</span>
+            )}
+
+            {imageCount > 1 && (
+                <div className="photo-indicator">
+                    {Array.from({ length: imageCount }).map((_, idx) => (
+                        <span
+                            key={idx}
+                            className={`photo-dot ${idx === 0 && !isHovered ? 'active' : ''} ${idx === 1 && isHovered ? 'active' : ''}`}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+});
+
+ProductImage.displayName = 'ProductImage';
+
+// Мемоизированная карточка товара для сетки (синяя с золотом)
+const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave, isHovered }) => {
     return (
         <div className="product-card-grid">
             <Link
                 href={`/product/${product.id}`}
                 className="product-card-link"
                 prefetch={false}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
             >
-                <div className="product-image">
-                    {!imageLoaded && !imageError && (
-                        <div className="image-skeleton" />
-                    )}
-                    {imageError ? (
-                        <div className="image-error">
-                            <FiGrid size={32} />
-                        </div>
-                    ) : (
-                        <>
-                            <img
-                                src={currentImage}
-                                alt={product.name}
-                                loading="lazy"
-                                decoding="async"
-                                onLoad={() => setImageLoaded(true)}
-                                onError={() => setImageError(true)}
-                                className={`product-img ${isTransitioning ? 'fade-out' : 'fade-in'}`}
-                            />
-                            {/* Второе изображение для кросс-фейда */}
-                            {isHovered && product.image_1 && currentImage === product.image_1 && (
-                                <img
-                                    src={product.image}
-                                    alt={`${product.name} основное`}
-                                    className="product-img fade-out"
-                                    style={{ position: 'absolute', top: 0, left: 0 }}
-                                />
-                            )}
-                        </>
-                    )}
-
-                    {/* Бейджи */}
-                    {product.oldPrice && (
-                        <span className="product-badge sale">SALE</span>
-                    )}
-                    {!product.inStock && (
-                        <span className="product-badge out">Под заказ</span>
-                    )}
-
-                    {/* Индикатор количества фото */}
-                    {imageCount > 1 && (
-                        <span className="photo-indicator">
-                            {Array.from({ length: imageCount }).map((_, idx) => (
-                                <span
-                                    key={idx}
-                                    className={`photo-dot ${idx === 0 && !isHovered ? 'active' : ''} ${idx === 1 && isHovered ? 'active' : ''}`}
-                                />
-                            ))}
-                        </span>
-                    )}
-                </div>
+                <ProductImage
+                    product={product}
+                    isHovered={isHovered}
+                    onMouseEnter={() => onMouseEnter(product.id)}
+                    onMouseLeave={onMouseLeave}
+                />
 
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-
-                    {/* Характеристики */}
                     <ProductSpecs specs={product.specs} viewMode="grid" />
                 </div>
             </Link>
@@ -456,10 +422,25 @@ const GridProductCard = memo(({ product, onAddToCart, onMouseEnter, onMouseLeave
 
 GridProductCard.displayName = 'GridProductCard';
 
-// Мемоизированная карточка товара для списка
+// Мемоизированная карточка товара для списка (синяя с золотом)
 const ListProductCard = memo(({ product, onAddToCart }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const [imageOrientation, setImageOrientation] = useState('landscape');
+
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => {
+            if (img.height > img.width * 1.2) {
+                setImageOrientation('portrait');
+            } else if (img.width > img.height * 1.2) {
+                setImageOrientation('landscape');
+            } else {
+                setImageOrientation('square');
+            }
+        };
+        img.src = product.image;
+    }, [product.image]);
 
     return (
         <div className="product-card-list">
@@ -468,7 +449,7 @@ const ListProductCard = memo(({ product, onAddToCart }) => {
                 className="product-card-link"
                 prefetch={false}
             >
-                <div className="product-image">
+                <div className={`product-image-container ${imageOrientation}`}>
                     {!imageLoaded && !imageError && (
                         <div className="image-skeleton" />
                     )}
@@ -484,14 +465,16 @@ const ListProductCard = memo(({ product, onAddToCart }) => {
                             decoding="async"
                             onLoad={() => setImageLoaded(true)}
                             onError={() => setImageError(true)}
-                            style={{ opacity: imageLoaded ? 1 : 0 }}
+                            className={`product-img ${imageLoaded ? 'loaded' : 'loading'} ${imageOrientation}`}
                         />
+                    )}
+                    {product.oldPrice && (
+                        <span className="product-badge sale">SALE</span>
                     )}
                     {!product.inStock && (
                         <span className="product-badge out">Под заказ</span>
                     )}
 
-                    {/* Индикатор количества фото для списка */}
                     {Object.keys(product).filter(key => key.startsWith('image_')).length > 0 && (
                         <span className="photo-indicator list">
                             +{Object.keys(product).filter(key => key.startsWith('image_')).length}
@@ -501,8 +484,6 @@ const ListProductCard = memo(({ product, onAddToCart }) => {
 
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-
-                    {/* Подробные характеристики для списка */}
                     <ProductSpecs specs={product.specs} viewMode="list" />
                 </div>
             </Link>
@@ -531,10 +512,8 @@ export default function CategoryPage() {
     const [filters, setFilters] = useState({});
     const { addToCart } = useCart();
 
-    // Состояние для hover эффекта
     const [hoveredProductId, setHoveredProductId] = useState(null);
 
-    // Находим информацию о категории из импортированных данных
     const categoryInfo = useMemo(() => {
         const found = categories.find(c => c.slug === category);
         if (!found) return null;
@@ -547,12 +526,10 @@ export default function CategoryPage() {
         };
     }, [category]);
 
-    // Мемоизируем товары категории
     const categoryProducts = useMemo(() => {
         return products.filter(p => p.category === category);
     }, [category]);
 
-    // Извлекаем все уникальные значения характеристик для фильтрации
     const filterOptions = useMemo(() => {
         const options = {};
 
@@ -562,7 +539,6 @@ export default function CategoryPage() {
                     if (!options[key]) {
                         options[key] = new Set();
                     }
-                    // Добавляем значение в Set (уникальные значения)
                     if (typeof value === 'object') {
                         Object.entries(value).forEach(([subKey, subValue]) => {
                             const fullKey = `${key}_${subKey}`;
@@ -578,7 +554,6 @@ export default function CategoryPage() {
             }
         });
 
-        // Конвертируем Set в массив и сортируем
         const result = {};
         Object.keys(options).forEach(key => {
             result[key] = Array.from(options[key]).sort();
@@ -587,28 +562,22 @@ export default function CategoryPage() {
         return result;
     }, [categoryProducts]);
 
-    // Применяем фильтры
     const filteredProducts = useMemo(() => {
         setIsLoading(true);
 
         const result = categoryProducts.filter(product => {
-            // Если фильтры пустые - показываем все
             if (Object.keys(filters).length === 0) return true;
 
-            // Проверяем каждый активный фильтр
             return Object.entries(filters).every(([filterKey, filterValues]) => {
                 if (!filterValues || filterValues.length === 0) return true;
 
-                // Разбираем ключ фильтра (может быть составным для вложенных объектов)
                 const keyParts = filterKey.split('_');
 
                 if (keyParts.length === 2) {
-                    // Вложенное свойство (например, sizes_mirror)
                     const [parentKey, childKey] = keyParts;
                     const specValue = product.specs?.[parentKey]?.[childKey];
                     return specValue && filterValues.includes(String(specValue));
                 } else {
-                    // Простое свойство
                     const specValue = product.specs?.[filterKey];
                     return specValue && filterValues.includes(String(specValue));
                 }
@@ -619,7 +588,6 @@ export default function CategoryPage() {
         return result;
     }, [categoryProducts, filters]);
 
-    // Обработчик добавления в корзину
     const handleAddToCart = useCallback((e, product) => {
         e.preventDefault();
         e.stopPropagation();
@@ -629,13 +597,11 @@ export default function CategoryPage() {
 
         addToCart(product);
 
-        // Визуальная обратная связь
         const btn = e.currentTarget;
         btn.classList.add('clicked');
         setTimeout(() => btn.classList.remove('clicked'), 200);
     }, [addToCart]);
 
-    // Обработчики hover для смены изображения
     const handleMouseEnter = useCallback((productId) => {
         setHoveredProductId(productId);
     }, []);
@@ -644,20 +610,17 @@ export default function CategoryPage() {
         setHoveredProductId(null);
     }, []);
 
-    // Обработчик изменения фильтра
     const handleFilterChange = useCallback((filterKey, value, checked) => {
         setFilters(prev => {
             const newFilters = { ...prev };
 
             if (checked) {
-                // Добавляем значение
                 if (!newFilters[filterKey]) {
                     newFilters[filterKey] = [value];
                 } else {
                     newFilters[filterKey] = [...newFilters[filterKey], value];
                 }
             } else {
-                // Удаляем значение
                 if (newFilters[filterKey]) {
                     newFilters[filterKey] = newFilters[filterKey].filter(v => v !== value);
                     if (newFilters[filterKey].length === 0) {
@@ -670,13 +633,11 @@ export default function CategoryPage() {
         });
     }, []);
 
-    // Обработчик сброса всех фильтров
     const handleResetFilters = useCallback(() => {
         setFilters({});
         setShowFilters(false);
     }, []);
 
-    // Блокировка скролла при открытых фильтрах
     useEffect(() => {
         if (showFilters) {
             document.body.style.overflow = 'hidden';
@@ -689,7 +650,6 @@ export default function CategoryPage() {
         };
     }, [showFilters]);
 
-    // Форматирование названия фильтра для отображения
     const formatFilterLabel = useCallback((key) => {
         const labels = {
             'size': 'Размер',
@@ -729,7 +689,6 @@ export default function CategoryPage() {
         return labels[key] || key;
     }, []);
 
-    // Если категория не найдена
     if (!categoryInfo) {
         return (
             <>
@@ -754,7 +713,6 @@ export default function CategoryPage() {
     return (
         <>
             <Navbar />
-            <PdfFloatingButton />
 
             <main className="category-page">
                 {/* Баннер категории */}
@@ -792,23 +750,26 @@ export default function CategoryPage() {
                         <span>{categoryInfo.name}</span>
                     </div>
 
-                    {/* Заголовок с фильтром для мобильных */}
+                    {/* Заголовок с фильтром для мобильных и кнопкой PDF */}
                     <div className="category-header">
                         <h2 className="category-subtitle">
                             {categoryInfo.name} в Ташкенте
                         </h2>
 
-                        <button
-                            className="mobile-filter-btn"
-                            onClick={() => setShowFilters(true)}
-                            aria-label="Открыть фильтры"
-                        >
-                            <FiFilter />
-                            Фильтры
-                            {Object.keys(filters).length > 0 && (
-                                <span className="filter-count">{Object.keys(filters).length}</span>
-                            )}
-                        </button>
+                        <div className="header-actions">
+                            <PdfButton />
+                            <button
+                                className="mobile-filter-btn"
+                                onClick={() => setShowFilters(true)}
+                                aria-label="Открыть фильтры"
+                            >
+                                <FiFilter />
+                                Фильтры
+                                {Object.keys(filters).length > 0 && (
+                                    <span className="filter-count">{Object.keys(filters).length}</span>
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="category-content">
@@ -825,7 +786,6 @@ export default function CategoryPage() {
                                 </button>
                             </div>
 
-                            {/* Динамические фильтры на основе характеристик */}
                             {Object.entries(filterOptions).map(([key, values]) => (
                                 <div key={key} className="filter-section">
                                     <h4 className="filter-title">{formatFilterLabel(key)}</h4>
@@ -855,7 +815,6 @@ export default function CategoryPage() {
                                 </div>
                             ))}
 
-                            {/* Сброс фильтров */}
                             {Object.keys(filters).length > 0 && (
                                 <button
                                     className="reset-filters"
@@ -868,7 +827,6 @@ export default function CategoryPage() {
 
                         {/* Товары */}
                         <div className="category-products">
-                            {/* Сортировка и вид */}
                             <div className="products-toolbar">
                                 <div className="results-count">
                                     Найдено: <strong>{filteredProducts.length}</strong> товаров
@@ -899,7 +857,6 @@ export default function CategoryPage() {
                                 </div>
                             </div>
 
-                            {/* Сетка товаров */}
                             {isLoading ? (
                                 <div className="products-loading">
                                     <div className="loading-spinner"></div>
@@ -942,7 +899,6 @@ export default function CategoryPage() {
             </main>
             <Footer />
 
-            {/* Оверлей для мобильных фильтров */}
             {showFilters && (
                 <div
                     className="filters-overlay"

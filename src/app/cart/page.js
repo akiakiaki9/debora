@@ -1,3 +1,4 @@
+// CartPage.jsx
 'use client'
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -6,8 +7,6 @@ import {
     FiShoppingCart,
     FiTrash2,
     FiArrowLeft,
-    FiPlus,
-    FiMinus,
     FiTruck,
     FiClock,
     FiX,
@@ -21,7 +20,7 @@ import './cart.css';
 
 export default function CartPage() {
     const router = useRouter();
-    const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
+    const { cartItems, removeFromCart, clearCart } = useCart();
     const [showModal, setShowModal] = useState(false);
 
     // Так как цен нет, просто считаем количество товаров
@@ -150,21 +149,10 @@ export default function CartPage() {
                                             )}
 
                                             <div className="cart-item-actions">
-                                                <div className="quantity-control">
-                                                    <button
-                                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                        className="quantity-btn"
-                                                        disabled={item.quantity <= 1}
-                                                    >
-                                                        <FiMinus />
-                                                    </button>
-                                                    <span className="quantity-value">{item.quantity}</span>
-                                                    <button
-                                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                        className="quantity-btn"
-                                                    >
-                                                        <FiPlus />
-                                                    </button>
+                                                {/* Вместо контролов количества просто показываем количество */}
+                                                <div className="cart-item-quantity">
+                                                    <span className="quantity-label">Количество:</span>
+                                                    <span className="quantity-value">{item.quantity} шт.</span>
                                                 </div>
 
                                                 <div className="cart-item-status">
@@ -294,7 +282,7 @@ export default function CartPage() {
                                             </div>
                                             <div className="modal-item-details">
                                                 <span className="modal-item-quantity">{item.quantity} шт.</span>
-                                                <span className="modal-item-status">
+                                                <span className={`modal-item-status ${item.inStock ? 'in-stock' : 'preorder'}`}>
                                                     {item.inStock ? '✓ В наличии' : '⌛ Под заказ'}
                                                 </span>
                                             </div>
