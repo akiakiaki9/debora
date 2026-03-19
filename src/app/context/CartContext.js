@@ -16,24 +16,36 @@ export function useCart() {
 export function CartProvider({ children }) {
     const [cartItems, setCartItems] = useState([]);
     const [isInitialized, setIsInitialized] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
-    // Загружаем корзину из localStorage при монтировании
+    // Устанавливаем флаг, что мы на клиенте
     useEffect(() => {
-        try {
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                setCartItems(JSON.parse(savedCart));
+        setIsClient(true);
+    }, []);
+
+    // Загружаем корзину из localStorage при монтировании (только на клиенте)
+    useEffect(() => {
+        // Проверяем, что мы на клиенте и localStorage доступен
+        if (typeof window !== 'undefined') {
+            try {
+                const savedCart = localStorage.getItem('cart');
+                if (savedCart) {
+                    setCartItems(JSON.parse(savedCart));
+                }
+            } catch (error) {
+                console.error('Error loading cart:', error);
+            } finally {
+                setIsInitialized(true);
             }
-        } catch (error) {
-            console.error('Error loading cart:', error);
-        } finally {
+        } else {
+            // На сервере просто помечаем как инициализированный
             setIsInitialized(true);
         }
     }, []);
 
-    // Сохраняем корзину в localStorage при каждом изменении
+    // Сохраняем корзину в localStorage при каждом изменении (только на клиенте)
     useEffect(() => {
-        if (isInitialized) {
+        if (isInitialized && typeof window !== 'undefined') {
             try {
                 localStorage.setItem('cart', JSON.stringify(cartItems));
             } catch (error) {
@@ -60,7 +72,7 @@ export function CartProvider({ children }) {
             }
         });
 
-        // Диспатчим событие для обновления UI
+        // Диспатчим событие для обновления UI (только на клиенте)
         if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('cartUpdated'));
         }
@@ -68,7 +80,9 @@ export function CartProvider({ children }) {
 
     const removeFromCart = (productId) => {
         setCartItems(prev => prev.filter(item => item.id !== productId));
-        window.dispatchEvent(new Event('cartUpdated'));
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('cartUpdated'));
+        }
     };
 
     const updateQuantity = (productId, quantity) => {
@@ -78,25 +92,32 @@ export function CartProvider({ children }) {
                 item.id === productId ? { ...item, quantity } : item
             )
         );
-        window.dispatchEvent(new Event('cartUpdated'));
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('cartUpdated'));
+        }
     };
 
     const clearCart = () => {
         setCartItems([]);
-        window.dispatchEvent(new Event('cartUpdated'));
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('cartUpdated'));
+        }
     };
 
-    // Вычисляем общее количество товаров
-    const cartCount = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    // Вычисляем общее количество товаров (с защитой от undefined)
+    const cartCount = Array.isArray(cartItems) 
+        ? cartItems.reduce((total, item) => total + (item?.quantity || 1), 0)
+        : 0;
 
     const value = {
-        cartItems,
+        cartItems: Array.isArray(cartItems) ? cartItems : [],
         cartCount,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
-        isInitialized
+        isInitialized,
+        isClient
     };
 
     return (
