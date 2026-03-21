@@ -758,7 +758,7 @@ export default function CategoryPage() {
 
                         <div className="header-actions">
                             <PdfButton />
-                            <button
+                            {/* <button
                                 className="mobile-filter-btn"
                                 onClick={() => setShowFilters(true)}
                                 aria-label="Открыть фильтры"
@@ -768,7 +768,7 @@ export default function CategoryPage() {
                                 {Object.keys(filters).length > 0 && (
                                     <span className="filter-count">{Object.keys(filters).length}</span>
                                 )}
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 

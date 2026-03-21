@@ -774,7 +774,7 @@ export default function CatalogPage() {
                             </p>
                         </div>
 
-                        <div className="header-actions">
+                        {/* <div className="header-actions">
                             <PdfButton />
                             <button
                                 className="mobile-filter-btn"
@@ -784,7 +784,7 @@ export default function CatalogPage() {
                                 <FiFilter />
                                 Фильтры
                             </button>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="categories-showcase">
