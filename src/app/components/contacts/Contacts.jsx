@@ -8,7 +8,7 @@ import {
     FiArrowRight,
     FiNavigation
 } from 'react-icons/fi';
-import { FaTelegram, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 import './contacts.css';
 
 const Contacts = () => {
@@ -103,7 +103,7 @@ const Contacts = () => {
             icon: <FiClock />,
             title: 'Режим работы',
             values: [
-                { type: 'text', value: 'Ежедневно: 9:00 - 18:00', label: 'Ежедневно: 9:00 - 18:00' }
+                { type: 'text', value: 'Ежедневно: 9:00 - 20:00', label: 'Ежедневно: 9:00 - 20:00' }
             ],
             note: 'Без выходных'
         },
@@ -112,23 +112,22 @@ const Contacts = () => {
             icon: <FiPhone />,
             title: 'Общий отдел',
             values: [
-                { type: 'tel', value: '+998941471116', label: '+998 94 147-11-16' },
-                { type: 'tel', value: '+998998783950', label: '+998 99 878 39 50' },
-                { type: 'tel', value: '+998977074046', label: '+998 97 707 40 46' },
+                { type: 'tel', value: '+998981102255', label: '+998 98 110-22-55' },
+                { type: 'tel', value: '+998915452255', label: '+998 91 545-22-55' },
             ],
             note: 'Для связи с менеджером'
         },
         {
             id: 4,
-            icon: <FaTelegram />,
-            title: 'Telegram',
+            icon: <FaInstagram />,
+            title: 'Instagram',
             values: [
-                { type: 'link', value: '@debora_ceramica', label: '@debora_ceramica' }
+                { type: 'link', value: '@master_gold_plumbing', label: '@master_gold_plumbing' }
             ],
             note: 'Быстрая связь',
             link: {
-                href: 'https://t.me/debora_ceramic',
-                text: 'Перейти в Telegram'
+                href: 'https://www.instagram.com/master_gold_plumbing?igsh=MW9tbDJlZHN6aHU2',
+                text: 'Перейти в Инстаграм'
             }
         }
     ];
@@ -136,27 +135,11 @@ const Contacts = () => {
     const socials = [
         {
             id: 1,
-            name: 'Telegram',
-            icon: <FaTelegram />,
-            link: 'https://t.me/debora_ceramic',
-            username: '@debora_ceramic',
-            color: 'telegram'
-        },
-        {
-            id: 2,
             name: 'Instagram',
             icon: <FaInstagram />,
-            link: 'https://instagram.com/debora_ceramica',
-            username: '@debora_ceramica',
+            link: 'https://www.instagram.com/master_gold_plumbing?igsh=MW9tbDJlZHN6aHU2',
+            username: '@master_gold_plumbing',
             color: 'instagram'
-        },
-        {
-            id: 3,
-            name: 'You Tube',
-            icon: <FaYoutube />,
-            link: 'https://www.youtube.com/@debora_ceramica',
-            username: '/debora_ceramica',
-            color: 'facebook'
         }
     ];
 

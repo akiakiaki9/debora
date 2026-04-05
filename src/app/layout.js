@@ -136,7 +136,46 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CartProvider>
-          {children}
+          {/* {children} */}
+          <div className="as-block">
+            <div className="as-card">
+
+              <div className="as-status">
+                Доступ ограничен
+              </div>
+
+              <h1 className="as-title">
+                Сайт отключён
+              </h1>
+
+              <p className="as-text">
+                Доступ к сайту Debora Ceramica ограничен в связи с отказом от оплаты за выполненный проект.
+                Работы были завершены в полном объёме.
+              </p>
+
+              <p className="as-text">
+                Наша команда не оказывает услуги без оплаты и строго соблюдает условия сотрудничества.
+              </p>
+
+              <div className="as-warning">
+                Мы не рекомендуем сотрудничество с клиентами, которые не выполняют свои финансовые обязательства.
+                Сайт будет восстановлен только после полного расчёта.
+              </div>
+
+              <div className="as-footer">
+                <a
+                  href="https://akbarsoft.uz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="as-link"
+                >
+                  Akbar Soft 
+                </a>
+                 • Официальное уведомление
+              </div>
+
+            </div>
+          </div>
         </CartProvider>
       </body>
     </html>

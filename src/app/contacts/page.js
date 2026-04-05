@@ -74,7 +74,7 @@ export default function ContactsPage() {
                                 </div>
                                 <h3 className="info-title">Режим работы</h3>
                                 <p className="info-value">Ежедневно</p>
-                                <p className="info-value">9:00 - 18:00</p>
+                                <p className="info-value">9:00 - 20:00</p>
                                 <p className="info-note">С Выходными</p>
                             </div>
 
@@ -83,19 +83,18 @@ export default function ContactsPage() {
                                     <FiPhone />
                                 </div>
                                 <h3 className="info-title">Общий отдел</h3>
-                                <a href="tel:+998941471116" className="info-value">+998 94 147-11-16</a>
-                                <a href="tel:+998998783950" className="info-value">+998 99 878 39 50</a>
-                                <a href="tel:+998977074046" className="info-value">+998 97 707 40 46</a>
+                                <a href="tel:+998981102255" className="info-value">+998 98 110-22-55</a>
+                                <a href="tel:+998915452255" className="info-value">+998 91 545-22-55</a>
                                 <p className="info-note">Для связи с менеджером</p>
                             </div>
 
                             <div className="info-card">
                                 <div className="info-icon">
-                                    <FaTelegram />
+                                    <FaInstagram />
                                 </div>
-                                <h3 className="info-title">Telegram</h3>
-                                <a href="https://t.me/debora_ceramic" target="_blank" rel="noopener noreferrer" className="info-value">
-                                    @debora_ceramica
+                                <h3 className="info-title">Instagram</h3>
+                                <a href="https://www.instagram.com/master_gold_plumbing?igsh=MW9tbDJlZHN6aHU2" target="_blank" rel="noopener noreferrer" className="info-value">
+                                    @master_gold_plumbing
                                 </a>
                                 <p className="info-note">Быстрая связь</p>
                             </div>
@@ -148,19 +147,9 @@ export default function ContactsPage() {
                         <h2 className="social-title">Мы в соцсетях</h2>
                         <div className="social-grid">
                             <a href="https://t.me/debora_ceramic" target="_blank" rel="noopener noreferrer" className="social-card telegram">
-                                <FaTelegram className="social-icon" />
-                                <span className="social-name">Telegram</span>
-                                <span className="social-link">@debora_ceramica</span>
-                            </a>
-                            <a href="https://instagram.com/debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card instagram">
                                 <FaInstagram className="social-icon" />
                                 <span className="social-name">Instagram</span>
-                                <span className="social-link">@debora_ceramica</span>
-                            </a>
-                            <a href="https://www.youtube.com/@debora_ceramica" target="_blank" rel="noopener noreferrer" className="social-card youtube">
-                                <FaYoutube className="social-icon" />
-                                <span className="social-name">You Tube</span>
-                                <span className="social-link">debora_ceramica</span>
+                                <span className="social-link">@master_gold_plumbing</span>
                             </a>
                         </div>
                     </div>

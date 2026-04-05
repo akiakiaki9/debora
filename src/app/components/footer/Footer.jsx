@@ -56,7 +56,7 @@ const Footer = () => {
 
     const footerSocialLinks = [
         { icon: <FaTelegram />, href: 'https://t.me/debora_ceramic', label: 'Telegram' },
-        { icon: <FaInstagram />, href: 'https://instagram.com/debora_ceramica', label: 'Instagram' },
+        { icon: <FaInstagram />, href: 'https://www.instagram.com/master_gold_plumbing?igsh=MW9tbDJlZHN6aHU2', label: 'Instagram' },
         { icon: <FaYoutube />, href: 'https://www.youtube.com/@debora_ceramica', label: 'YouTube' },
     ];
 
@@ -176,7 +176,7 @@ const Footer = () => {
                                     </div>
                                     <div className="footer-contact-details">
                                         <span className="footer-contact-label">Режим работы:</span>
-                                        <span>Ежедневно: 9:00 - 18:00</span>
+                                        <span>Ежедневно: 9:00 - 20:00</span>
                                     </div>
                                 </li>
                             </ul>

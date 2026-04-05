@@ -224,17 +224,19 @@ const Navbar = () => {
                     <div className="navbar-top-inner">
                         <div className="contact-info">
                             <FiPhone className="icon" />
-                            <a href="tel:+998941471116" className="phone-link">
-                                +998 94 147-11-16
+                            <a href="tel:+998981102255" className="phone-link">
+                                +998 98 110-22-55
                             </a>
                         </div>
                         <div className="years-badge">
                             <FiClock className="icon" />
-                            <span>9:00 - 18:00 ежедневно</span>
+                            <span>9:00 - 20:00 ежедневно</span>
                         </div>
                         <div className="premium-badge">
                             <FiAward className="icon" />
-                            <span>3 магазина в Ташкенте</span>
+                            <a href="tel:+998915452255" className="phone-link">
+                                +998 91 545-22-55
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -258,7 +260,7 @@ const Navbar = () => {
                             <span className="logo-text">Debora Ceramica</span>
                         </Link>
 
-                        {/* Десктоп меню */}
+                        {/* Десктоп меню - УБРАНЫ ДИЛЕРЫ И КОНТАКТЫ */}
                         <ul className={`nav-menu ${isOpen ? 'active' : ''}`} ref={menuRef}>
                             <li className="nav-item">
                                 <Link href="/" onClick={closeMenu}>
@@ -289,11 +291,6 @@ const Navbar = () => {
                                 </div>
                             </li>
                             <li className="nav-item">
-                                <Link href="/contacts" onClick={closeMenu}>
-                                    Контакты
-                                </Link>
-                            </li>
-                            <li className="nav-item">
                                 <Link href="/pdf" onClick={closeMenu}>
                                     PDF Каталоги
                                 </Link>
@@ -321,7 +318,7 @@ const Navbar = () => {
                             >
                                 <button className="phones-trigger">
                                     <FiPhone className="phones-icon" />
-                                    <span className="phones-text">Контакты</span>
+                                    <span className="phones-text">Телефоны</span>
                                     <FiChevronDown className={`phones-arrow ${activePhones ? 'active' : ''}`} />
                                 </button>
                                 <div className={`phones-dropdown ${activePhones ? 'show' : ''}`}>
